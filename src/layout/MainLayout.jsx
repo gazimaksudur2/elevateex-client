@@ -1,11 +1,13 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
+import Navbar from '../shared/Navbar';
+import Footer from '../shared/Footer';
 
 const MainLayout = () => {
     return (
-        <div>
-            <h2>This is from mainLayout.</h2>
+        <div className='min-h-screen flex flex-col justify-between'>
+            <Navbar/>
             <Outlet/>
+            <Footer/>
         </div>
     );
 };

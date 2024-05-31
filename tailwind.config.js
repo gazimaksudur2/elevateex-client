@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        poppins: '"Poppins", sans-serif',
+        mulish: '"Mulish", sans-serif',
+        roboto: '"Roboto Slab", serif',
       },
       backgroundImage: {
         'hero-pattern': "url('/img/hero-pattern.svg')",
