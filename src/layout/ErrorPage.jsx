@@ -8,7 +8,7 @@ const ErrorPage = () => {
                 <h1 className="text-6xl font-roboto font-semibold text-[#151515db]">404</h1>
                 <div className="flex flex-col items-center justify-center gap-2">
                     <h2 className="text-2xl font-roboto font-medium text-[#151515bc]">{"Look like you're lost"}</h2>
-                    <p className="text-[#151515ac]">{"the page you're looking for not available"}</p>
+                    <p className="text-[#151515ac]">{"the page you're looking for not available else under construction"}</p>
                     <Link to={'/'}>
                         <button className="btn rounded-none text-white bg-green-600 hover:bg-green-500">Go to Home</button>
                     </Link>

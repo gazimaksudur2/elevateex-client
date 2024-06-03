@@ -1,9 +1,14 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CiHome } from 'react-icons/ci';
 import SocialLogin from './SocialLogin';
+import useAuth from '../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+    const { logIn } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
     const {
         register,
         handleSubmit,
@@ -11,7 +16,25 @@ const Login = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data);
+        logIn(data.email, data.password)
+        .then(res=>{
+            console.log(res);
+            Swal.fire({
+                title: `Welcome! "${res?.user?.displayName}"`,
+                text: "User Logged in Successful!",
+                icon: "success"
+              });
+            navigate('/');
+        })
+        .catch(error=>{
+            // console.log(error.message);
+            Swal.fire({
+                title: "Unfortunately!",
+                text: error.message,
+                icon: "warning"
+              });
+        })
     }
     return (
         <div className='min-h-screen py-10 bg-base-200'>

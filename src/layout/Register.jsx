@@ -1,9 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { CiHome } from 'react-icons/ci';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SocialLogin from './SocialLogin';
+import useAuth from '../hooks/useAuth';
+import useAxiosPublic from '../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 const Register = () => {
+    const { createUser, updateUser } = useAuth();
+    const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
     const img_hosting_key = import.meta.env.VITE_image_hosting_key;
     const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
     const {
@@ -12,9 +18,64 @@ const Register = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
         console.log(data);
+        let profile_img = null;
+        if(data.image.length){
+            const res = await axiosPublic.post(img_hosting_api, {image: data.image[0]}, {
+                headers: {
+                    "content-type": 'multipart/form-data'
+                }
+            });
+            profile_img = res.data.data.display_url;
+        }
+        
+        // console.log(res.data.data.display_url);
+        const user = {
+            displayName: data.name,
+            photoURL: profile_img,
+            email: data.email,
+            provider: null,
+            password: data.password,
+            role: 'general',
+            req_status: 'No'
+        }
+        // console.log(user);
+        axiosPublic.post('/users', user)
+
+        createUser(data.email, data.password)
+        .then(res=>{
+            console.log(res);
+            updateUser(data.name, profile_img)
+            .then(()=>{
+                // console.log('profile updated successfully!!');
+                Swal.fire({
+                    title: "Great job!",
+                    text: "User Created Successfully!",
+                    icon: "success"
+                  });
+                navigate('/');
+            })
+            .catch(error=>{
+                // console.log(error.message);
+                Swal.fire({
+                    title: "User Created But!",
+                    text: error.message,
+                    icon: "warning"
+                  });
+                navigate('/');
+            })
+        })
+        .catch(error=>{
+            // console.log(error.message);
+            Swal.fire({
+                title: "Unfortunately!",
+                text: error.message,
+                icon: "warning"
+              });
+        })
     }
+    
     return (
         <div className='min-h-screen py-10 bg-base-200'>
             <div className="flex justify-center items-center gap-3">
@@ -41,26 +102,26 @@ const Register = () => {
                                 <label className="label">
                                     <span className="label-text">Your Name</span>
                                 </label>
-                                <input type="text" name="name" placeholder={'Enter Your Name'} {...register("name")} className="input input-bordered" />
+                                <input type="text" name="name" placeholder={'Enter Your Name'} {...register("name", { required: true })} className="input input-bordered" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Your Email</span>
                                 </label>
-                                <input type="email" name="email" placeholder={'Enter Your Email'} {...register("email")} className="input input-bordered" />
+                                <input type="email" name="email" placeholder={'Enter Your Email'} {...register("email", { required: true })} className="input input-bordered" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" name="password" placeholder='Enter Password here' {...register("password")} className="input input-bordered" />
+                                <input type="password" name="password" placeholder='Enter Password here' {...register("password", { required: true })} className="input input-bordered" />
                                 {errors.exampleRequired && <span>This field is required</span>}
                             </div>
                             <label className="form-control w-full max-w-xs">
                                 <div className="label">
                                     <span className="label-text">Upload Your Profile Image</span>
                                 </div>
-                                <input type="file" className="file-input file-input-bordered w-full max-w-xs" />
+                                <input type="file"  {...register("image")} name='image' className="file-input file-input-bordered w-full max-w-xs" />
                             </label>
                             <div className="form-control mt-2">
                                 <input className="btn bg-red-600 text-white hover:bg-red-500" type='submit' value={'SignUp'} />

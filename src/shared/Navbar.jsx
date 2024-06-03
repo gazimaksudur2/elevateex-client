@@ -7,23 +7,34 @@ const Navbar = () => {
 
     const handleLogOut = () => {
         logOut()
-        .then(()=>{
-            console.log('user logged out successfully!!');
-            toast.success('🦄 Wow so easy!', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
+            .then(() => {
+                // console.log('user logged out successfully!!');
+                toast.success('User Logged out Successfully!', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
                 });
-        })
-        .catch(error=>{
-            console.log(error.message);
-        })
+            })
+            .catch(error => {
+                console.log(error.message);
+                toast.error('Logout Interrupted!', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
+            })
     }
     const navLinks = <>
         <li><NavLink to={'/'}>Home</NavLink></li>
@@ -35,11 +46,26 @@ const Navbar = () => {
     const sidebar = <>
         <div className="drawer-side">
             <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-            <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-                {/* Sidebar content here */}
-                <li><a>Sidebar Item 1</a></li>
-                <li><a>Sidebar Item 2</a></li>
-                <li><button onClick={handleLogOut} className="btn btn-secondary">Log Out</button></li>
+            <ul className="relative menu p-4 w-80 space-y-2 min-h-full bg-base-200 text-base-content flex flex-col justify-start items-center">
+                <div className="flex justify-center items-center"><a><img className="w-20 h-16 rounded-lg" src={user?.photoURL} alt="userProfile" /></a></div>
+                <h2><a>{user?.displayName}</a></h2>
+                <h2 className="pb-6"><a>{user?.email}</a></h2>
+                <div className="pb-5 flex flex-col justify-center items-center gap-2">
+                    <h4 className="text-lg font-roboto">Current Role</h4>
+                    <div className="flex items-center justify-start gap-1">
+                        <p className="bg-green-300 px-2 py-1 rounded-full cursor-pointer">super admin</p>
+                        <p className="bg-amber-300 px-2 py-1 rounded-full cursor-pointer">admin</p>
+                        <p className="bg-red-300 px-2 py-1 rounded-full cursor-pointer">general user</p>
+                    </div>
+                </div>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdashboard'}>User Dashboard</Link></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Admin Request</a></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Teachers</a></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Our Successes</a></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Contacts</a></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>About</a></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>User Guide</a></li>
+                <li className="w-full absolute p-3 bottom-2"><button onClick={handleLogOut} className="btn btn-secondary">Log Out</button></li>
             </ul>
         </div>
     </>;
@@ -74,7 +100,7 @@ const Navbar = () => {
                                 <label htmlFor="my-drawer-4" className="drawer-button ">
                                     <div className="avatar">
                                         <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                            <img src={user?.photoURL} />
                                         </div>
                                     </div>
                                 </label>
