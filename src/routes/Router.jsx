@@ -6,6 +6,8 @@ import MainLayout from "../layout/MainLayout";
 import Login from "../layout/Login";
 import Register from "../layout/Register";
 import ErrorPage from "../layout/ErrorPage";
+import UserDashboard from "../layout/UserDashboard/UserDashboard";
+import AdminDashboard from "../layout/AdminDashBoard/AdminDashboard";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
                 element: <TeachHere/>
             }
         ]
+    },
+    {
+        path: 'userdash',
+        element: <UserDashboard/>
+    },
+    {
+        path: 'admindash',
+        element: <AdminDashboard/>
     },
     {
         path: 'login',

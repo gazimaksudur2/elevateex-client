@@ -1,9 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { Slide, toast } from "react-toastify";
+import { useRef } from "react";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const ref = useRef();
 
     const handleLogOut = () => {
         logOut()
@@ -42,12 +45,47 @@ const Navbar = () => {
         <li><NavLink to={'/teach'}>Teach Here</NavLink></li>
         <li><NavLink to={'/'}>Contacts</NavLink></li>
     </>;
+    const adminApply = () => {
+        // const letter = ref
+        console.log(ref.current.value);
+        Swal.fire({
+            title: "Best of Luck!",
+            text: "Application Submitted Successfully!",
+            icon: "success"
+        });
+    }
+    const defaultLetter = "I am writing to formally request admin privileges for my account. As I continue to contribute to our ElevateEx, having admin access would enable me to manage tasks more efficiently and assist with administrative responsibilities, ensuring smoother operations and timely updates."
+    const adminReqModal = <div>
+        <dialog id="my_modal_1" className="modal backdrop-blur">
+            <div className="modal-box bg-base-100">
+                <div className="w-full flex flex-col justify-center items-center">
+                    <img className="w-40" src="https://img.freepik.com/free-vector/follow-me-social-business-theme-design_24877-50426.jpg?t=st=1717443448~exp=1717447048~hmac=e757907a06ab84e3244b1cdfc700081ea5fef85f5985f3f3026ba306bf2e14cf&w=740" alt="" />
+                </div>
+                <div className="flex flex-col justify-center items-start">
+                    <p>To superAdmin,</p>
+                    <h3 className=""><span className="font-semibold text-lg">Subject:</span> Request for the Admin role.</h3>
+                </div>
+                <h3 className="font-bold text-lg">Hello! Sir,</h3>
+                {/* <p className="py-4">Press ESC key or click the button below to close</p> */}
+                <div className="modal-action">
+                    <form method="dialog" className="w-full flex flex-col justify-center items-center gap-3">
+                        <textarea ref={ref} className="textarea textarea-secondary w-full h-44" defaultValue={defaultLetter}></textarea>
+                        <div className="w-full flex justify-end items-center gap-3">
+                            <button className="btn btn-primary">Close</button>
+                            <button onClick={adminApply} className="btn btn-outline">Apply</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+    </div>
+    // console.log(user);
 
     const sidebar = <>
         <div className="drawer-side">
             <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
             <ul className="relative menu p-4 w-80 space-y-2 min-h-full bg-base-200 text-base-content flex flex-col justify-start items-center">
-                <div className="flex justify-center items-center"><a><img className="w-20 h-16 rounded-lg" src={user?.photoURL} alt="userProfile" /></a></div>
+                <div className="flex justify-center items-center"><a><img className="w-20 h-20 rounded-lg" src={user?.photoURL} alt="userProfile" /></a></div>
                 <h2><a>{user?.displayName}</a></h2>
                 <h2 className="pb-6"><a>{user?.email}</a></h2>
                 <div className="pb-5 flex flex-col justify-center items-center gap-2">
@@ -58,8 +96,8 @@ const Navbar = () => {
                         <p className="bg-red-300 px-2 py-1 rounded-full cursor-pointer">general user</p>
                     </div>
                 </div>
-                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdashboard'}>User Dashboard</Link></li>
-                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Admin Request</a></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash'}>User Dashboard</Link></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a onClick={() => document.getElementById('my_modal_1').showModal()}>Admin Request</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Teachers</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Our Successes</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Contacts</a></li>
@@ -71,6 +109,7 @@ const Navbar = () => {
     </>;
     return (
         <div>
+            {adminReqModal}
             <div className="w-[95%] mx-auto mt-5 navbar bg-base-100 rounded-md">
                 <div className="navbar-start">
                     <div className="dropdown">

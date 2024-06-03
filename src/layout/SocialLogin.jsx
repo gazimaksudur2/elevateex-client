@@ -14,11 +14,7 @@ const SocialLogin = () => {
     const handleGoogle = () => {
         googleLogin()
             .then(async (res) => {
-                Swal.fire({
-                    title: "Great!",
-                    text: "Logged in Successful!",
-                    icon: "success"
-                });
+                const msg = "Logged in Successful!";
                 const existing = await axiosPublic.get(`/users?email=${res.user.email}`);
                 // console.log(existing.data);
                 // console.log(res.user);
@@ -35,6 +31,11 @@ const SocialLogin = () => {
                     }
                     axiosPublic.post('/users', user);
                 }
+                Swal.fire({
+                    title: `Hello! ${res.user.displayName}`,
+                    text: msg,
+                    icon: "success"
+                });
                 navigate('/');
             })
             .catch(error => {
@@ -51,8 +52,8 @@ const SocialLogin = () => {
         githubLogin()
             .then(async(res) => {
                 Swal.fire({
-                    title: "Great!",
-                    text: "Logged in Successful!",
+                    title: `Hello! ${res.user.displayName}`,
+                    text: "Logged in user Successful!",
                     icon: "success"
                 });
                 const existing = await axiosPublic.get(`/users?displayName=${res.user.displayName}&photoURL=${res.user.photoURL}`);

@@ -75,7 +75,7 @@ const Register = () => {
               });
         })
     }
-    
+
     return (
         <div className='min-h-screen py-10 bg-base-200'>
             <div className="flex justify-center items-center gap-3">
@@ -114,8 +114,11 @@ const Register = () => {
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" name="password" placeholder='Enter Password here' {...register("password", { required: true })} className="input input-bordered" />
-                                {errors.exampleRequired && <span>This field is required</span>}
+                                <input type="password" name="password" placeholder='Enter Password here' {...register("password", { required: true, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/, minLength: 6, maxLength: 12 })} className="input input-bordered" />
+                                {/* {errors.password && <span className='text-xs font-mulish text-red-600 mt-1'>This field is required</span>} */}
+                                {errors?.password?.type == 'maxLength' && <span className='text-xs font-mulish text-red-600 mt-1'>Maximum password length should be 12 characters</span>}
+                                {errors?.password?.type == 'minLength' && <span className='text-xs font-mulish text-red-600 mt-1'>Minimum password length should be 6 characters</span>}
+                                {errors?.password?.type == 'pattern' && <span className='text-xs font-mulish text-red-600 mt-1'>password should at least one capital letter, one small letter and a special character</span>}
                             </div>
                             <label className="form-control w-full max-w-xs">
                                 <div className="label">
