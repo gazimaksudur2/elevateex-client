@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
+import { CiHome } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
-import { Typewriter } from 'react-simple-typewriter';
+import SocialLogin from './SocialLogin';
 
 const Register = () => {
     const img_hosting_key = import.meta.env.VITE_image_hosting_key;
@@ -15,29 +16,22 @@ const Register = () => {
         console.log(data);
     }
     return (
-        <div>
-            <div className="hero min-h-screen bg-base-200">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="text-center lg:text-left">
-                        <h1 className="text-5xl font-bold font-roboto">
-                            Let  <span className='text-red-500'><Typewriter
-                                words={['Elevate', 'Your', 'Study', 'Experience!']}
-                                loop={5}
-                                cursor
-                                cursorStyle='_'
-                                typeSpeed={90}
-                                deleteSpeed={50}
-                                delaySpeed={1300}
-                            /></span>
-                        </h1>
-                        <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                        <Link to={'/'}>
-                            <button className='btn btn-outline'>Go to Home</button>
+        <div className='min-h-screen py-10 bg-base-200'>
+            <div className="flex justify-center items-center gap-3">
+                <img className="w-10 h-10 rounded" src="https://cdn-icons-png.flaticon.com/128/3048/3048425.png" alt="web Icon" />
+                <h2 className="text-gray-800 text-xl">Elevate<span className="text-2xl text-red-600">Ex</span></h2>
+            </div>
+            <div className="hero">
+                <div className="hero-content flex-col lg:flex-row">
+                    <div className="w-[50%] text-center space-y-4 lg:text-left">
+                        <Link to={'/'} className='mb-5 btn btn-outline inline-flex justify-start items-center gap-2'>
+                            <span className='text-xl'>Back to </span>
+                            <CiHome className='font-bold text-3xl' />
                         </Link>
-                        <div>
-                            <p>Log in with other Accounts</p>
-                            <div>
-                            </div>
+                        <img src="https://app.10minuteschool.com/assets/login/routine3.svg" alt="login image" />
+                        <div className='space-y-2'>
+                            <h1 className="text-5xl font-bold">Unlock Your Potential</h1>
+                            <p>Explore a world of knowledge and take control of your future with ElevateEx. Your potential is limitless. ElevateEx is here to help you realize it.</p>
                         </div>
                     </div>
                     <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -68,9 +62,11 @@ const Register = () => {
                                 </div>
                                 <input type="file" className="file-input file-input-bordered w-full max-w-xs" />
                             </label>
-                            <div className="form-control mt-6">
-                                <input className="btn btn-primary" type='submit' value={'SignUp'} />
+                            <div className="form-control mt-2">
+                                <input className="btn bg-red-600 text-white hover:bg-red-500" type='submit' value={'SignUp'} />
                             </div>
+                            <div className="divider">OR Sign in with</div>
+                            <SocialLogin/>
                             <p className='w-full text-center'>Already have an Account? <Link className='text-red-400' to={'/login'}>Sign in</Link></p>
                         </form>
                     </div>

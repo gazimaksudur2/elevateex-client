@@ -6,7 +6,7 @@ Assignment Variant Is: Assignment12_category_0008
 Admin email: admin@elavateex.edu
 Admin Password: AdmEdu123!
 live site URL: https://elevateex-ac4de.web.app
-live server URL: https://elevateexserver-gazi-maksudur-rahmans-projects.vercel.app/demo
+live server URL: https://elevate-dusky-nine.vercel.app
 Client side repo: https://github.com/programming-hero-web-course1/b9a12-client-side-gazimaksudur2
 Server side repo: https://github.com/programming-hero-web-course1/b9a12-server-side-gazimaksudur2
 
