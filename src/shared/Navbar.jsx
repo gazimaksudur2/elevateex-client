@@ -82,19 +82,19 @@ const Navbar = () => {
     // console.log(user);
 
     const sidebar = <>
-        <div className="drawer-side">
+        <div className="z-50 drawer-side">
             <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
             <ul className="relative menu p-4 w-80 space-y-2 min-h-full bg-base-200 text-base-content flex flex-col justify-start items-center">
                 <div className="flex justify-center items-center"><a><img className="w-20 h-20 rounded-lg" src={user?.photoURL} alt="userProfile" /></a></div>
                 <h2><a>{user?.displayName}</a></h2>
                 <h2 className="pb-6"><a>{user?.email}</a></h2>
-                <div className="pb-5 flex flex-col justify-center items-center gap-2">
+                <div className="pb-5 flex justify-center items-center gap-4">
                     <h4 className="text-lg font-roboto">Current Role</h4>
-                    <div className="flex items-center justify-start gap-1">
-                        <p className="bg-green-300 px-2 py-1 rounded-full cursor-pointer">super admin</p>
-                        <p className="bg-amber-300 px-2 py-1 rounded-full cursor-pointer">admin</p>
-                        <p className="bg-red-300 px-2 py-1 rounded-full cursor-pointer">general user</p>
-                    </div>
+                    <p className="text-[#151515bc] font-medium bg-green-300 px-2 py-1 rounded-full cursor-pointer">super admin</p>
+                    {/* <div className="flex items-center justify-start gap-1">
+                        <p className="text-[#151515bc] font-medium bg-amber-300 px-2 py-1 rounded-full cursor-pointer">admin</p>
+                        <p className="text-[#151515bc] font-medium bg-red-300 px-2 py-1 rounded-full cursor-pointer">general user</p>
+                    </div> */}
                 </div>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash'}>User Dashboard</Link></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a onClick={() => document.getElementById('my_modal_1').showModal()}>Admin Request</a></li>

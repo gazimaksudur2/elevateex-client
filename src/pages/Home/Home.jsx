@@ -1,9 +1,10 @@
 import { Typewriter } from "react-simple-typewriter";
+import BannerSlider from "../../components/Home/BannerSlider";
 
 const Home = () => {
     return (
         <div>
-            <h2>This is home. </h2>
+            <BannerSlider/>
             <h1 className="text-5xl font-bold font-roboto">
                 {"Let's"}  <span className='text-red-500'><Typewriter
                     words={['Elevate Your Study Experience!']}
