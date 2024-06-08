@@ -14,7 +14,8 @@ body {
     font-size: 50px;
     color: #fff;
     font-weight: 500;
-    height: 200px;
+    height: 400px;
+    border-radius: 10px;
     max-height: 100vh;
   }
   
@@ -25,6 +26,7 @@ body {
       rgba(64, 175, 255, 1) 0%,
       rgba(63, 97, 255, 1) 100%
     );
+    border-radius: 10px;
   }
   
   .number-slide2 {
@@ -34,6 +36,7 @@ body {
       rgba(255, 154, 63, 1) 0%,
       rgba(255, 75, 64, 1) 100%
     );
+    border-radius: 10px;
   }
   
   .number-slide3 {
@@ -43,6 +46,7 @@ body {
       rgba(182, 255, 64, 1) 0%,
       rgba(63, 255, 71, 1) 100%
     );
+    border-radius: 10px;
     background: linear-gradient(
       128deg,
       rgba(189, 255, 83, 1) 0%,
@@ -57,6 +61,7 @@ body {
       rgba(64, 255, 242, 1) 0%,
       rgba(63, 188, 255, 1) 100%
     );
+    border-radius: 10px;
   }
   
   .number-slide5 {
@@ -66,7 +71,9 @@ body {
       rgba(255, 64, 156, 1) 0%,
       rgba(255, 63, 63, 1) 100%
     );
+    border-radius: 10px;
   }
+  
   .number-slide6 {
     background: rgb(64, 76, 255);
     background: linear-gradient(
@@ -74,5 +81,18 @@ body {
       rgba(64, 76, 255, 1) 0%,
       rgba(174, 63, 255, 1) 100%
     );
+    border-radius: 10px;
+  }
+  
+  .thumbnail .keen-slider__slide {
+    font-size: 30px;
+    margin-top: 10px;
+    height: 100px;
+  }
+  .thumbnail .keen-slider__slide {
+    cursor: pointer;
+  }
+  .thumbnail .keen-slider__slide.active {
+    border: 2px dashed black;
   }
   

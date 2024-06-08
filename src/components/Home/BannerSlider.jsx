@@ -47,7 +47,7 @@ const BannerSlider = () => {
         'number-slide6'];
     return (
         <>
-            <div className="w-[90%] mx-auto">
+            <div className="min-h-[20vh]">
                 <div ref={sliderRef} className="keen-slider">
                     {/* <div className="keen-slider__slide number-slide1">1</div>
                     <div className="keen-slider__slide number-slide2">2</div>

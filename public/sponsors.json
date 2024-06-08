@@ -1,0 +1,18 @@
+[
+  {
+    "company_name": "Google",
+    "logo_url": "https://cdn-icons-png.flaticon.com/128/281/281764.png"
+  },
+  {
+    "company_name": "Microsoft",
+    "logo_url": "https://cdn-icons-png.flaticon.com/128/732/732221.png"
+  },
+  {
+    "company_name": "Tesla",
+    "logo_url": "https://cdn-icons-png.flaticon.com/128/1348/1348039.png"
+  },
+  {
+    "company_name": "Amazon",
+    "logo_url": "https://cdn-icons-png.flaticon.com/128/16021/16021158.png"
+  }
+]

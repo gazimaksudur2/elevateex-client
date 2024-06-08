@@ -6,9 +6,9 @@ Assignment Variant Is: Assignment12_category_0008
 Admin email: admin@elavateex.edu
 Admin Password: AdmEdu123!
 live site URL: https://elevateex-ac4de.web.app
-live server URL: https://elevate-dusky-nine.vercel.app
 Client side repo: https://github.com/programming-hero-web-course1/b9a12-client-side-gazimaksudur2
 Server side repo: https://github.com/programming-hero-web-course1/b9a12-server-side-gazimaksudur2
+live server URL: https://elevate-dusky-nine.vercel.app
 
 Include a minimum of 20 notable GitHub commits on the client side
 ● Include a minimum of 12 notable GitHub commits on the server side

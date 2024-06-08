@@ -1,21 +1,14 @@
-import { Typewriter } from "react-simple-typewriter";
-import BannerSlider from "../../components/Home/BannerSlider";
+import Collaborators from "../../components/Home/Collaborators";
+import HomeSubSection from "../../components/Home/HomeSubSection";
+import KeenSlider from "../../components/Home/KeenSlider";
 
 const Home = () => {
     return (
         <div>
-            <BannerSlider/>
-            <h1 className="text-5xl font-bold font-roboto">
-                {"Let's"}  <span className='text-red-500'><Typewriter
-                    words={['Elevate Your Study Experience!']}
-                    loop={5}
-                    cursor
-                    cursorStyle='_'
-                    typeSpeed={90}
-                    deleteSpeed={50}
-                    delaySpeed={1300}
-                /></span>
-            </h1>
+            {/* <BannerSlider/> */}
+            <KeenSlider/>
+            <HomeSubSection/>
+            <Collaborators/>
             <p>Our Slogan is : Elevate your study Experience...</p>
         </div>
     );
