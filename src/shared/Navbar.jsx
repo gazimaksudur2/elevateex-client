@@ -111,7 +111,7 @@ const Navbar = () => {
         <div className="w-full">
             {adminReqModal}
             <div className="w-full">
-                <div className="w-[95%] mx-auto mt-3 px-4 py-2 navbar rounded-md bg-base-200">
+                <div className="w-[95%] mx-auto mt-6 px-4 py-2 navbar rounded-md bg-base-200">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -131,26 +131,28 @@ const Navbar = () => {
                             {navLinks}
                         </ul>
                     </div>
-                    <div className="navbar-end">
-                        {user ? <div>
-                            <div className="drawer drawer-end">
-                                <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-                                <div className="drawer-content">
-                                    {/* Page content here */}
-                                    <label htmlFor="my-drawer-4" className="drawer-button ">
-                                        <div className="avatar">
-                                            <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                <img src={user?.photoURL} />
+                    <div className="navbar-end pt-1">
+                        <div className="p-2 flex justify-center items-center">
+                            {user ? <div>
+                                <div className="drawer drawer-end">
+                                    <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+                                    <div className="drawer-content">
+                                        {/* Page content here */}
+                                        <label htmlFor="my-drawer-4" className="drawer-button ">
+                                            <div className="avatar">
+                                                <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                    <img src={user?.photoURL} />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </label>
+                                        </label>
+                                    </div>
+                                    {sidebar}
                                 </div>
-                                {sidebar}
-                            </div>
 
-                        </div> : <Link to={'login'}>
-                            <h4 className="btn btn-primary">Sign In</h4>
-                        </Link>}
+                            </div> : <Link to={'login'}>
+                                <h4 className="btn btn-primary">Sign In</h4>
+                            </Link>}
+                        </div>
                     </div>
                 </div>
             </div>

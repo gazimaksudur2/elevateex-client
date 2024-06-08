@@ -1,0 +1,24 @@
+[
+    {
+      "course_type": "Programming",
+      "course_title": "Introduction to Python",
+      "instructor": "Jane Doe",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/11/handsome-man-at-home-6FC7GVM.jpg",
+      "course_url": "https://kinforce.net/learen/wp-content/uploads/2022/08/the-latest-study-material-is-available-online-KGXC4FD.jpg"
+    },
+    {
+      "course_type": "Design",
+      "course_title": "Graphic Design Basics",
+      "instructor": "John Smith",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/11/education-women-and-lifestyle-concept-attractive-a-VY6PRCD_team.jpg",
+      "course_url": "https://kinforce.net/learen/wp-content/uploads/2022/11/university-students-in-cooperation-at-library-grou-XEYS7Z7.jpg"
+    },
+    {
+      "course_type": "Marketing",
+      "course_title": "Digital Marketing Strategies",
+      "instructor": "Emily Johnson",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/11/confident-businessman-6R4AN52.jpg",
+      "course_url": "https://kinforce.net/learen/wp-content/uploads/2022/11/young-university-students-studying-together-group-2EQGPJ8.jpg"
+    }
+  ]
+  
