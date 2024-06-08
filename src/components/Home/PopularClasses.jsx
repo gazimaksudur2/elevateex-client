@@ -47,7 +47,7 @@ const PopularClasses = () => {
     return (
         <div className='w-[80%] mx-auto'>
             <SubSection heading={heading} subHeading={subHeading} />
-            <div className='flex gap-10'>
+            {/* <div className='flex gap-10'>
                 {
                     course && course.map(each => <>
                         <div className="card w-96 h-[25rem] bg-base-100 shadow-xl image-full rounded-lg hover:scale-105 duration-100">
@@ -67,19 +67,34 @@ const PopularClasses = () => {
                         </div>
                     </>)
                 }
-            </div>
-                <div className="wrapper bg-base-300 my-10">
-                    <div className="scene bg-red-400">
+            </div> */}
+            {
+                course && <div className="wrapper my-10">
+                    <div className="scene">
                         <div className="carousel keen-slider" ref={sliderRef}>
-                            <div className="carousel__cell number-slide1 ">1</div>
-                            <div className="carousel__cell number-slide2">2</div>
-                            <div className="carousel__cell number-slide3">3</div>
-                            <div className="carousel__cell number-slide4">4</div>
-                            <div className="carousel__cell number-slide5">5</div>
-                            <div className="carousel__cell number-slide6">6</div>
+                            {
+                                course.slice(0, 5).map(each => <>
+                                    <div className="carousel__cell card w-96 h-[25rem] bg-base-100 shadow-xl image-full rounded-lg hover:scale-105 duration-100">
+                                        <img className='object-cover w-full h-full rounded-xl' src={each?.course_url} alt="Shoes" />
+                                        <div className="card-body rounded-lg flex-col justify-between">
+                                            <div>
+                                                <p className='bg-red-100 text-sm px-2 py-1 font-semibold text-red-600 rounded-full inline'>{each?.course_type}</p>
+                                            </div>
+                                            <div className='flex items-center justify-start gap-3'>
+                                                <img className='w-16 h-16 rounded-full' src={each?.instructor_url} alt="" />
+                                                <div>
+                                                    <h2 className="card-title">{each?.instructor}</h2>
+                                                    <p>{each?.course_title}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>)
+                            }
                         </div>
                     </div>
                 </div>
+            }
         </div>
     );
 };
