@@ -1,0 +1,83 @@
+[
+    {
+      "description": "Fantastic course! Learned a lot about Python programming.",
+      "rating": 5,
+      "user_name": "Alice Johnson",
+      "user_url": "https://example.com/users/alice-johnson",
+      "rated_at": "2024-05-15",
+      "course_title": "Introduction to Python"
+    },
+    {
+      "description": "The design principles were well-explained and easy to follow.",
+      "rating": 4,
+      "user_name": "Bob Smith",
+      "user_url": "https://example.com/users/bob-smith",
+      "rated_at": "2024-04-10",
+      "course_title": "Graphic Design Basics"
+    },
+    {
+      "description": "Great insights into digital marketing strategies!",
+      "rating": 5,
+      "user_name": "Charlie Brown",
+      "user_url": "https://example.com/users/charlie-brown",
+      "rated_at": "2024-03-22",
+      "course_title": "Digital Marketing Strategies"
+    },
+    {
+      "description": "Comprehensive and well-structured course on business management.",
+      "rating": 4,
+      "user_name": "Dana White",
+      "user_url": "https://example.com/users/dana-white",
+      "rated_at": "2024-02-18",
+      "course_title": "Business and Management"
+    },
+    {
+      "description": "The data science course covered all the basics and more.",
+      "rating": 5,
+      "user_name": "Eli Green",
+      "user_url": "https://example.com/users/eli-green",
+      "rated_at": "2024-01-12",
+      "course_title": "Data Science and Analytics"
+    },
+    {
+      "description": "Helpful course, but could use more practical examples.",
+      "rating": 3,
+      "user_name": "Fiona Davis",
+      "user_url": "https://example.com/users/fiona-davis",
+      "rated_at": "2024-05-05",
+      "course_title": "Introduction to Python"
+    },
+    {
+      "description": "Loved the creative exercises in this design course!",
+      "rating": 5,
+      "user_name": "George Harris",
+      "user_url": "https://example.com/users/george-harris",
+      "rated_at": "2024-04-28",
+      "course_title": "Graphic Design Basics"
+    },
+    {
+      "description": "Very informative, I now feel confident in digital marketing.",
+      "rating": 4,
+      "user_name": "Hannah Lee",
+      "user_url": "https://example.com/users/hannah-lee",
+      "rated_at": "2024-03-15",
+      "course_title": "Digital Marketing Strategies"
+    },
+    {
+      "description": "Well-organized business course with practical applications.",
+      "rating": 4,
+      "user_name": "Ian Martinez",
+      "user_url": "https://example.com/users/ian-martinez",
+      "rated_at": "2024-02-10",
+      "course_title": "Business and Management"
+    },
+    {
+      "description": "Thorough and engaging, a must for aspiring data scientists.",
+      "rating": 5,
+      "user_name": "Jane Patel",
+      "user_url": "https://example.com/users/jane-patel",
+      "rated_at": "2024-01-08",
+      "course_title": "Data Science and Analytics"
+    }
+  ]
+  

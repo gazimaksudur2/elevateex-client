@@ -69,14 +69,14 @@ const PopularClasses = () => {
                 }
             </div> */}
             {
-                course && <div className="wrapper my-10">
+                course && <div className="wrapper">
                     <div className="scene">
                         <div className="carousel keen-slider" ref={sliderRef}>
                             {
                                 course.slice(0, 5).map(each => <>
-                                    <div className="carousel__cell card w-96 h-[25rem] bg-base-100 shadow-xl image-full rounded-lg hover:scale-105 duration-100">
+                                    <div className="carousel__cell card w-96 h-[25rem] bg-base-100 shadow-xl image-full hover:scale-105 duration-100">
                                         <img className='object-cover w-full h-full rounded-xl' src={each?.course_url} alt="Shoes" />
-                                        <div className="card-body rounded-lg flex-col justify-between">
+                                        <div className="card-body flex-col justify-between">
                                             <div>
                                                 <p className='bg-red-100 text-sm px-2 py-1 font-semibold text-red-600 rounded-full inline'>{each?.course_type}</p>
                                             </div>

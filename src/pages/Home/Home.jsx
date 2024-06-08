@@ -3,6 +3,7 @@ import Collaborators from "../../components/Home/Collaborators";
 import HomeSubSection from "../../components/Home/HomeSubSection";
 import KeenSlider from "../../components/Home/KeenSlider";
 import PopularClasses from "../../components/Home/PopularClasses";
+import StudentFeedbacks from "../../components/Home/StudentFeedbacks";
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
             <BannerBottom/>
             <PopularClasses/>
             <Collaborators/>
+            <StudentFeedbacks/>
             <p>Our Slogan is : Elevate your study Experience...</p>
         </div>
     );
