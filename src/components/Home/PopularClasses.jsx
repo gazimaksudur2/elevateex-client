@@ -23,7 +23,7 @@ const carousel = (slider) => {
 const PopularClasses = () => {
     const [course, setCourse] = useState();
     const subHeading = "Discover our diverse range of popular courses, covering programming, design, marketing, business, and data science. Each course is crafted by industry experts to enhance your skills and knowledge, suitable for all experience levels.";
-    const heading = "Learn From our Courses";
+    const heading = "Learn From our Premium Courses";
     const [sliderRef] = useKeenSlider(
         {
             loop: true,
@@ -45,7 +45,7 @@ const PopularClasses = () => {
     // console.log(course);
 
     return (
-        <div className='w-[80%] mx-auto'>
+        <div className='w-[80%] mx-auto mb-10'>
             <SubSection heading={heading} subHeading={subHeading} />
             {/* <div className='flex gap-10'>
                 {

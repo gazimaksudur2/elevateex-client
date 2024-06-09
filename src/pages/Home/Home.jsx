@@ -1,8 +1,10 @@
 import BannerBottom from "../../components/Home/BannerBottom";
+import BeInstructor from "../../components/Home/BeInstructor";
 import Collaborators from "../../components/Home/Collaborators";
 import HomeSubSection from "../../components/Home/HomeSubSection";
 import KeenSlider from "../../components/Home/KeenSlider";
 import PopularClasses from "../../components/Home/PopularClasses";
+import Statistics from "../../components/Home/Statistics";
 import StudentFeedbacks from "../../components/Home/StudentFeedbacks";
 
 const Home = () => {
@@ -13,9 +15,10 @@ const Home = () => {
             <HomeSubSection/>
             <BannerBottom/>
             <PopularClasses/>
-            <Collaborators/>
             <StudentFeedbacks/>
-            <p>Our Slogan is : Elevate your study Experience...</p>
+            <Statistics/>
+            <BeInstructor/>
+            <Collaborators/>
         </div>
     );
 };

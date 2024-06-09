@@ -15,7 +15,7 @@ const HomeSubSection = () => {
 
     return (
         info && <div className='pt-20 w-[70%] mx-auto text-center flex flex-col justify-center items-center gap-2'>
-            <h1 className="text-5xl font-bold font-roboto">
+            <h1 className="mb-2 text-5xl font-bold font-roboto">
                 {"Let's"}  <span className='text-red-500'><Typewriter
                     words={[info?.title]}
                     loop={5}

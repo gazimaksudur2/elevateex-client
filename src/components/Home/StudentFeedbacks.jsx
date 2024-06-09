@@ -32,7 +32,7 @@ const StudentFeedbacks = () => {
                     }}
                     navigation={true}
                     modules={[Pagination, Navigation]}
-                    className="mySwiper h-[115vh]"
+                    className="mySwiper h-[110vh] bg-base-300"
                 >
 
                     {

@@ -1,7 +1,7 @@
 const ReviewSlide = ({review}) => {
     return (
         <div>
-            <section className="bg-base-300">
+            <section className="">
                 <div className="max-w-6xl px-6 py-10 mx-auto">
                     <p className="text-xl font-medium text-blue-500 ">Testimonials</p>
 
@@ -17,8 +17,8 @@ const ReviewSlide = ({review}) => {
 
                             <div className="mt-2 md:mx-6">
                                 <div>
-                                    <p className="text-xl font-medium tracking-tight text-white">Ema Watson</p>
-                                    <p className="text-blue-200 ">Marketing Manager at Stech</p>
+                                    <p className="text-xl font-medium tracking-tight text-white">{review?.user_name}</p>
+                                    <p className="text-blue-200 ">{review?.course_title}</p>
                                 </div>
 
                                 <p className="mt-4 text-lg leading-relaxed text-white md:text-xl"> “Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore quibusdam ducimus libero ad tempora doloribus expedita laborum saepe voluptas perferendis delectus assumenda”.</p>
