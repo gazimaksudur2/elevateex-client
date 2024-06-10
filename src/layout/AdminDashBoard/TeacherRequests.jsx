@@ -3,7 +3,7 @@ import TeacherRequest from './TeacherRequest'
 const TeacherRequests = () => {
     const requests = ['a','b','c'];
     return (
-        <div className='p-3'>
+        <div className='p-6'>
             <div>
                 <section className="container px-4 mx-auto">
                     <div className="sm:flex sm:items-center sm:justify-between">
