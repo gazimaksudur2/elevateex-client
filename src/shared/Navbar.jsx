@@ -98,6 +98,8 @@ const Navbar = () => {
                 </div>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash'}>User Dashboard</Link></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a onClick={() => document.getElementById('my_modal_1').showModal()}>Admin Request</a></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/teacherdash'}>TeacherDashBoard</Link></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/admindash'}>AdminDashboard</Link></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Teachers</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Our Successes</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Contacts</a></li>

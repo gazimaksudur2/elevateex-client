@@ -11,7 +11,7 @@ export default {
         roboto: '"Roboto Slab", serif',
       },
       backgroundImage: {
-        'hero-pattern': "url('/img/hero-pattern.svg')",
+        'hero-img': "url('https://images.unsplash.com/photo-1508394522741-82ac9c15ba69?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=748&q=80')",
         'footer-texture': "url('/img/footer-texture.png')",
       }
     },

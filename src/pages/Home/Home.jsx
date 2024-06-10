@@ -3,6 +3,7 @@ import BeInstructor from "../../components/Home/BeInstructor";
 import Collaborators from "../../components/Home/Collaborators";
 import HomeSubSection from "../../components/Home/HomeSubSection";
 import KeenSlider from "../../components/Home/KeenSlider";
+import NewsLetter from "../../components/Home/NewsLetter";
 import PopularClasses from "../../components/Home/PopularClasses";
 import Statistics from "../../components/Home/Statistics";
 import StudentFeedbacks from "../../components/Home/StudentFeedbacks";
@@ -19,6 +20,7 @@ const Home = () => {
             <Statistics/>
             <BeInstructor/>
             <Collaborators/>
+            <NewsLetter/>
         </div>
     );
 };

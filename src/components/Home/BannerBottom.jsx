@@ -47,7 +47,7 @@ const BannerBottom = () => {
                 </div>
 
                 <div className="flex items-center justify-center w-full h-96 lg:w-1/2">
-                    <img className="object-cover w-full h-full mx-auto rounded-md lg:max-w-2xl" src="https://kinforce.net/learen/wp-content/uploads/2022/11/image-of-cheerful-woman-working-with-laptop-while.jpg" alt="learn banner" />
+                    <img className="mask mask-hexagon-2 bg-fixed object-cover w-full h-full mx-auto rounded-md lg:max-w-2xl" src="https://kinforce.net/learen/wp-content/uploads/2022/11/image-of-cheerful-woman-working-with-laptop-while.jpg" alt="learn banner" />
                 </div>
             </div>
         </div>

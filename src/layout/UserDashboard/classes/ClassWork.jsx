@@ -1,7 +1,7 @@
-import TeacherRequest from './TeacherRequest'
+import Assignment from "./Assignment";
 
-const TeacherRequests = () => {
-    const requests = ['a','b','c'];
+const ClassWork = () => {
+    const assignments = ['a','b','c'];
     return (
         <div className='p-3'>
             <div>
@@ -9,7 +9,7 @@ const TeacherRequests = () => {
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div>
                             <div className="flex items-center gap-x-3">
-                                <h2 className="text-lg font-medium text-gray-800">Teacher Requests</h2>
+                                <h2 className="text-lg font-medium text-gray-800">Assignments</h2>
 
                                 <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">14 Pending</span>
                             </div>
@@ -68,7 +68,7 @@ const TeacherRequests = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
                                             {
-                                                requests && requests.map((request, idx)=><TeacherRequest key={idx} request={request}/>)
+                                                assignments && assignments.map((assign, idx)=><Assignment key={idx} assign={assign}/>)
                                             }
                                         </tbody>
                                     </table>
@@ -112,4 +112,4 @@ const TeacherRequests = () => {
     );
 };
 
-export default TeacherRequests;
+export default ClassWork;

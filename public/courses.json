@@ -1,0 +1,122 @@
+[
+    {
+      "id": 1,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/young-woman-doing-web-meeting-using-mirrorless-cam-7CTA9CH.jpg",
+      "instructor": "Jane Doe",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/08/small-business-owners-startup-and-e-commerce-conce-83S5W35.jpg",
+      "course_title": "Introduction to Python",
+      "course_fee": "$99.99",
+      "course_type": "Programming",
+      "course_duration": "4 weeks",
+      "total_lessons": 20,
+      "rating": 4.8
+    },
+    {
+      "id": 2,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/the-latest-study-material-is-available-online-KGXC4FD.jpg",
+      "instructor": "John Smith",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/08/young-teacher-at-school-U2UNGYB.jpg",
+      "course_title": "Graphic Design Basics",
+      "course_fee": "$79.99",
+      "course_type": "Design",
+      "course_duration": "6 weeks",
+      "total_lessons": 15,
+      "rating": 4.5
+    },
+    {
+      "id": 3,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/modern-devices-for-remote-lesson-with-class-social-9WGAYKJ.jpg",
+      "instructor": "Emily Johnson",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/08/teacher-teaching-kids-on-digital-tablet-SBBGJMJ.jpg",
+      "course_title": "Digital Marketing Strategies",
+      "course_fee": "$119.99",
+      "course_type": "Marketing",
+      "course_duration": "5 weeks",
+      "total_lessons": 18,
+      "rating": 4.7
+    },
+    {
+      "id": 4,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/group-of-cheerful-young-women-studying-together-KSM8FHZ.jpg",
+      "instructor": "Michael Brown",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/08/optimistic-positive-handsome-bearded-man-FXXXGY4.jpg",
+      "course_title": "Business Management Essentials",
+      "course_fee": "$89.99",
+      "course_type": "Business",
+      "course_duration": "8 weeks",
+      "total_lessons": 25,
+      "rating": 4.6
+    },
+    {
+      "id": 5,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/coding-web-game-at-home-V3L73RC.jpg",
+      "instructor": "Sarah Davis",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/12/business-concept-portrait-handsome-business-man.jpg",
+      "course_title": "Data Science and Analytics",
+      "course_fee": "$149.99",
+      "course_type": "Data Science",
+      "course_duration": "10 weeks",
+      "total_lessons": 30,
+      "rating": 4.9
+    },
+    {
+      "id": 6,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/creative-brainstorming-happy-business-people-desig-G2UPFTK.jpg",
+      "instructor": "David Wilson",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/12/smiling-businesswoman-standing-in-office-Y3BRKUW.jpg",
+      "course_title": "Full-Stack Web Development",
+      "course_fee": "$199.99",
+      "course_type": "Programming",
+      "course_duration": "12 weeks",
+      "total_lessons": 40,
+      "rating": 4.8
+    },
+    {
+      "id": 7,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/young-woman-doing-web-meeting-using-mirrorless-cam-7CTA9CH.jpg",
+      "instructor": "Laura Martinez",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/12/happy-young-elegant-businesswoman-with-arms-crosse-YJECA4Y.jpg",
+      "course_title": "Photography for Beginners",
+      "course_fee": "$59.99",
+      "course_type": "Photography",
+      "course_duration": "4 weeks",
+      "total_lessons": 10,
+      "rating": 4.4
+    },
+    {
+      "id": 8,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/the-latest-study-material-is-available-online-KGXC4FD.jpg",
+      "instructor": "Kevin Lee",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/11/handsome-man-at-home-6FC7GVM.jpg",
+      "course_title": "Cyber Security Fundamentals",
+      "course_fee": "$129.99",
+      "course_type": "Security",
+      "course_duration": "6 weeks",
+      "total_lessons": 20,
+      "rating": 4.7
+    },
+    {
+      "id": 9,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/modern-devices-for-remote-lesson-with-class-social-9WGAYKJ.jpg",
+      "instructor": "Jessica Taylor",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/11/education-women-and-lifestyle-concept-attractive-a-VY6PRCD_team.jpg",
+      "course_title": "UI/UX Design",
+      "course_fee": "$99.99",
+      "course_type": "Design",
+      "course_duration": "8 weeks",
+      "total_lessons": 22,
+      "rating": 4.5
+    },
+    {
+      "id": 10,
+      "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/group-of-cheerful-young-women-studying-together-KSM8FHZ.jpg",
+      "instructor": "Anthony Walker",
+      "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/11/confident-businessman-6R4AN52.jpg",
+      "course_title": "Project Management Professional",
+      "course_fee": "$139.99",
+      "course_type": "Management",
+      "course_duration": "10 weeks",
+      "total_lessons": 28,
+      "rating": 4.6
+    }
+]

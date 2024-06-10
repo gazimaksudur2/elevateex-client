@@ -7,7 +7,7 @@ const UserDashboard = () => {
         <div className='flex'>
             {/* <h2>This is from general user dashboard.</h2> */}
             <div>
-                <ul className="menu p-4 w-64 space-y-2 min-h-screen bg-base-200 text-base-content flex flex-col justify-start items-center">
+                <ul className="menu p-4 w-64 space-y-2 min-h-screen h-full bg-base-200 text-base-content flex flex-col justify-start items-center">
                     {/* <div className="flex justify-center items-center"><a><img className="w-20 h-20 rounded-lg" src={user?.photoURL} alt="userProfile" /></a></div>
                     <h2><a>{user?.displayName}</a></h2>
                     <h2 className="pb-6"><a>{user?.email}</a></h2> */}
@@ -24,15 +24,15 @@ const UserDashboard = () => {
                         </div>
                     </div>
                     {/* <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash'}>User Dashboard</Link></li> */}
-                    <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>My Profile</a></li>
-                    <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>My Enrolled Class</a></li>
+                    <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash'}>My Profile</Link></li>
+                    <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash/enrolled'}>My Enrolled Class</Link></li>
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Our Successes</a></li>
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Contacts</a></li>
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>About</a></li>
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>User Guide</a></li>
                 </ul>
             </div>
-            <div className='bg-red-200 w-full'>
+            <div className='w-full'>
                 <Outlet />
             </div>
         </div>

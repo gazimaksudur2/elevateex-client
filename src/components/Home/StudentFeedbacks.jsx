@@ -22,7 +22,7 @@ const StudentFeedbacks = () => {
                 setReviews(data);
             })
     }, []);
-    console.log(reviews);
+    // console.log(reviews);
     return (
         <div>
             <div>
