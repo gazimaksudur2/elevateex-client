@@ -1,13 +1,14 @@
 import { Link, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import { CiHome } from 'react-icons/ci';
 
 const UserDashboard = () => {
     const { user } = useAuth();
     return (
         <div className='flex'>
             {/* <h2>This is from general user dashboard.</h2> */}
-            <div>
-                <ul className="menu p-4 w-64 space-y-2 min-h-screen h-full bg-base-200 text-base-content flex flex-col justify-start items-center">
+            <div className='flex flex-col justify-between min-h-screen h-full bg-base-200'>
+                <ul className="menu p-4 w-64 space-y-2 text-base-content flex flex-col justify-start items-center">
                     {/* <div className="flex justify-center items-center"><a><img className="w-20 h-20 rounded-lg" src={user?.photoURL} alt="userProfile" /></a></div>
                     <h2><a>{user?.displayName}</a></h2>
                     <h2 className="pb-6"><a>{user?.email}</a></h2> */}
@@ -31,6 +32,10 @@ const UserDashboard = () => {
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>About</a></li>
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>User Guide</a></li>
                 </ul>
+                <Link to={'/'} className='w-[90%] mx-auto mb-5 btn btn-outline inline-flex justify-center items-center gap-2'>
+                    <span className='text-xl'>Back to </span>
+                    <CiHome className='font-bold text-3xl' />
+                </Link>
             </div>
             <div className='w-full'>
                 <Outlet />
