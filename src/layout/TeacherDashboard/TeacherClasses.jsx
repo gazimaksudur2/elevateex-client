@@ -1,7 +1,13 @@
+import EmptyEnrollment from "../UserDashboard/EmptyEnrollment";
 import TeacherClass from "./TeacherClass";
 
 const TeacherClasses = () => {
     const classes = ['a', 'b', 'c'];
+    
+    // const classes = [];
+    if (classes.length == 0) {
+        return <EmptyEnrollment info={"You didn't add any class yet !!"}/>;
+    }
     return (
         <div className='p-6'>
             <section className="container px-4 mx-auto">

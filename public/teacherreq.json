@@ -1,0 +1,122 @@
+[
+    {
+        "first_name": "Laura",
+        "last_name": "Martinez",
+        "email": "lauram@example.com",
+        "user_id": "1bcdef2341lh15l1h",
+        "cur_role": "student",
+        "img_url": "https://randomuser.me/api/portraits/women/3.jpg",
+        "course_category": "Data Science",
+        "experience_level": "mid-level",
+        "attemptedAt": "25-03-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "johndoe@example.com",
+        "user_id": "2acdef2341lh15l1i",
+        "cur_role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/men/1.jpg",
+        "course_category": "Programming",
+        "experience_level": "expert",
+        "attemptedAt": "15-03-2024",
+        "instructor_status": "approved"
+    },
+    {
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "email": "janesmith@example.com",
+        "user_id": "3bcdef2341lh15l1j",
+        "cur_role": "student",
+        "img_url": "https://randomuser.me/api/portraits/women/1.jpg",
+        "course_category": "Design",
+        "experience_level": "beginner",
+        "attemptedAt": "12-02-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "first_name": "Michael",
+        "last_name": "Johnson",
+        "email": "michaelj@example.com",
+        "user_id": "4bcdef2341lh15l1k",
+        "cur_role": "student",
+        "img_url": "https://randomuser.me/api/portraits/men/2.jpg",
+        "course_category": "Data Science",
+        "experience_level": "mid-level",
+        "attemptedAt": "23-01-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "first_name": "Emily",
+        "last_name": "Davis",
+        "email": "emilyd@example.com",
+        "user_id": "5bcdef2341lh15l1l",
+        "cur_role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/women/2.jpg",
+        "course_category": "Marketing",
+        "experience_level": "expert",
+        "attemptedAt": "05-04-2024",
+        "instructor_status": "approved"
+    },
+    {
+        "first_name": "David",
+        "last_name": "Wilson",
+        "email": "davidw@example.com",
+        "user_id": "6bcdef2341lh15l1m",
+        "cur_role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/men/3.jpg",
+        "course_category": "Programming",
+        "experience_level": "expert",
+        "attemptedAt": "10-03-2024",
+        "instructor_status": "pending"
+    },
+    {
+        "first_name": "Kevin",
+        "last_name": "Lee",
+        "email": "kevinl@example.com",
+        "user_id": "7bcdef2341lh15l1n",
+        "cur_role": "student",
+        "img_url": "https://randomuser.me/api/portraits/men/4.jpg",
+        "course_category": "Security",
+        "experience_level": "mid-level",
+        "attemptedAt": "18-02-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "first_name": "Jessica",
+        "last_name": "Taylor",
+        "email": "jessicat@example.com",
+        "user_id": "8bcdef2341lh15l1o",
+        "cur_role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/women/4.jpg",
+        "course_category": "Design",
+        "experience_level": "expert",
+        "attemptedAt": "30-03-2024",
+        "instructor_status": "pending"
+    },
+    {
+        "first_name": "Anthony",
+        "last_name": "Walker",
+        "email": "anthonyw@example.com",
+        "user_id": "9bcdef2341lh15l1p",
+        "cur_role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/men/5.jpg",
+        "course_category": "Management",
+        "experience_level": "expert",
+        "attemptedAt": "15-02-2024",
+        "instructor_status": "approved"
+    },
+    {
+        "first_name": "Sarah",
+        "last_name": "Brown",
+        "email": "sarahb@example.com",
+        "user_id": "10bcdef2341lh15l1q",
+        "cur_role": "student",
+        "img_url": "https://randomuser.me/api/portraits/women/5.jpg",
+        "course_category": "Programming",
+        "experience_level": "beginner",
+        "attemptedAt": "22-01-2024",
+        "instructor_status": "not_attempted"
+    }
+]

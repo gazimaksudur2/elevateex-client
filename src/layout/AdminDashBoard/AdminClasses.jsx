@@ -1,7 +1,13 @@
+import EmptyEnrollment from "../UserDashboard/EmptyEnrollment";
 import AdminClass from "./AdminClass";
 
 const AdminClasses = () => {
-    const classes = ['a', 'b', 'c'];
+    // const classes = ['a', 'b', 'c'];
+    
+    const classes = [];
+    if (classes.length == 0) {
+        return <EmptyEnrollment info={"There is no class added yet !!"}/>;
+    }
     return (
         <div className='p-6'>
             <section className="container px-4 mx-auto">

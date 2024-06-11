@@ -14,9 +14,9 @@ const TeacherDashboard = () => {
                     <div className="pb-5 flex flex-col justify-center items-center gap-2">
                         <h4 className="text-lg font-roboto">Current Role</h4>
                         <div className="flex flex-col items-center justify-start gap-1">
-                            <p className="bg-green-300 px-2 py-1 rounded-full cursor-pointer">super admin</p>
-                            <p className="bg-amber-300 px-2 py-1 rounded-full cursor-pointer">admin</p>
-                            <p className="bg-red-300 px-2 py-1 rounded-full cursor-pointer">general user</p>
+                            {/* <p className="bg-green-300 px-2 py-1 rounded-full cursor-pointer">Admin</p> */}
+                            <p className="bg-amber-300 px-2 py-1 rounded-full cursor-pointer">Teacher</p>
+                            {/* <p className="bg-red-300 px-2 py-1 rounded-full cursor-pointer">Student</p> */}
                         </div>
                     </div>
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/teacherdash'}>My Profile</Link></li>

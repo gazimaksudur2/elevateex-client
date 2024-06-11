@@ -3,9 +3,10 @@ import EnrolledClass from './EnrolledClass';
 
 
 const MyEnrollments = () => {
-    const vals = [{id: 'a'},{id: 'a'}];
+    // const vals = [{id: 'a'},{id: 'a'}];
+    const vals = [];
     if (vals.length == 0) {
-        return <EmptyEnrollment />;
+        return <EmptyEnrollment info={"You are not Currently Enrolling any Classes"}/>;
     }
     return (
         <div className='h-full'>

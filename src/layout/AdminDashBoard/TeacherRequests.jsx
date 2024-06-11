@@ -1,7 +1,18 @@
+import { useEffect, useState } from 'react';
 import TeacherRequest from './TeacherRequest'
 
 const TeacherRequests = () => {
-    const requests = ['a','b','c'];
+    const [requests, setRequests] = useState();
+
+    useEffect(() => {
+        fetch('/teacherreq.json')
+            .then(res => res.json())
+            .then(data => {
+                setRequests(data);
+            })
+    }, []);
+
+    // console.log(requests);
     return (
         <div className='p-6'>
             <div>

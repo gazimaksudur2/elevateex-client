@@ -1,8 +1,18 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import User from './User';
 
 const Users = () => {
-    const users = ['1', '2', '3'];
+    const [users, setUsers] = useState();
+
+    useEffect(() => {
+        fetch('/users.json')
+            .then(res => res.json())
+            .then(data => {
+                setUsers(data);
+            })
+    }, []);
+
+    // console.log(users);
     return (
         <div className='p-6'>
             <section className="container px-4 mx-auto">
@@ -36,12 +46,16 @@ const Users = () => {
                                 <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-50">
                                         <tr>
-                                            <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500">
+                                            <th scope="col" className="text-left px-4 py-3.5 text-sm font-normal rtl:text-right text-gray-500">
+                                                User
+                                            </th>
+                                            <th scope="col" className="text-center px-4 py-3.5 text-sm font-normal rtl:text-right text-gray-500">
+                                                role
+                                            </th>
+                                            {/* <th scope="col" className="text-center py-3.5 px-4 text-sm font-normal rtl:text-right text-gray-500">
                                                 <div className="flex items-center gap-x-3">
-                                                    <input type="checkbox" className="text-blue-500 border-gray-300 rounded" />
                                                     <button className="flex items-center gap-x-2">
-                                                        <span>Invoice</span>
-
+                                                        <span>role</span>
                                                         <svg className="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z" fill="currentColor" stroke="currentColor" strokeWidth="0.1" />
                                                             <path d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z" fill="currentColor" stroke="currentColor" strokeWidth="0.1" />
@@ -49,27 +63,25 @@ const Users = () => {
                                                         </svg>
                                                     </button>
                                                 </div>
+                                            </th> */}
+                                            <th scope="col" className="text-left px-4 py-3.5 text-sm font-normal rtl:text-right text-gray-500">
+                                                Admin Request Msg
                                             </th>
 
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                Date
-                                            </th>
-
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                                            <th scope="col" className="text-left px-4 py-3.5 text-sm font-normal rtl:text-right text-gray-500">
                                                 Status
                                             </th>
 
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                Customer
-                                            </th>
 
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                Purchase
+                                            <th scope="col" className="text-left px-4 py-3.5 text-sm font-normal rtl:text-right text-gray-500">
+                                                User Created At
                                             </th>
-
-                                            <th scope="col" className="relative py-3.5 px-4">
-                                                <span className="sr-only">Actions</span>
+                                            <th scope="col" className="text-left px-4 py-3.5 text-sm font-normal rtl:text-right text-gray-500">
+                                                Accept / Cancel Request
                                             </th>
+                                            {/* <th scope="col" className="relative py-3.5 px-4">
+                                                Accept/Cancel Admin Request
+                                            </th> */}
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">

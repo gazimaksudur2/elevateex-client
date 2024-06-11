@@ -1,0 +1,112 @@
+[
+    {
+        "name": "Gazi Maksudur Rahman",
+        "email": "gazimaksudur2@gmail.com",
+        "role": "student",
+        "img_url": "https://avatars.githubusercontent.com/u/128631494?v=4",
+        "admin_status": "not_attempted",
+        "req_message": "No",
+        "createdAt": "20-04-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/men/1.jpg",
+        "admin_status": "approved",
+        "req_message": "Looking forward to teaching!",
+        "createdAt": "15-03-2024",
+        "instructor_status": "approved"
+    },
+    {
+        "name": "Jane Smith",
+        "email": "janesmith@example.com",
+        "role": "student",
+        "img_url": "https://randomuser.me/api/portraits/women/1.jpg",
+        "admin_status": "pending",
+        "req_message": "Excited to learn!",
+        "createdAt": "12-02-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "name": "Michael Johnson",
+        "email": "michaelj@example.com",
+        "role": "student",
+        "img_url": "https://randomuser.me/api/portraits/men/2.jpg",
+        "admin_status": "not_attempted",
+        "req_message": "Can I join the data science course?",
+        "createdAt": "23-01-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "name": "Emily Davis",
+        "email": "emilyd@example.com",
+        "role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/women/2.jpg",
+        "admin_status": "approved",
+        "req_message": "Ready to inspire students.",
+        "createdAt": "05-04-2024",
+        "instructor_status": "approved"
+    },
+    {
+        "name": "David Wilson",
+        "email": "davidw@example.com",
+        "role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/men/3.jpg",
+        "admin_status": "not_attempted",
+        "req_message": "Looking for approval to start teaching.",
+        "createdAt": "10-03-2024",
+        "instructor_status": "pending"
+    },
+    {
+        "name": "Laura Martinez",
+        "email": "lauram@example.com",
+        "role": "student",
+        "img_url": "https://randomuser.me/api/portraits/women/3.jpg",
+        "admin_status": "approved",
+        "req_message": "I am interested in the photography course.",
+        "createdAt": "25-03-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "name": "Kevin Lee",
+        "email": "kevinl@example.com",
+        "role": "student",
+        "img_url": "https://randomuser.me/api/portraits/men/4.jpg",
+        "admin_status": "not_attempted",
+        "req_message": "No",
+        "createdAt": "18-02-2024",
+        "instructor_status": "not_attempted"
+    },
+    {
+        "name": "Jessica Taylor",
+        "email": "jessicat@example.com",
+        "role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/women/4.jpg",
+        "admin_status": "pending",
+        "req_message": "I would like to contribute to the UI/UX course.",
+        "createdAt": "30-03-2024",
+        "instructor_status": "pending"
+    },
+    {
+        "name": "Anthony Walker",
+        "email": "anthonyw@example.com",
+        "role": "instructor",
+        "img_url": "https://randomuser.me/api/portraits/men/5.jpg",
+        "admin_status": "approved",
+        "req_message": "Excited to teach project management.",
+        "createdAt": "15-02-2024",
+        "instructor_status": "approved"
+    },
+    {
+        "name": "Sarah Brown",
+        "email": "sarahb@example.com",
+        "role": "student",
+        "img_url": "https://randomuser.me/api/portraits/women/5.jpg",
+        "admin_status": "not_attempted",
+        "req_message": "Looking forward to joining the programming class.",
+        "createdAt": "22-01-2024",
+        "instructor_status": "not_attempted"
+    }
+]
