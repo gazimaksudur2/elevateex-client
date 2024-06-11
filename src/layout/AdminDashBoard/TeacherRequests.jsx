@@ -50,7 +50,7 @@ const TeacherRequests = () => {
                                             <tr>
                                                 <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500">
                                                     <button className="flex items-center gap-x-3 focus:outline-none">
-                                                        <span>Assignment Title</span>
+                                                        <span>Instructor Candidates</span>
 
                                                         <svg className="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z" fill="currentColor" stroke="currentColor" strokeWidth="0.1" />
@@ -60,20 +60,21 @@ const TeacherRequests = () => {
                                                     </button>
                                                 </th>
 
-                                                <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                    Status
+                                                <th scope="col" className="px-2 py-3.5 text-sm font-normal text-left text-gray-500">
+                                                    Current Role
                                                 </th>
 
                                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                    Description
+                                                    Course Category
+                                                </th>
+                                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                                                    Experience Level
                                                 </th>
 
-                                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">Assigned At</th>
+                                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">Attempted At</th>
 
-                                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">Deadline</th>
-
-                                                <th scope="col" className="relative py-3.5 px-4">
-                                                    
+                                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                                                    Approve / Cancel
                                                 </th>
                                             </tr>
                                         </thead>
