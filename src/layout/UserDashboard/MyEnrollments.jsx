@@ -3,8 +3,8 @@ import EnrolledClass from './EnrolledClass';
 
 
 const MyEnrollments = () => {
-    // const vals = [{id: 'a'},{id: 'a'}];
-    const vals = [];
+    const vals = [{id: 'a'},{id: 'a'}];
+    // const vals = [];
     if (vals.length == 0) {
         return <EmptyEnrollment info={"You are not Currently Enrolling any Classes"}/>;
     }
@@ -17,7 +17,7 @@ const MyEnrollments = () => {
                         <div className="p-4 flex flex-col items-start justify-start gap-4">
                             <div className="flex flex-col items-start">
                                 <h2 className="text-[#151515db] font-roboto font-medium text-xl">Running Courses</h2>
-                                <div className="py-6 grid grid-cols-1 gap-10">
+                                <div className="py-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
                                     {
                                         vals && vals.map((course, idx) => (<EnrolledClass key={idx} course={course} />))
                                     }

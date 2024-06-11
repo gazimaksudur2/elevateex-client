@@ -2,9 +2,9 @@ import EmptyEnrollment from "../UserDashboard/EmptyEnrollment";
 import AdminClass from "./AdminClass";
 
 const AdminClasses = () => {
-    // const classes = ['a', 'b', 'c'];
+    const classes = ['a', 'b', 'c'];
     
-    const classes = [];
+    // const classes = [];
     if (classes.length == 0) {
         return <EmptyEnrollment info={"There is no class added yet !!"}/>;
     }

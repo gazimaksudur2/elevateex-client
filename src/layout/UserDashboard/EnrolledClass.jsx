@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const EnrolledClassName = ({ course }) => {
     return (
         <div>
-            <section className="bg-gray-100 lg:py-12 lg:flex lg:justify-center rounded-lg">
+            {/* <section className="bg-gray-100 lg:py-12 lg:flex lg:justify-center rounded-lg">
                 <div
                     className="overflow-hidden bg-white lg:mx-8 lg:flex lg:max-w-6xl lg:w-full lg:shadow-md lg:rounded-xl">
                     <div className="lg:w-1/2">
@@ -28,8 +28,8 @@ const EnrolledClassName = ({ course }) => {
                         </div>
                     </div>
                 </div>
-            </section>
-            {/* <div className="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md">
+            </section> */}
+            <div className="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md">
                 <img className="object-cover w-full h-64" src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="Article" />
 
                 <div className="p-6">
@@ -47,7 +47,7 @@ const EnrolledClassName = ({ course }) => {
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 };

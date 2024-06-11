@@ -54,7 +54,7 @@ const Navbar = () => {
             icon: "success"
         });
     }
-    const defaultLetter = "I am writing to formally request admin privileges for my account. As I continue to contribute to our ElevateEx, having admin access would enable me to manage tasks more efficiently and assist with administrative responsibilities, ensuring smoother operations and timely updates."
+    const defaultLetter = "I am writing to formally request admin privileges for my account. As I continue to contribute to our ElevateEx, having admin access would enable me to manage tasks more efficiently and assist with administrative responsibilities, ensuring smoother operations and timely updates.";
     const adminReqModal = <div>
         <dialog id="my_modal_1" className="modal backdrop-blur">
             <div className="modal-box bg-base-100">

@@ -1,12 +1,23 @@
+import { useEffect, useState } from "react";
 import EmptyEnrollment from "../UserDashboard/EmptyEnrollment";
 import TeacherClass from "./TeacherClass";
 
 const TeacherClasses = () => {
-    const classes = ['a', 'b', 'c'];
-    
+    // const classes = ['a', 'b', 'c'];
+    const [classes, setClasses] = useState([]);
+
+    useEffect(()=>{
+        fetch('/courses.json')
+        .then(res=>res.json())
+        .then(data=>{
+            setClasses(data);
+        })
+    },[]);
+    // console.log(classes);
+
     // const classes = [];
     if (classes.length == 0) {
-        return <EmptyEnrollment info={"You didn't add any class yet !!"}/>;
+        return <EmptyEnrollment info={"You didn't add any class yet !!"} />;
     }
     return (
         <div className='p-6'>
@@ -30,8 +41,22 @@ const TeacherClasses = () => {
                     <AdminClass />
                     <AdminClass />
                 </div> */}
+
+                <div className='p-10'>
+                    <h1 className='p-4 border-b-2 border-gray-400 text-2xl font-semibold text-[#151515d0]'>Manage Your Courses</h1>
+                    <div className="p-4 flex flex-col items-start justify-start gap-4">
+                        <div className="flex flex-col items-start">
+                            <div className="py-6 grid grid-cols-1 gap-10">
+                                {
+                                    classes.map((course, idx) => <TeacherClass key={idx} course={course} />)
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="container px-4 mx-auto">
-                    <div className="flex flex-col mt-6">
+                    {/* <div className="flex flex-col mt-6">
                         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                 <div className="overflow-hidden border border-gray-200 md:rounded-lg">
@@ -85,9 +110,9 @@ const TeacherClasses = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className="flex items-center justify-between mt-6">
+                    {/* <div className="flex items-center justify-between mt-6">
                         <a href="#" className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 rtl:-scale-x-100">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
@@ -117,7 +142,7 @@ const TeacherClasses = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                             </svg>
                         </a>
-                    </div>
+                    </div> */}
                 </div>
             </section>
         </div>
