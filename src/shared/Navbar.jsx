@@ -43,7 +43,6 @@ const Navbar = () => {
         <li><NavLink to={'/'}>Home</NavLink></li>
         <li><NavLink to={'/allclass'}>All Classes</NavLink></li>
         <li><NavLink to={'/teach'}>Teach Here</NavLink></li>
-        <li><NavLink to={'/'}>Contacts</NavLink></li>
     </>;
     const adminApply = () => {
         // const letter = ref
@@ -100,11 +99,11 @@ const Navbar = () => {
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a onClick={() => document.getElementById('my_modal_1').showModal()}>Admin Request</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/teacherdash'}>TeacherDashBoard</Link></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/admindash'}>AdminDashboard</Link></li>
-                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Teachers</a></li>
+                {/* <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Teachers</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Our Successes</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Contacts</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>About</a></li>
-                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>User Guide</a></li>
+                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>User Guide</a></li> */}
                 <li className="w-full absolute p-3 bottom-2"><button onClick={handleLogOut} className="btn btn-secondary">Log Out</button></li>
             </ul>
         </div>

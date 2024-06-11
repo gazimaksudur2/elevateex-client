@@ -23,10 +23,12 @@ const TeacherDashboard = () => {
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/teacherdash'}>My Profile</Link></li>
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/teacherdash/myclass'}>My Classes</Link></li>
                     <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/teacherdash/addclass'}>Add Class</Link></li>
-                    <Link to={'/'} className='w-[96%] mx-auto mb-5 btn btn-outline inline-flex justify-center items-center gap-2'>
-                        <span className='text-xl'>Back to </span>
-                        <CiHome className='font-bold text-3xl' />
-                    </Link>
+                    <li className='pt-10 w-full'>
+                        <Link to={'/'} className='w-[96%] mx-auto mb-5 btn btn-outline inline-flex justify-center items-center gap-2'>
+                            <span className='text-xl'>Back to </span>
+                            <CiHome className='font-bold text-3xl' />
+                        </Link>
+                    </li>
                 </ul>
 
             </div>

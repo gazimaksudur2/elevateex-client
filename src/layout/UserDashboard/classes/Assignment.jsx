@@ -1,6 +1,5 @@
-import React from 'react';
-
 const Assignment = ({assign}) => {
+    console.log(assign);
     return (
         <>
             <tr>
@@ -9,14 +8,14 @@ const Assignment = ({assign}) => {
                         <h2 className="font-medium text-gray-800 ">Catalog</h2>
                     </div>
                 </td>
-                <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                    <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60">
-                        Customer
-                    </div>
-                </td>
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                     <div>
                         <p className="text-gray-500">Brings all your news into one place</p>
+                    </div>
+                </td>
+                <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                    <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60">
+                        submitted
                     </div>
                 </td>
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
