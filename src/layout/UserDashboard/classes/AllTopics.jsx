@@ -4,6 +4,7 @@ import { SlCalender } from 'react-icons/sl';
 import { ScrollRestoration } from 'react-router-dom';
 
 const AllTopics = ({course}) => {
+    // console.log(course);
     return (
         <div>
             <ScrollRestoration />

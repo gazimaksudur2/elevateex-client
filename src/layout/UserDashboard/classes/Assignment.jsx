@@ -1,5 +1,5 @@
 const Assignment = ({assign}) => {
-    console.log(assign);
+    // console.log(assign);
     return (
         <>
             <tr>
@@ -27,7 +27,7 @@ const Assignment = ({assign}) => {
                 </td>
 
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                    <button className="btn btn-info">
+                    <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn btn-info">
                         Submit
                     </button>
                 </td>

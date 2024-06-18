@@ -1,10 +1,55 @@
+import { useRef } from "react";
 import Assignment from "./Assignment";
+import Swal from "sweetalert2";
+import { Rating } from "@mui/material";
 
 const ClassWork = () => {
     const assignments = ['a','b','c'];
+    const ref = useRef();
+
+    const adminApply = () => {
+        // const letter = ref
+        console.log(ref.current.value);
+        Swal.fire({
+            title: "Best of Luck!",
+            text: "Your Review Submitted Successfully!",
+            icon: "success"
+        });
+    }
+    const defaultLetter = "The [Course Title] course offers exceptional content, clear and engaging instruction from [Instructor's Name], and practical projects that reinforce learning. With strong community support and comprehensive resources, this course is a valuable investment for anyone looking to master [subject/topic]. Highly recommended!";
+    const AssignmentModal = <>
+        <dialog id="my_modal_1" className="modal backdrop-blur">
+            <div className="modal-box bg-base-100">
+                <div className="w-full flex flex-col justify-center items-center">
+                    <img className="w-40" src="https://img.freepik.com/free-vector/hand-drawn-cartoon-business-planning_23-2149158459.jpg?t=st=1718243146~exp=1718246746~hmac=8a44771af4255b9d25c4de78d618b9996d5a6c1fe648b0cbd2434d7e7df87509&w=826" alt="" />
+                </div>
+                <h3 className="text-center font-medium text-[#151515ab]">Submit your <span className="font-semibold text-blue-600"> Experience in a Review</span> Over this course.</h3>
+                {/* <p className="py-4">Press ESC key or click the button below to close</p> */}
+                <div className="modal-action">
+                    <form method="dialog" className="w-full flex flex-col justify-center items-center gap-3">
+                        <div className='flex justify-center items-center gap-8'>
+                            <p className='text-lg'>Rate Here</p>
+                            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+                        </div>
+                        <label className="form-control w-full">
+                            <div className="label">
+                                <span className="label-text">Your review</span>
+                            </div>
+                            <textarea ref={ref} className="textarea textarea-secondary w-full h-44" defaultValue={defaultLetter}></textarea>
+                        </label>
+                        <div className="w-full flex justify-end items-center gap-3">
+                            <button className="btn btn-primary">Cancel</button>
+                            <button onClick={adminApply} className="btn btn-outline">Review it</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+    </>
     return (
         <div className='p-3'>
             <div>
+                {AssignmentModal}
                 <section className="container px-4 mx-auto">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div>
@@ -55,7 +100,7 @@ const ClassWork = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
                                             {
-                                                assignments && assignments.map((assign, idx)=><Assignment key={idx} assign={assign}/>)
+                                                assignments && assignments.map((assign, idx)=><Assignment key={idx} assign={assign} />)
                                             }
                                         </tbody>
                                     </table>

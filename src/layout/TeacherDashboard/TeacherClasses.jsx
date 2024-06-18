@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react";
 import EmptyEnrollment from "../UserDashboard/EmptyEnrollment";
 import TeacherClass from "./TeacherClass";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const TeacherClasses = () => {
-    // const classes = ['a', 'b', 'c'];
-    const [classes, setClasses] = useState([]);
+    const [userInfo] = useUserInfo();
+    const [myCourse, setMyCourse] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(()=>{
-        fetch('/courses.json')
-        .then(res=>res.json())
-        .then(data=>{
-            setClasses(data);
+        axiosSecure.get(`allclasses?instructor_email=${userInfo?.email}`)
+        .then(res=>{
+            setMyCourse(res.data);
+        })
+        .catch(error=>{
+            console.log(error);
         })
     },[]);
-    // console.log(classes);
 
-    // const classes = [];
-    if (classes.length == 0) {
+    console.log(myCourse);
+
+    if (myCourse.length == 0) {
         return <EmptyEnrollment info={"You didn't add any class yet !!"} />;
     }
     return (
@@ -48,7 +53,7 @@ const TeacherClasses = () => {
                         <div className="flex flex-col items-start">
                             <div className="py-6 grid grid-cols-1 gap-10">
                                 {
-                                    classes.map((course, idx) => <TeacherClass key={idx} course={course} />)
+                                    myCourse.map((course, idx) => <TeacherClass key={idx} course={course} />)
                                 }
                             </div>
                         </div>

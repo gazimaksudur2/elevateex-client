@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const AddClass = () => {
+    const [userInfo] = useUserInfo();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => console.log(data);
 
@@ -23,13 +25,13 @@ const AddClass = () => {
                                         <label className="label">
                                             <span className="label-text">Course Launcher</span>
                                         </label>
-                                        <input type="text" {...register("launcher")} className="input input-bordered" value={"Gazi Maksudur Rahman"} readOnly />
+                                        <input type="text" {...register("launcher")} className="input input-bordered" value={userInfo?.displayName} readOnly />
                                     </div>
                                     <div className="form-control">
                                         <label className="label">
                                             <span className="label-text">Course Launcher Email</span>
                                         </label>
-                                        <input type="text" {...register("mail")} className="input input-bordered" value={"gazimaksudur2@gmail.com"} readOnly />
+                                        <input type="text" {...register("mail")} className="input input-bordered" value={userInfo?.email} readOnly />
                                     </div>
                                     <div className="form-control">
                                         <label className="label">

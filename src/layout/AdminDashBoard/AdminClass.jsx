@@ -1,35 +1,60 @@
-import React from 'react';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const AdminClass = () => {
+const AdminClass = ({ course }) => {
+    const [status, setStatus] = useState({
+        course_status: course?.course_status,
+    });
+    const navigate = useNavigate();
+    const navigat = (address) => {
+        navigate(address);
+    }
     return (
         <>
             <tr>
                 <td className="px-4 py-4 text-gray-800">
-                    <h2 className='font-medium'>Introduction to Programming</h2>
-                    <p className='text-xs'>Embark on a journey to learn Python basics and start coding with confidence in just 4 weeks.</p>
+                    <h2 className='font-medium'>{course?.course_title}</h2>
+                    <p className='text-xs'>{course?.course_description.slice(0, 150) + "..."}</p>
                 </td>
                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                     <div className="inline-flex items-center gap-x-3">
                         <div className="flex items-center gap-x-2">
-                            <img className="object-cover w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
+                            <img className="object-cover w-10 h-10 rounded-full" src={course?.instructor_url} alt="instructor images" />
                             <div>
-                                <h2 className="font-medium text-gray-800">Arthur Melo</h2>
-                                <p className="text-sm font-normal text-gray-600">@authurmelo</p>
+                                <h2 className="font-medium text-gray-800">{course?.instructor}</h2>
+                                <p className="text-sm font-normal text-gray-600">{course?.instructor_email}</p>
                             </div>
                         </div>
                     </div>
                 </td>
                 <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-
-                        <h2 className="text-sm font-normal text-emerald-500">Active</h2>
-                    </div>
+                    {
+                        status.course_status === "approved" ? <>
+                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
+                                <h2 className="text-sm font-normal text-emerald-500">{status?.course_status}</h2>
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                            </div>
+                        </> : status?.course_status === "pending" ? <div className="space-x-2">
+                            <button className="btn btn-sm btn-success text-white">Approve it</button>
+                            <button className="btn btn-sm btn-error text-white">Cancel it</button>
+                        </div> : <>
+                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60">
+                                <h2 className="text-sm font-normal text-red-500">{course?.course_status}</h2>
+                                <span className="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                            </div>
+                        </>
+                    }
                 </td>
                 <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                    <button className='inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80'>
+                    {
+                        status.course_status !== 'approved' ? <>
+                            <button className="btn btn-disabled btn-sm">
+                                See Progress
+                            </button>
+                        </>:<button onClick={()=>navigat(`/class/${course?._id}`)} className='inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80'>
                         See Progress
                     </button>
+                    }
                 </td>
                 {/* <td className="px-4 py-4 text-sm whitespace-nowrap">
                     <div className="flex items-center gap-x-2">
@@ -38,7 +63,7 @@ const AdminClass = () => {
                         <p className="px-3 py-1 text-xs text-pink-500 rounded-full bg-pink-100/60">Marketing</p>
                     </div>
                 </td> */}
-                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                {/* <td className="px-4 py-4 text-sm whitespace-nowrap">
                     <div className="flex items-center gap-x-6">
                         <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 hover:text-red-500 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
@@ -52,7 +77,7 @@ const AdminClass = () => {
                             </svg>
                         </button>
                     </div>
-                </td>
+                </td> */}
             </tr>
         </>
     );

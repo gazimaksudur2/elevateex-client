@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const EnrolledClassName = ({ course }) => {
+const EnrolledClass = ({ course }) => {
     return (
         <div>
             <div className="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md">
@@ -26,7 +26,7 @@ const EnrolledClassName = ({ course }) => {
 
                     <div className="mt-4">
                         <div className="flex items-center">
-                            <Link to={`/userdash/classes/${course?.id}`} state={{from: course}}>
+                            <Link to={`/userdash/classes/${course?._id}`}>
                                 <button className="btn btn-outline">Continue Course</button>
                             </Link>
                         </div>
@@ -37,4 +37,4 @@ const EnrolledClassName = ({ course }) => {
     );
 };
 
-export default EnrolledClassName;
+export default EnrolledClass;

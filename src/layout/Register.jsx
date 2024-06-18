@@ -19,7 +19,7 @@ const Register = () => {
     } = useForm();
 
     const onSubmit = async(data) => {
-        console.log(data);
+        // console.log(data);
         let profile_img = null;
         if(data.image.length){
             const res = await axiosPublic.post(img_hosting_api, {image: data.image[0]}, {
@@ -30,7 +30,7 @@ const Register = () => {
             profile_img = res.data.data.display_url;
         }
         
-        // console.log(res.data.data.display_url);
+        // console.log(new Date().toISOString().slice(0,10));
         const user = {
             displayName: data.name,
             photoURL: profile_img,
@@ -38,7 +38,9 @@ const Register = () => {
             provider: null,
             password: data.password,
             role: 'general',
-            req_status: 'No'
+            req_status: 'No',
+            admin_status: "not_attempted",
+            createdAt: new Date().toISOString().slice(0,10),
         }
         // console.log(user);
         axiosPublic.post('/users', user)
@@ -124,7 +126,7 @@ const Register = () => {
                                 <div className="label">
                                     <span className="label-text">Upload Your Profile Image</span>
                                 </div>
-                                <input type="file"  {...register("image")} name='image' className="file-input file-input-bordered w-full max-w-xs" />
+                                <input type="file"  {...register("image")} name='image' className="file-input file-input-bordered w-full max-w-xs" required />
                             </label>
                             <div className="form-control mt-2">
                                 <input className="btn bg-red-600 text-white hover:bg-red-500" type='submit' value={'SignUp'} />

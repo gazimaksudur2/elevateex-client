@@ -1,10 +1,47 @@
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const TeachHere = () => {
     const immersive = "Let's open an immersive door to";
     const career = "one's career.";
+    // const {user} = useAuth();
+    const [userInfo] = useUserInfo();
+    const axiosSecure = useAxiosSecure();
+    // const [userInfo] = useUserInfo();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        // console.log(data);
+        const instructor = {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            photoURL: userInfo?.photoURL,
+            role: userInfo?.role,
+            category: data.category,
+            experience: data.experience,
+            requestedAt: new Date().toISOString().slice(0, 10),
+        }
+        // console.log(user);
+        axiosSecure.post('/instructors', instructor)
+            .then(() => {
+                Swal.fire({
+                    title: "Great job!",
+                    text: "Review submitted Successfully!",
+                    icon: "success"
+                });
+            })
+            .catch(error => {
+                // console.log(error.message);
+                Swal.fire({
+                    title: "Error Occured!",
+                    text: error.message,
+                    icon: "error"
+                });
+            })
+    }
 
     return (
         <div>
@@ -36,14 +73,14 @@ const TeachHere = () => {
                                             <label className="label">
                                                 <span className="label-text text-sm">Email</span>
                                             </label>
-                                            <input type="email" {...register("example")} placeholder="email" className="input input-bordered" required />
+                                            <input type="email" {...register("email")} placeholder="email" className="input input-bordered" required />
                                         </div>
-                                        <div className="form-control">
+                                        {/* <div className="form-control">
                                             <label className="label">
                                                 <span className="label-text text-sm">Profile Image</span>
                                             </label>
-                                            <input type="file" {...register("example")} className="file-input file-input-bordered w-full" />
-                                        </div>
+                                            <input type="file" {...register("profile")} className="file-input file-input-bordered w-full" />
+                                        </div> */}
                                         <div className="form-control">
                                             <label className="label">
                                                 <span className="label-text text-sm">Your Course Category</span>
@@ -67,29 +104,49 @@ const TeachHere = () => {
                                                 <option value="drinks">Drinks</option>
                                             </select> */}
                                         </div>
-                                        <div className="form-control py-2">
+                                        <div className="form-control">
+                                            <label className="label">
+                                                <span className="label-text text-sm">Your Experience Level</span>
+                                            </label>
+                                            <select {...register("experience")} className="select select-bordered w-full">
+                                                <option selected disabled>Select Your Experience Level</option>
+                                                <option>beginner</option>
+                                                <option>Mid-Level</option>
+                                                <option>Experienced</option>
+                                            </select>
+                                            {/* <select defaultValue={"Category Name"} {...register('category', { required: true })}
+                                                className="select select-bordered w-full">
+                                                <option disabled value="default">Select a category</option>
+                                                <option value="salad">Salad</option>
+                                                <option value="pizza">Pizza</option>
+                                                <option value="soup">Soup</option>
+                                                <option value="dessert">Dessert</option>
+                                                <option value="drinks">Drinks</option>
+                                            </select> */}
+                                        </div>
+                                        {/* <div className="form-control py-2">
                                             <label className="label">
                                                 <span className="label-text text-sm">Your Expertise Level</span>
                                             </label>
                                             <div className="ml-2 flex justify-start items-center gap-5">
                                                 <div className="flex justify-center items-center gap-2">
-                                                    <input {...register("example")} type="radio" name="radio-2" className="radio radio-primary" />
+                                                    <input {...register("experience")} type="radio" name="radio-2" className="radio radio-primary" />
                                                     <h2 className="inline">beginner</h2>
                                                 </div>
                                                 <div className="flex justify-center items-center gap-2">
-                                                    <input {...register("example")} type="radio" name="radio-2" className="radio radio-primary" />
+                                                    <input {...register("experience")} type="radio" name="radio-2" className="radio radio-primary" />
                                                     <h2 className="inline">mid-level</h2>
                                                 </div>
                                                 <div className="flex justify-center items-center gap-2">
-                                                    <input {...register("example")} type="radio" name="radio-2" className="radio radio-primary" />
+                                                    <input {...register("experience")} type="radio" name="radio-2" className="radio radio-primary" />
                                                     <h2 className="inline">Experienced</h2>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="form-control mt-6 gap-3">
                                             {/* <button className="btn btn-primary">Login</button> */}
                                             <input type="submit" value={'Submit For Review'} className="w-full btn btn-primary" />
-                                            <input type="submit" value={'Request to Another'} className="w-full btn btn-primary" />
+                                            {/* <input type="submit" value={'Request to Another'} className="w-full btn btn-primary" /> */}
                                         </div>
                                     </form>
                                 </div>

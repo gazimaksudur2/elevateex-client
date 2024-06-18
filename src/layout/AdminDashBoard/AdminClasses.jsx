@@ -1,8 +1,9 @@
+import useClass from "../../hooks/useClass";
 import EmptyEnrollment from "../UserDashboard/EmptyEnrollment";
 import AdminClass from "./AdminClass";
 
 const AdminClasses = () => {
-    const classes = ['a', 'b', 'c'];
+    const [classes] = useClass();
     
     // const classes = [];
     if (classes.length == 0) {
@@ -16,7 +17,7 @@ const AdminClasses = () => {
                         <div className="flex items-center gap-x-3">
                             <h2 className="text-lg font-medium text-gray-800">Released Courses</h2>
 
-                            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">14 Currently</span>
+                            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">{classes?.length} Currently</span>
                         </div>
 
                         <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p>

@@ -2,14 +2,26 @@ import { CiStar } from "react-icons/ci";
 import { MdOutlineLibraryBooks } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
 import { Link } from "react-router-dom";
+import { FaDollarSign } from "react-icons/fa";
+import { TbUsersPlus } from "react-icons/tb";
 
 const ClassCards = ({ course }) => {
     return (
-        <Link to={`/course/${course?.id}`} state={{data: course}}>
+        <Link to={`/course/${course?._id}`} state={{data: course}}>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <figure><img src={course?.course_banner} alt="Shoes" /></figure>
                 <div className=" absolute badge badge-accent top-4 left-4">{course?.course_type}</div>
-                <div className="card-body">
+                <div className="card-body relative">
+                    <div className="absolute w-full px-10 -top-3 left-0 flex items-center justify-between"> 
+                        <div className="bg-primary rounded-badge px-3 py-1 text-white flex justify-center items-center gap-1">
+                            <FaDollarSign/>
+                            <p>{course?.course_fee}</p>
+                        </div>
+                        <div className="bg-secondary rounded-badge px-3 py-1 text-white flex justify-center items-center gap-1">
+                            <TbUsersPlus/>
+                            <p>{course?.total_enrollment}</p>
+                        </div>
+                    </div>
                     <div className='flex items-center justify-start gap-3'>
                         <img className='w-16 h-16 rounded-full' src={course?.instructor_url} alt="" />
                         <h2 className="text-xl font-medium">{course?.instructor}</h2>

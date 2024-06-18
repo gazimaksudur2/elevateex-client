@@ -21,7 +21,7 @@ const TeacherClass = ({ course }) => {
                                 {course?.course_title}
                             </h2>
                             <div className=''>
-                                <p className="bg-blue-200 text-blue-700 px-2 py-1 rounded-full cursor-pointer">Pending</p>
+                                <p className="bg-blue-200 text-blue-700 px-2 py-1 rounded-full cursor-pointer">{course?.course_type}</p>
                                 {/* <p className="bg-green-200 text-green-700 px-2 py-1 rounded-full cursor-pointer">Approved</p> */}
                                 {/* <p className="bg-red-200 text-red-700 px-2 py-1 rounded-full cursor-pointer">Cancelled</p> */}
                             </div>
@@ -65,7 +65,7 @@ const TeacherClass = ({ course }) => {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                 </svg>
                             </button>
-                            <Link to={`/teacherclass/${course?.id}`} className="inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80">
+                            <Link to={`/teacherclass/${course?._id}`} className="inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80">
                                 See Details
                             </Link>
                         </div>

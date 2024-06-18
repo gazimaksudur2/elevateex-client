@@ -3,10 +3,15 @@ import useAuth from "../hooks/useAuth";
 import { Slide, toast } from "react-toastify";
 import { useRef } from "react";
 import Swal from "sweetalert2";
+import useUserInfo from "../hooks/useUserInfo";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import axios from "axios";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const ref = useRef();
+    const [userInfo] = useUserInfo();
+    const axiosSecure = useAxiosSecure();
 
     const handleLogOut = () => {
         logOut()
@@ -46,13 +51,25 @@ const Navbar = () => {
     </>;
     const adminApply = () => {
         // const letter = ref
-        console.log(ref.current.value);
-        Swal.fire({
-            title: "Best of Luck!",
-            text: "Application Submitted Successfully!",
-            icon: "success"
-        });
+        // console.log(ref.current.value);
+        axiosSecure.patch(`users?email=${userInfo?.email}`, { admin_status: "pending", admin_req_msg: ref.current.value })
+            .then(() => {
+                Swal.fire({
+                    title: "Great job!",
+                    text: "Admin Request submitted Successfully!",
+                    icon: "success"
+                });
+            })
+            .catch(error => {
+                // console.log(error.message);
+                Swal.fire({
+                    title: "Error Occured!",
+                    text: error.message,
+                    icon: "error"
+                });
+            })
     }
+    // console.log(userInfo?.role);
     const defaultLetter = "I am writing to formally request admin privileges for my account. As I continue to contribute to our ElevateEx, having admin access would enable me to manage tasks more efficiently and assist with administrative responsibilities, ensuring smoother operations and timely updates.";
     const adminReqModal = <div>
         <dialog id="my_modal_1" className="modal backdrop-blur">
@@ -89,16 +106,30 @@ const Navbar = () => {
                 <h2 className="pb-6"><a>{user?.email}</a></h2>
                 <div className="pb-5 flex justify-center items-center gap-4">
                     <h4 className="text-lg font-roboto">Current Role</h4>
-                    <p className="text-green-600 font-medium bg-green-200 px-2 py-1 rounded-full cursor-pointer">super admin</p>
+                    {/* <p className="text-green-600 font-medium bg-green-200 px-2 py-1 rounded-full cursor-pointer">super admin</p> */}
                     {/* <div className="flex items-center justify-start gap-1">
                         <p className="text-[#151515bc] font-medium bg-amber-300 px-2 py-1 rounded-full cursor-pointer">admin</p>
                         <p className="text-[#151515bc] font-medium bg-red-300 px-2 py-1 rounded-full cursor-pointer">general user</p>
                     </div> */}
+                    {userInfo?.role == "admin" && <p className="text-green-600 font-medium bg-green-200 px-2 py-1 rounded-full cursor-pointer">Admin</p>}
+                    {userInfo?.role == "instructor" && <p className="text-amber-600 font-medium bg-amber-200 px-2 py-1 rounded-full cursor-pointer">Teacher</p>}
+                    {(userInfo?.role == "student" || userInfo?.role == "general") && <p className="text-red-600 font-medium bg-red-200 px-2 py-1 rounded-full cursor-pointer">Student</p>}
                 </div>
-                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash'}>User Dashboard</Link></li>
-                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a onClick={() => document.getElementById('my_modal_1').showModal()}>Admin Request</a></li>
-                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/teacherdash'}>TeacherDashBoard</Link></li>
-                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/admindash'}>AdminDashboard</Link></li>
+                {
+                    userInfo?.role === 'admin' ?
+                        <>
+                            <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/admindash'}>AdminDashboard</Link></li>
+                        </>
+                        : (userInfo?.role === 'instructor' ?
+                            <>
+
+                                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/teacherdash'}>TeacherDashBoard</Link></li>
+                                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a onClick={() => document.getElementById('my_modal_1').showModal()}>Admin Request</a></li></>
+                            : <>
+                                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash'}>User Dashboard</Link></li>
+                                <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a onClick={() => document.getElementById('my_modal_1').showModal()}>Admin Request</a></li>
+                            </>)
+                }
                 {/* <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Teachers</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Our Successes</a></li>
                 <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><a>Contacts</a></li>

@@ -41,3 +41,7 @@ Elevate Your Mind, ElevateEx:
 "Elevate your mind and broaden your horizons with ElevateEx."
 "At ElevateEx, we believe that education is the key to unlocking a brighter future."
 These titles and sentences are designed to inspire and motivate users, reflecting the mission and values of your EdTech platform, ElevateEx.
+
+
+Response A is closer to the truth but gets the construction date wrong and oversimplifies the role of Gustave Eiffel.
+Response B contains several significant errors, including the wrong name for Gustave Eiffel and the incorrect construction date.

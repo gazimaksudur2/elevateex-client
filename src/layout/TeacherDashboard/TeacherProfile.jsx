@@ -1,20 +1,22 @@
 import { CiEdit } from "react-icons/ci";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { VscGithubInverted } from "react-icons/vsc";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const TeacherProfile = () => {
+    const [ userInfo ] = useUserInfo();
     return (
         <div className='h-full'>
             <div className='flex h-full'>
                 <div className='w-1/4 bg-gradient-to-r from-red-400 to-orange-400 flex flex-col justify-center items-center'>
                     <div className="avatar">
                         <div className="w-24 rounded-xl">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                            <img src={userInfo?.photoURL} />
                         </div>
                     </div>
                     <div className='mt-4 flex flex-col justify-center items-center'>
-                        <h2 className='text-[#151515bd] font-medium text-lg'>Gazi Maksudur Rahman</h2>
-                        <p className='text-[#151515ab]'>Student</p>
+                        <h2 className='text-[#151515bd] font-medium text-lg'>{userInfo?.displayName}</h2>
+                        <p className='text-[#151515ab]'>Instructor</p>
                     </div>
                 </div>
                 <div className='w-full flex flex-col'>
@@ -26,7 +28,7 @@ const TeacherProfile = () => {
                         <div className="p-4 flex items-center justify-start">
                             <div className="w-1/2 flex flex-col items-start">
                                 <h2 className="text-[#151515db] font-roboto font-medium text-xl">Email</h2>
-                                <p className="text-[#151515a0] font-mulish">gazimaksudur2@gmail.com</p>
+                                <p className="text-[#151515a0] font-mulish">{userInfo?.email}</p>
                             </div>
                             <div className="w-1/2 flex flex-col items-start">
                                 <h2 className="text-[#151515db] font-roboto font-medium text-xl">Phone No.</h2>

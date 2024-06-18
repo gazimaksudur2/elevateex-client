@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const BeInstructor = () => {
     return (
         <div>
@@ -15,17 +17,19 @@ const BeInstructor = () => {
                         <div className="mt-10 lg:mt-20 lg:flex lg:items-center">
                             <img className="object-cover object-center w-full lg:w-[32rem] rounded-lg h-96" src="https://kinforce.net/learen/wp-content/uploads/2022/08/young-successful-chemistry-teacher-in-casualwear-s-GWTLZWZ.jpg" alt="" />
 
-                                <div className="mt-8 lg:px-10 lg:mt-0">
-                                    <h1 className="text-2xl font-semibold text-gray-800 lg:w-72">
-                                        Help us improve our productivity
-                                    </h1>
+                            <div className="mt-8 lg:px-10 lg:mt-0">
+                                <h1 className="text-2xl font-semibold text-gray-800 lg:w-72">
+                                    Help us improve our productivity
+                                </h1>
 
-                                    <p className="max-w-lg mt-6 text-gray-500-400">
-                                        “ Become an instructor with us to share your expertise, access comprehensive teaching resources, and unlock numerous professional growth opportunities while inspiring and engaging learners globally. ”
-                                    </p>
+                                <p className="max-w-lg mt-6 text-gray-500-400">
+                                    “ Become an instructor with us to share your expertise, access comprehensive teaching resources, and unlock numerous professional growth opportunities while inspiring and engaging learners globally. ”
+                                </p>
 
+                                <Link to={'/teach'}>
                                     <button className="btn btn-outline w-40 bg-slate-300 border-0 mt-10 border-b-4 border-gray-800 ">Join Now</button>
-                                </div>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

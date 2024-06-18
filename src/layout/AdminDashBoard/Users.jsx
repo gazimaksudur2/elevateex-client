@@ -1,16 +1,29 @@
 import { useEffect, useState } from 'react';
 import User from './User';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Users = () => {
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
-    useEffect(() => {
-        fetch('/users.json')
-            .then(res => res.json())
-            .then(data => {
-                setUsers(data);
-            })
-    }, []);
+    useEffect(()=>{
+        axiosSecure.get(`users`)
+        .then(res=>{
+            setUsers(res.data);
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    },[]);
+
+
+    // useEffect(() => {
+    //     fetch('/users.json')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setUsers(data);
+    //         })
+    // }, []);
 
     // console.log(users);
     return (
@@ -21,10 +34,8 @@ const Users = () => {
                         <div className="flex items-center gap-x-3">
                             <h2 className="text-lg font-medium text-gray-800">Platform Users</h2>
 
-                            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">14 Currently</span>
+                            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">{users?.length} Currently</span>
                         </div>
-
-                        <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p>
                     </div>
                 </div>
 
@@ -69,7 +80,7 @@ const Users = () => {
                                             </th>
 
                                             <th scope="col" className="text-left px-4 py-3.5 text-sm font-normal rtl:text-right text-gray-500">
-                                                Status
+                                                Admin_Status
                                             </th>
 
 

@@ -1,9 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
 import { CiHome } from 'react-icons/ci';
 
 const TeacherDashboard = () => {
-    const { user } = useAuth();
     return (
         <div className='flex'>
             <div className='flex flex-col justify-between'>

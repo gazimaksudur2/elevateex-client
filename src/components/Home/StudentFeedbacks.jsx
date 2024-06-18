@@ -12,16 +12,30 @@ import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules';
 import ReviewSlide from "./ReviewSlide";
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const StudentFeedbacks = () => {
     const [reviews, setReviews] = useState();
-    useEffect(() => {
-        fetch('reviews.json')
-            .then(res => res.json())
-            .then(data => {
-                setReviews(data);
-            })
-    }, []);
+    const axiosSecure = useAxiosSecure();
+
+    useEffect(()=>{
+        axiosSecure.get(`reviews`)
+        .then(res=>{
+            setReviews(res.data);
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    },[]);
+
+
+    // useEffect(() => {
+    //     fetch('reviews.json')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setReviews(data);
+    //         })
+    // }, []);
     // console.log(reviews);
     return (
         <div>
@@ -36,7 +50,7 @@ const StudentFeedbacks = () => {
                 >
 
                     {
-                        reviews && reviews.map(review => (<>
+                        reviews && reviews.slice(reviews?.length-5,reviews?.length).map(review => (<>
                             <SwiperSlide>
                                 <ReviewSlide review={review}/>
                             </SwiperSlide>

@@ -1,16 +1,36 @@
 import { useEffect, useState } from 'react';
 import TeacherRequest from './TeacherRequest'
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const TeacherRequests = () => {
-    const [requests, setRequests] = useState();
+    const [requests, setRequests] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
-        fetch('/teacherreq.json')
-            .then(res => res.json())
-            .then(data => {
-                setRequests(data);
+        axiosSecure.get(`instructors`)
+            .then(res => {
+                setRequests(res.data);
+            })
+            .catch(error => {
+                console.log(error);
             })
     }, []);
+
+    const handleRemove = email => {
+        // console.log(email);
+        let temp = requests;
+        temp = temp.filter(each=>each?.email!==email);
+        setRequests(temp);
+    }
+
+
+    // useEffect(() => {
+    //     fetch('/teacherreq.json')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setRequests(data);
+    //         })
+    // }, []);
 
     // console.log(requests);
     return (
@@ -22,10 +42,8 @@ const TeacherRequests = () => {
                             <div className="flex items-center gap-x-3">
                                 <h2 className="text-lg font-medium text-gray-800">Teacher Requests</h2>
 
-                                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">14 Pending</span>
+                                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">{requests?.length} Pending</span>
                             </div>
-
-                            <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p>
                         </div>
                     </div>
 
@@ -80,7 +98,7 @@ const TeacherRequests = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
                                             {
-                                                requests && requests.map((request, idx)=><TeacherRequest key={idx} request={request}/>)
+                                                requests.map((request, idx) => <TeacherRequest key={idx} handleRemove={handleRemove} request={request} />)
                                             }
                                         </tbody>
                                     </table>

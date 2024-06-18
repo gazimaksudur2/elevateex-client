@@ -21,6 +21,7 @@ import TeacherProfile from "../layout/TeacherDashboard/TeacherProfile";
 import TeacherClasses from "../layout/TeacherDashboard/TeacherClasses";
 import AddClass from "../layout/TeacherDashboard/AddClass";
 import SingleClass from "../layout/TeacherDashboard/SingleClass";
+import AdminSingleClass from "../layout/AdminDashBoard/AdminSingleClass";
 
 const router = createBrowserRouter([
     {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
                 element: <AdminClasses/>
             }
         ]
+    },
+    {
+        path: 'class/:id',
+        element: <AdminSingleClass/>,
     },
     {
         path: 'teacherdash',

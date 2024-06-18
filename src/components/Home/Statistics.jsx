@@ -1,11 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CountUp from 'react-countup';
 import { HiOutlineBuildingLibrary } from "react-icons/hi2";
 import { MdAddCircleOutline } from "react-icons/md";
 import { PiUsersThree } from 'react-icons/pi';
+import useUsers from '../../hooks/useUsers';
+import useClass from '../../hooks/useClass';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Statistics = () => {
     const countUpRef = useRef(null);
+    const [users] = useUsers();
+    const [classes] = useClass();
+    const axiosSecure = useAxiosSecure();
+    const [enrolled, setEnrolled] = useState(0);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -32,6 +39,20 @@ const Statistics = () => {
         };
       }, []);
 
+      useEffect(() => {
+        axiosSecure.get(`/enroll`)
+            .then(res => {
+                // console.log(res.data, userInfo);
+                setEnrolled(res.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        // console.log( enrolled );
+        // console.log( classes );
+        
+    }, []);
+
     return (
         <div className='relative w-full h-80 overflow-hidden'>
             <img className='absolute -z-10 object-cover' src="https://demo.web3canvas.com/themeforest/unisco/images/slider-3.jpg" alt="large Image" />
@@ -43,7 +64,7 @@ const Statistics = () => {
                         <CountUp
                             className='text-3xl font-bold'
                             start={0}
-                            end={140}
+                            end={users?.length}
                             duration={2.75}
                             separator=" "
                             decimal=","
@@ -59,7 +80,7 @@ const Statistics = () => {
                     <CountUp
                             className='text-3xl font-bold'
                             start={0}
-                            end={12}
+                            end={classes?.length}
                             duration={2.75}
                             separator=" "
                             decimal=","
@@ -75,8 +96,8 @@ const Statistics = () => {
                     <CountUp
                             className='text-3xl font-bold'
                             start={0}
-                            end={70}
-                            duration={2.75}
+                            end={enrolled.length}
+                            duration={3.75}
                             separator=" "
                             decimal=","
                             ref={countUpRef}
