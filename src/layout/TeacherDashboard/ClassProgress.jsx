@@ -1,12 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CountUp from 'react-countup';
-import { HiOutlineBuildingLibrary } from 'react-icons/hi2';
-import { MdAddCircleOutline } from 'react-icons/md';
+import { MdAddCircleOutline, MdAssignment } from 'react-icons/md';
 import { PiUsersThree } from 'react-icons/pi';
 import SubSection from '../../shared/SubSection';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
-const ClassProgress = () => {
+const ClassProgress = ({course}) => {
     const countUpRef = useRef(null);
+    const axiosSecure = useAxiosSecure();
+    const [enrolled, setEnrolled] = useState([]);
+    const [assignments, setAssignments] = useState([]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -32,6 +35,28 @@ const ClassProgress = () => {
             }
         };
     }, []);
+
+    useEffect(()=>{
+        axiosSecure.get(`/enroll?course_id=${course?._id}`)
+            .then(res => {
+                // console.log(res.data, userInfo);
+                setEnrolled(res.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        axiosSecure.get(`/assignments?course_title=${course?.course_title}`)
+            .then(res => {
+                // console.log(res.data, userInfo);
+                setAssignments(res.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        // console.log( courses );
+        // console.log( classes );
+    },[course]);
+    // console.log(course);
     return (
         <div>
             <SubSection heading={"Overall Course Progress"} subHeading={"Track your learning journey with our Course Progress Page. Stay updated on completed lessons, upcoming topics, and your overall progress to ensure you reach your educational goals efficiently."}/>
@@ -39,52 +64,52 @@ const ClassProgress = () => {
                         <div className='absolute w-full h-80 bg-black z-10 opacity-40'></div>
                         <img className='absolute object-cover w-full z-0' src="https://img.freepik.com/premium-photo/successful-learning-with-modern-technology-focus_670382-155217.jpg?w=1060" alt="large Image" />
                         <div className='absolute z-20 h-full w-full text-white flex justify-evenly items-center'>
-                            <div className='backdrop-blur-md w-60 h-40 rounded-lg border-2 border-gray-500 flex justify-center items-center gap-4'>
+                            <div className='pl-5 backdrop-blur-md w-60 h-40 rounded-lg border-2 border-gray-500 flex justify-center items-center gap-4'>
                                 <PiUsersThree className='text-3xl font-bold' size={50} />
                                 <div className='flex flex-col justify-center items-start'>
                                     <CountUp
                                         className='text-3xl font-bold'
                                         start={0}
-                                        end={140}
+                                        end={enrolled?.length}
                                         duration={2.75}
                                         separator=" "
                                         decimal=","
                                         ref={countUpRef}
                                         enableScrollSpy={true}
                                     />
-                                    <p className='text-lg'>Users</p>
+                                    <p className='text-lg'>Total Enrolled</p>
                                 </div>
                             </div>
-                            <div className='backdrop-blur-md w-60 h-40 rounded-lg border-2 border-gray-500 flex justify-center items-center gap-4'>
-                                <HiOutlineBuildingLibrary className='text-3xl font-bold' size={50} />
+                            <div className='pl-5 backdrop-blur-md w-60 h-40 rounded-lg border-2 border-gray-500 flex justify-center items-center gap-4'>
+                                <MdAssignment className='text-3xl font-bold' size={50} />
                                 <div className='flex flex-col justify-center items-start'>
                                     <CountUp
                                         className='text-3xl font-bold'
                                         start={0}
-                                        end={12}
+                                        end={assignments?.length}
                                         duration={2.75}
                                         separator=" "
                                         decimal=","
                                         ref={countUpRef}
                                         enableScrollSpy={true}
                                     />
-                                    <p className='text-lg'>Courses</p>
+                                    <p className='text-lg'>Total Assignments</p>
                                 </div>
                             </div>
-                            <div className='backdrop-blur-md w-60 h-40 rounded-lg border-2 border-gray-500 flex justify-center items-center gap-4'>
+                            <div className='pl-5 backdrop-blur-md w-60 h-40 rounded-lg border-2 border-gray-500 flex justify-center items-center gap-4'>
                                 <MdAddCircleOutline className='text-3xl font-bold' size={50} />
                                 <div className='flex flex-col justify-center items-start'>
                                     <CountUp
                                         className='text-3xl font-bold'
                                         start={0}
-                                        end={70}
+                                        end={10}
                                         duration={2.75}
                                         separator=" "
                                         decimal=","
                                         ref={countUpRef}
                                         enableScrollSpy={true}
                                     />
-                                    <p className='text-lg'>Enrollments</p>
+                                    <p className='text-xs'>Per Day Assignment Submits</p>
                                 </div>
                             </div>
                         </div>

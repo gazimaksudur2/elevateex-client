@@ -1,32 +1,38 @@
 const SubmittedAssignment = ({ assign }) => {
-    console.log(assign);
+    // console.log(assign);
     return (
         <>
             <tr>
                 <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                     <div>
-                        <h2 className="font-medium text-gray-800 ">Catalog</h2>
+                        <h2 className="font-medium text-gray-800 ">{assign?.title}</h2>
                     </div>
                 </td>
-                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                    <div>
-                        <p className="text-gray-500">Brings all your news into one place</p>
+                <td className="px-4 py-4 ">
+                    <div className="">
+                        <p className="text-gray-500 text-xs w-72">{assign?.description}</p>
                     </div>
                 </td>
                 <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                    <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60">
+                    {
+                        assign?.status==='active'?<div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60">
                         Active
-                    </div>
+                    </div>:
                     <div className="inline px-3 py-1 text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60">
                         TimeOut
                     </div>
+                    }
                 </td>
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                    20-05-2024
+                    {
+                        assign?.assignedAt
+                    }
                 </td>
 
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                    12-06-2024
+                    {
+                        assign?.deadline
+                    }
                 </td>
 
                 <td className="px-4 py-4 text-sm whitespace-nowrap">

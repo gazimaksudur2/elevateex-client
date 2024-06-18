@@ -103,10 +103,10 @@ const SingleClass = () => {
                     {/* <h2 className="text-2xl mt-10 mb-4 font-semibold text-gray-800 md:text-3xl">
                         Overall Course <span className='text-blue-600'>Progress</span>
                     </h2> */}
-                    <ClassProgress />
+                    <ClassProgress course={course}/>
                     <SubSection heading={"Take Patience with CourseWork"} subHeading={"Manage and submit your coursework with ease on our Assignment Page. Access all your assignments, review deadlines, and receive feedback to keep your learning on track."} />
 
-                    <AssignmentTable />
+                    <AssignmentTable course={course}/>
                 </div>
 
 

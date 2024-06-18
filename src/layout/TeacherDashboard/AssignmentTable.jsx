@@ -1,13 +1,32 @@
 import { IoMdAdd } from 'react-icons/io';
 import SubmittedAssignment from './SubmittedAssignment';
 import CreateAssignment from './CreateAssignment';
+import { useEffect, useState } from 'react';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
-const AssignmentTable = () => {
-    const assignments = ['a', 'b', 'c'];
+const AssignmentTable = ({course}) => {
+    // const assignments = ['a', 'b', 'c'];
+    const [assignments, setAssignments] = useState([]);
+    const axiosSecure = useAxiosSecure();
+    
+    useEffect(()=>{
+        axiosSecure.get(`assignments?course_title=${course?.course_title}&instructor=${course?.instructor}`)
+        .then(res=>{
+            setAssignments(res.data);
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    },[course]);
+
+    const pushNew = (doc)=>{
+        setAssignments([...assignments, doc]);
+    }
+
     return (
         <div className='p-3 w-full'>
             <div>
-                <CreateAssignment />
+                <CreateAssignment  course={course} pushNew={pushNew}/>
                 <section className="container px-4 mx-auto">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div>
@@ -66,7 +85,7 @@ const AssignmentTable = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
                                             {
-                                                assignments && assignments.map((assign, idx) => <SubmittedAssignment key={idx} assign={assign} />)
+                                                assignments.map((assign, idx) => <SubmittedAssignment key={idx} assign={assign} />)
                                             }
                                         </tbody>
                                     </table>

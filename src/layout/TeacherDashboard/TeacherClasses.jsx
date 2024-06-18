@@ -3,10 +3,11 @@ import EmptyEnrollment from "../UserDashboard/EmptyEnrollment";
 import TeacherClass from "./TeacherClass";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useUserInfo from "../../hooks/useUserInfo";
+import { ClimbingBoxLoader } from "react-spinners";
 
 const TeacherClasses = () => {
     const [userInfo] = useUserInfo();
-    const [myCourse, setMyCourse] = useState([]);
+    const [myCourse, setMyCourse] = useState(null);
     const axiosSecure = useAxiosSecure();
 
     useEffect(()=>{
@@ -21,21 +22,26 @@ const TeacherClasses = () => {
 
     console.log(myCourse);
 
-    if (myCourse.length == 0) {
-        return <EmptyEnrollment info={"You didn't add any class yet !!"} />;
+    if (myCourse == null) {
+        return <div className='w-full min-h-screen flex justify-center items-center'>
+            <ClimbingBoxLoader color="#d65336" />
+        </div>;
+    } else if (myCourse?.length == 0) {
+        return <EmptyEnrollment info={"You didn't published any Class yet."} />;
     }
+
     return (
         <div className='p-6'>
             <section className="container px-4 mx-auto">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-x-3">
-                            <h2 className="text-lg font-medium text-gray-800">Released Courses</h2>
+                            <h2 className="text-lg font-medium text-gray-800">Your Released Courses</h2>
 
-                            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">14 Currently</span>
+                            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">{myCourse?.length} Currently</span>
                         </div>
 
-                        <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p>
+                        {/* <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p> */}
                     </div>
                 </div>
 

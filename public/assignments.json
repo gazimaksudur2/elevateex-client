@@ -1,0 +1,13 @@
+[
+    {
+        "id": "01u0591u42oriqoiwhf",
+        "title": "assignment type name",
+        "description": "this should be a 10 word description of the corresponding assignment type",
+        "status": "active/inactive",
+        "assignedAt": "2024-05-15",
+        "deadline": "2024-05-25",
+        "user_email": "gazimaksudur2@gmail.com",
+        "course_title": "Introduction to Programming language",
+        "instructor": "Elon Mask"
+    }
+]

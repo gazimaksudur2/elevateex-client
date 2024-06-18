@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-// import EmptyEnrollment from './EmptyEnrollment';
+import EmptyEnrollment from './EmptyEnrollment';
 import EnrolledClass from './EnrolledClass';
 import useAuth from '../../hooks/useAuth';
 import useUserInfo from '../../hooks/useUserInfo';
@@ -8,7 +8,7 @@ import { ClimbingBoxLoader } from 'react-spinners';
 
 
 const MyEnrollments = () => {
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState(null);
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [userInfo] = useUserInfo();
@@ -24,16 +24,15 @@ const MyEnrollments = () => {
             })
         // console.log( courses );
         // console.log( classes );
-        
+
     }, []);
 
-    // if (courses.length == 0) {
-    //     return <EmptyEnrollment info={"You are not Currently Enrolling any Classes"} />;
-    // }
-    if (courses.length == 0) {
+    if (courses == null) {
         return <div className='w-full min-h-screen flex justify-center items-center'>
             <ClimbingBoxLoader color="#d65336" />
         </div>;
+    } else if (courses?.length == 0) {
+        return <EmptyEnrollment info={"You are not Currently Enrolling any Classes"} />;
     }
     // console.log(courses);
     return (

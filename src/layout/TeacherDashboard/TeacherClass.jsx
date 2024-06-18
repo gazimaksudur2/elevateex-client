@@ -4,7 +4,7 @@ import { SlCalender } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
 
 const TeacherClass = ({ course }) => {
-    console.log(course);
+    // console.log(course);
     return (
         <>
             <section className="bg-gray-100 lg:py-10 lg:flex lg:justify-center rounded-lg">

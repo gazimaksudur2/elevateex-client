@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 const Login = () => {
     const { logIn } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
+    // const location = useLocation();
     const {
         register,
         handleSubmit,
@@ -25,7 +25,6 @@ const Login = () => {
                 text: "User Logged in Successful!",
                 icon: "success"
               });
-            navigate('/');
         })
         .catch(error=>{
             // console.log(error.message);
@@ -35,6 +34,7 @@ const Login = () => {
                 icon: "warning"
               });
         })
+        navigate('/');
     }
     return (
         <div className='min-h-screen py-10 bg-base-200'>
