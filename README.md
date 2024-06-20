@@ -1,35 +1,17 @@
-Add a meaningful readme.md file with the name of your website, Admin
-username, password and live site URL.
-
-
-Assignment Variant Is: Assignment12_category_0008
-Admin email: admin@elavateex.edu
-Admin Password: AdmEdu123!
-Instructor email: johndoe@example.com
-Instructor Password: JohnMama2!
-Student with proper Functionality
-student mail: hello@gmail.com
-student password: helloVai!
-live site URL: https://elevateex-ac4de.web.app
-Client side repo: https://github.com/programming-hero-web-course1/b9a12-client-side-gazimaksudur2
-Server side repo: https://github.com/programming-hero-web-course1/b9a12-server-side-gazimaksudur2
-live server URL: https://elevate-dusky-nine.vercel.app
-
-Assalamualikum vai,
-Here I'm requesting you about my submission. Please take patience while evaluating my submission. Here the accessing the value from database is taking too much time.
-I don't know what is the issue occuring here. I'm too much confused.
-
-Include a minimum of 20 notable GitHub commits on the client side
-● Include a minimum of 12 notable GitHub commits on the server side
-
- Include a minimum of 10 bullet points to feature your website
- 
  10 Bullet features of my ElevateEx web application goes here
- 1.
- 2.
- 3.
- 4.
- 5.
+ 
+ 1. There are 3 type of user facility. Like, admin, instructor, student or general user.
+ 2. Students will be able to access the courses that are approved by the admin and able to enroll it.
+ 3. When Student login or signup his account on this platform he will get access to the user dashboard.
+ 4. In Student Dashboard, he will have access to his profile and his enrolled courses. For each enrolled course he will have another page to see description of that course and his coursework like assignments submissions or others.
+ 5. There Second option is to login or upgrade as an instructor, at first you've to signup as general user and have to create a request to admin for being an instructor on this platform.
+ 6. After being an Instructor, you will be able to launch your own designed course will proper description. When your course is ready you will have to wait for the admin to approve that course on that platform. After approving the course, the course will be visible for all type of users on their All Classes Navbar route.
+ 7. Instructor will have a dashboard profile, my classes route and add classes route.
+ 8. Any general user or instructor will have the opportunity to be an admin on that platform. For that, He will have to apply to the admin for being an admin. There will be available route on the right side bar which will open when you click over your profile image on the home page.
+ 9. There admin will have multiple type of features like All users route, All classes route, Admin profile route, Instructor/Teacher requests route. There for each one will experience a lot of features.
+ 10. All the requests for being an instructor that are pending will be appeared on the Teachers request route on admin dashboard. Admin will be able to approve the requests or cancel them. On All users page he will be able to see the people who are applied to be an admin and will be able to approve or cancel their requests. Also There on All classes pages will contain the all the classes with their status there he will able to approve or cancel the pending class requests.
+
+ These all are the main features of my Project website. Hope you will have an amazing experience over this project.
 
 
 
