@@ -22,9 +22,10 @@ const UserDashboard = () => {
                     <div className="pb-5 flex flex-col justify-center items-center gap-2">
                         <h4 className="text-lg font-roboto">Current Role</h4>
                         <div className="flex flex-col items-center justify-start gap-1">
-                            {userInfo?.role == "admin" && <p className="bg-green-300 px-2 py-1 rounded-full cursor-pointer">Admin</p>}
-                            {userInfo?.role == "Teacher" && <p className="bg-amber-300 px-2 py-1 rounded-full cursor-pointer">Teacher</p>}
-                            {(userInfo?.role == "Student" || userInfo?.role == "general") && <p className="bg-red-300 px-2 py-1 rounded-full cursor-pointer">Student</p>}
+                            {/* {userInfo?.role == "admin" && <p className="bg-green-300 px-2 py-1 rounded-full cursor-pointer">Admin</p>}
+                            {userInfo?.role == "instructor" && <p className="bg-amber-300 px-2 py-1 rounded-full cursor-pointer">Teacher</p>}
+                            {(userInfo?.role == "student" || userInfo?.role == "general") && <p className="bg-red-300 px-2 py-1 rounded-full cursor-pointer">Student</p>} */}
+                            <p className="bg-red-300 px-2 py-1 rounded-full cursor-pointer">Student</p>
                         </div>
                     </div>
                     {/* <li className="w-full bg-gray-300 border-b-2 border-red-400 rounded-md"><Link to={'/userdash'}>User Dashboard</Link></li> */}

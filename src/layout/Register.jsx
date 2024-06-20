@@ -37,9 +37,10 @@ const Register = () => {
             email: data.email,
             provider: null,
             password: data.password,
-            role: 'general',
+            role: 'student',
             req_status: 'No',
             admin_status: "not_attempted",
+            instructor_status: 'not_attempted',
             createdAt: new Date().toISOString().slice(0,10),
         }
         // console.log(user);

@@ -8,10 +8,12 @@ import ClassProgress from './ClassProgress';
 import { MdOutlineLibraryBooks } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { ClimbingBoxLoader } from 'react-spinners';
+import EmptyEnrollment from '../UserDashboard/EmptyEnrollment';
 
 const SingleClass = () => {
     const location = useLocation();
-    const [course, setCourse] = useState();
+    const [course, setCourse] = useState(null);
     const axiosSecure = useAxiosSecure();
     const id = location.pathname.split('/')[location.pathname.split('/').length - 1];
     // console.log(id);
@@ -39,6 +41,13 @@ const SingleClass = () => {
     //     "course_status": "pending",
     //     "course_description": "Embark on a journey to learn Python basics and start coding with confidence in just 4 weeks. This comprehensive course covers everything from variables and data types to loops, functions, and object-oriented programming concepts. Gain hands-on experience with practical exercises and projects designed to reinforce your understanding of Python fundamentals. By the end of the course, you'll have the skills to write your own Python scripts and applications, setting a solid foundation for further exploration in the world of programming."
     // };
+    if (course == null) {
+        return <div className='w-full min-h-screen flex justify-center items-center'>
+            <ClimbingBoxLoader color="#d65336" />
+        </div>;
+    } else if (course?.length == 0) {
+        return <EmptyEnrollment info={"You didn't published any Class yet."} />;
+    }
     return (
         <div>
             <ScrollRestoration />

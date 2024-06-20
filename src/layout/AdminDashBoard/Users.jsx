@@ -88,7 +88,7 @@ const Users = () => {
                                                 User Created At
                                             </th>
                                             <th scope="col" className="text-left px-4 py-3.5 text-sm font-normal rtl:text-right text-gray-500">
-                                                Accept / Cancel Request
+                                                Accept / Cancel <span className='text-red-400 text-lg'>Admin</span> Request
                                             </th>
                                             {/* <th scope="col" className="relative py-3.5 px-4">
                                                 Accept/Cancel Admin Request

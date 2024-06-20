@@ -20,7 +20,7 @@ const TeacherClasses = () => {
         })
     },[]);
 
-    console.log(myCourse);
+    // console.log(myCourse);
 
     if (myCourse == null) {
         return <div className='w-full min-h-screen flex justify-center items-center'>

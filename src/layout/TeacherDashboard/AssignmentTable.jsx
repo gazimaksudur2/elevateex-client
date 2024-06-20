@@ -33,10 +33,10 @@ const AssignmentTable = ({course}) => {
                             <div className="flex items-center gap-x-3">
                                 <h2 className="text-lg font-medium text-gray-800">Assignments</h2>
 
-                                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">14 Posted</span>
+                                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">{assignments?.length} Posted</span>
                             </div>
 
-                            <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p>
+                            {/* <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p> */}
                         </div>
                         <div>
                             <button onClick={() => document.getElementById('my_modal_1').showModal()} className='flex justify-center items-center gap-1 bg-green-600 px-3 py-2 rounded-badge text-white hover:bg-green-400 active:scale-95'>

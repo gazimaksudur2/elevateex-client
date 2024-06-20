@@ -11,7 +11,7 @@ const TeachHere = () => {
     const [userInfo] = useUserInfo();
     const axiosSecure = useAxiosSecure();
     // const [userInfo] = useUserInfo();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     const onSubmit = data => {
         // console.log(data);
         const instructor = {
@@ -41,6 +41,7 @@ const TeachHere = () => {
                     icon: "error"
                 });
             })
+            reset();
     }
 
     return (

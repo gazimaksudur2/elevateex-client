@@ -15,12 +15,12 @@ const AdminClasses = () => {
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-x-3">
-                            <h2 className="text-lg font-medium text-gray-800">Released Courses</h2>
+                            <h2 className="text-lg font-medium text-gray-800">Released All Courses</h2>
 
                             <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">{classes?.length} Currently</span>
                         </div>
 
-                        <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p>
+                        {/* <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p> */}
                     </div>
                 </div>
 

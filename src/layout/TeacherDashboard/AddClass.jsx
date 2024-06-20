@@ -1,10 +1,64 @@
 import { useForm } from "react-hook-form";
 import useUserInfo from "../../hooks/useUserInfo";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const AddClass = () => {
     const [userInfo] = useUserInfo();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const { register, handleSubmit, reset } = useForm();
+    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
+    const img_hosting_key = import.meta.env.VITE_image_hosting_key;
+    const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
+    const onSubmit = async(data) =>{
+        let banner_img = null;
+        if(data.banner_img.length){
+            const res = await axiosPublic.post(img_hosting_api, {image: data.banner_img[0]}, {
+                headers: {
+                    "content-type": 'multipart/form-data'
+                }
+            });
+            banner_img = res.data.data.display_url;
+        }
+        
+        // console.log(new Date().toISOString().slice(0,10));
+        const course = {
+            course_title: data.course_title,
+            course_fee: data.fee,
+            course_banner: banner_img,
+            course_type: data.type,
+            course_duration: data.duration,
+            course_description: data.description,
+            course_status: "pending",
+            total_enrollment: 0,
+            total_lessons: data.lesson,
+            rating: 4.8,
+            instructor: userInfo.displayName,
+            instructor_email: userInfo.email,
+            instructor_url: userInfo.photoURL,
+            enrolled_by: [],
+            createdAt: new Date().toISOString().slice(0,10),
+        }
+        // console.log(course);
+        axiosSecure.post('/allclasses', course)
+        .then(()=>{
+            Swal.fire({
+                title: "Great job!",
+                text: "Course info sent to admin for Reviewing!",
+                icon: "success"
+              });
+        })
+        .catch(error=>{
+            // console.log(error.message);
+            Swal.fire({
+                title: "Unfortunately!",
+                text: error.message,
+                icon: "warning"
+              });
+        })
+        reset();
+    };
 
     return (
         <div>
@@ -37,7 +91,7 @@ const AddClass = () => {
                                         <label className="label">
                                             <span className="label-text text-sm">Course Banner Image</span>
                                         </label>
-                                        <input type="file" {...register("banner_img")} className="file-input file-input-bordered w-full" />
+                                        <input type="file" {...register("banner_img")} className="file-input file-input-bordered w-full" required/>
                                     </div>
                                     <div className="flex justify-between items-center gap-3">
                                         <div className="form-control w-[48%]">
@@ -50,7 +104,7 @@ const AddClass = () => {
                                             <label className="label">
                                                 <span className="label-text text-sm">Course Type</span>
                                             </label>
-                                            <input type="text" {...register("type")} placeholder="Your Course Type" className="input input-bordered" required />
+                                            <input type="text" {...register("type")} placeholder="Your Course Type  eg. programming" className="input input-bordered" required />
                                         </div>
                                     </div>
                                     <div className="flex justify-between items-center gap-3">
@@ -58,7 +112,7 @@ const AddClass = () => {
                                             <label className="label">
                                                 <span className="label-text text-sm">Course Duration</span>
                                             </label>
-                                            <input type="text" {...register("Duration")} placeholder="Your Course Duration" className="input input-bordered" required />
+                                            <input type="text" {...register("duration")} placeholder="Your Course Duration eg. 8 weeks" className="input input-bordered" required />
                                         </div>
                                         <div className="form-control w-[48%]">
                                             <label className="label">
@@ -71,7 +125,7 @@ const AddClass = () => {
                                         <div className="label">
                                             <span className="label-text">Course Description</span>
                                         </div>
-                                        <textarea className="textarea textarea-bordered h-24" placeholder="Your Course Description" {...register("price")} required></textarea>
+                                        <textarea className="textarea textarea-bordered h-24" placeholder="Your Course Description" {...register("description")} required></textarea>
                                     </label>
                                     <div className="form-control mt-6 gap-3">
                                         {/* <button className="btn btn-primary">Login</button> */}

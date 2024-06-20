@@ -1,11 +1,23 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Assignment from "./Assignment";
 import Swal from "sweetalert2";
 import { Rating } from "@mui/material";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const ClassWork = () => {
-    const assignments = ['a','b','c'];
+const ClassWork = ({course}) => {
     const ref = useRef();
+    const [assignments, setAssignments] = useState([]);
+    const axiosSecure = useAxiosSecure();
+    
+    useEffect(()=>{
+        axiosSecure.get(`assignments?course_title=${course?.course_title}&instructor=${course?.instructor}`)
+        .then(res=>{
+            setAssignments(res.data);
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    },[course]);
 
     const adminApply = () => {
         // const letter = ref
@@ -56,10 +68,8 @@ const ClassWork = () => {
                             <div className="flex items-center gap-x-3">
                                 <h2 className="text-lg font-medium text-gray-800">Assignments</h2>
 
-                                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">14 Pending</span>
+                                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">{assignments?.length} Pending</span>
                             </div>
-
-                            <p className="mt-1 text-sm text-gray-500">These companies have purchased in the last 12 months.</p>
                         </div>
                     </div>
 
@@ -100,7 +110,7 @@ const ClassWork = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
                                             {
-                                                assignments && assignments.map((assign, idx)=><Assignment key={idx} assign={assign} />)
+                                                assignments.map((assign, idx)=><Assignment key={idx} assign={assign} />)
                                             }
                                         </tbody>
                                     </table>

@@ -4,46 +4,72 @@ import Swal from "sweetalert2";
 
 const TeacherRequest = ({ request, handleRemove }) => {
     const axiosSecure = useAxiosSecure();
-    const handleApprove = () =>{
-        axiosSecure.post('instructors/approve',{email: request.email})
-        .then((res)=>{
-            console.log(res);
-            Swal.fire({
-                title: "Request Approved!",
-                text: "Instructor Permission Provided!",
-                icon: "success"
-              });
-              handleRemove(request.email);
-        })
-        .catch(error=>{
-            // console.log(error.message);
-            Swal.fire({
-                title: "Request Denied!",
-                text: error.message,
-                icon: "error"
-              });
-        })
+    const handleApprove = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Approve!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.post('instructors/approve', { email: request.email })
+                    .then((res) => {
+                        console.log(res);
+                        Swal.fire({
+                            title: "Request Approved!",
+                            text: "Instructor Permission Provided!",
+                            icon: "success"
+                        });
+                        handleRemove(request.email);
+                    })
+                    .catch(error => {
+                        // console.log(error.message);
+                        Swal.fire({
+                            title: "Request Denied!",
+                            text: error.message,
+                            icon: "error"
+                        });
+                    })
+            }
+        });
+
     }
-    const handleCancel = ()=>{
-        axiosSecure.post('instructors/cancel',{email: request.email})
-        .then((res)=>{
-            console.log(res);
-            Swal.fire({
-                title: "Request Cancelled!",
-                text: "Instructor Permission Denied!",
-                icon: "warning"
-              });
-              handleRemove(request.email);
-        })
-        .catch(error=>{
-            // console.log(error.message);
-            Swal.fire({
-                title: "Request Denied!",
-                text: error.message,
-                icon: "error"
-              });
-        })
+    const handleCancel = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Deny Request!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.post('instructors/cancel', { email: request.email })
+                    .then((res) => {
+                        console.log(res);
+                        Swal.fire({
+                            title: "Request Cancelled!",
+                            text: "Instructor Permission Denied!",
+                            icon: "warning"
+                        });
+                        handleRemove(request.email);
+                    })
+                    .catch(error => {
+                        // console.log(error.message);
+                        Swal.fire({
+                            title: "Request Denied!",
+                            text: error.message,
+                            icon: "error"
+                        });
+                    })
+            }
+        });
     }
+
     return (
         <>
             <tr>
@@ -51,7 +77,7 @@ const TeacherRequest = ({ request, handleRemove }) => {
                     <div className="flex items-center gap-x-2">
                         <img className="object-cover w-8 h-8 rounded-full" src={request?.photoURL} alt="" />
                         <div>
-                            <h2 className="text-sm font-medium text-gray-800 ">{request?.first_name+" "+request?.last_name}</h2>
+                            <h2 className="text-sm font-medium text-gray-800 ">{request?.first_name + " " + request?.last_name}</h2>
                             <p className="text-xs font-normal text-gray-600 ">{request?.email}</p>
                         </div>
                     </div>

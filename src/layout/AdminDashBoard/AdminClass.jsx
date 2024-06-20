@@ -1,10 +1,83 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AdminClass = ({ course }) => {
     const [status, setStatus] = useState({
         course_status: course?.course_status,
     });
+    const axiosSecure = useAxiosSecure();
+    const handleApprove = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Approve!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.post('allclasses/approve', { _id: course?._id })
+                    .then((res) => {
+                        console.log(res);
+                        Swal.fire({
+                            title: "Request Approved!",
+                            text: "Course Permission Provided!",
+                            icon: "success"
+                        });
+                        //   handleRemove(course?._id);
+                        setStatus({
+                            course_status: 'approved'
+                        })
+                    })
+                    .catch(error => {
+                        // console.log(error.message);
+                        Swal.fire({
+                            title: "Request Denied!",
+                            text: error.message,
+                            icon: "error"
+                        });
+                    })
+            }
+        });
+    }
+    const handleCancel = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Deny permission!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.post('allclasses/cancel', { _id: course?._id })
+                    .then((res) => {
+                        console.log(res);
+                        Swal.fire({
+                            title: "Request Cancelled!",
+                            text: "Course Permission Denied!",
+                            icon: "warning"
+                        });
+                        //   handleRemove(course?._id);
+                        setStatus({
+                            course_status: 'cancelled'
+                        })
+                    })
+                    .catch(error => {
+                        // console.log(error.message);
+                        Swal.fire({
+                            title: "Request Denied!",
+                            text: error.message,
+                            icon: "error"
+                        });
+                    })
+            }
+        });
+    }
     const navigate = useNavigate();
     const navigat = (address) => {
         navigate(address);
@@ -31,15 +104,15 @@ const AdminClass = ({ course }) => {
                     {
                         status.course_status === "approved" ? <>
                             <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
-                                <h2 className="text-sm font-normal text-emerald-500">{status?.course_status}</h2>
+                                <h2 className="text-sm font-normal text-emerald-500">approved</h2>
                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                             </div>
                         </> : status?.course_status === "pending" ? <div className="space-x-2">
-                            <button className="btn btn-sm btn-success text-white">Approve it</button>
-                            <button className="btn btn-sm btn-error text-white">Cancel it</button>
+                            <button onClick={handleApprove} className="btn btn-sm btn-success text-white">Approve it</button>
+                            <button onClick={handleCancel} className="btn btn-sm btn-error text-white">Cancel it</button>
                         </div> : <>
                             <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60">
-                                <h2 className="text-sm font-normal text-red-500">{course?.course_status}</h2>
+                                <h2 className="text-sm font-normal text-red-500">cancelled</h2>
                                 <span className="h-1.5 w-1.5 rounded-full bg-red-500"></span>
                             </div>
                         </>
@@ -51,9 +124,9 @@ const AdminClass = ({ course }) => {
                             <button className="btn btn-disabled btn-sm">
                                 See Progress
                             </button>
-                        </>:<button onClick={()=>navigat(`/class/${course?._id}`)} className='inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80'>
-                        See Progress
-                    </button>
+                        </> : <button onClick={() => navigat(`/class/${course?._id}`)} className='inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80'>
+                            See Progress
+                        </button>
                     }
                 </td>
                 {/* <td className="px-4 py-4 text-sm whitespace-nowrap">

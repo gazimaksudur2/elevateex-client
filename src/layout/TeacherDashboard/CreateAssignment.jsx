@@ -31,6 +31,7 @@ const CreateAssignment = ({course, pushNew}) => {
                 assignedAt: new Date().toISOString().slice(0,10),
                 instructor: course?.instructor,
                 status: "active",
+                submittedBy: [],
             }
             axiosSecure.post(`assignments`, assignDoc )
                 .then(() => {
