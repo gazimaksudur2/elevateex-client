@@ -32,6 +32,7 @@ const CreateAssignment = ({course, pushNew}) => {
                 instructor: course?.instructor,
                 status: "active",
                 submittedBy: [],
+                submissionCount: 0,
             }
             axiosSecure.post(`assignments`, assignDoc )
                 .then(() => {

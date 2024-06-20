@@ -1,11 +1,11 @@
 import { Link, Outlet } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+// import useAuth from '../../hooks/useAuth';
 import { CiHome } from 'react-icons/ci';
-import useUserInfo from '../../hooks/useUserInfo';
+// import useUserInfo from '../../hooks/useUserInfo';
 
 const UserDashboard = () => {
-    const { user } = useAuth();
-    const [userInfo] = useUserInfo();
+    // const { user } = useAuth();
+    // const [userInfo] = useUserInfo();
     // console.log(userInfo);
     return (
         <div className='flex'>

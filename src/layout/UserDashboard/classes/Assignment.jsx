@@ -1,4 +1,55 @@
-const Assignment = ({assign}) => {
+import { useState } from "react";
+import Swal from "sweetalert2";
+
+const Assignment = ({ assign }) => {
+    const [status, setStatus] = useState({
+        submitted: false,
+    })
+
+    const handleSubmit = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Submit!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Request Submited!",
+                    text: "Your Submission perfectly submitted for the corresponding Course!",
+                    icon: "success"
+                });
+                setStatus({
+                    submitted: true,
+                });
+            }
+        });
+    }
+    const handleUnsubmit = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Unsubmit it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Unsubmitted your Submission!",
+                    text: "Submit it again for this assignment within the announced timeframe!",
+                    icon: "warning"
+                });
+                setStatus({
+                    submitted: false,
+                });
+            }
+        });
+    }
     // console.log(assign);
     return (
         <>
@@ -15,12 +66,12 @@ const Assignment = ({assign}) => {
                 </td>
                 <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
                     {
-                        assign?.status==='active'?<div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60">
-                        Active
-                    </div>:
-                    <div className="inline px-3 py-1 text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60">
-                        TimeOut
-                    </div>
+                        assign?.status === 'active' ? <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60">
+                            Active
+                        </div> :
+                            <div className="inline px-3 py-1 text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60">
+                                TimeOut
+                            </div>
                     }
                 </td>
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -36,9 +87,10 @@ const Assignment = ({assign}) => {
                 </td>
 
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                    <button className="inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80">
-                        See Details
-                    </button>
+                    {
+                        status.submitted===false?<button onClick={handleSubmit} className="btn btn-sm btn-success text-white">Submit it</button>:
+                        <button onClick={handleUnsubmit} className="btn btn-sm btn-error text-white">Unsubmit it</button>
+                    }
                 </td>
             </tr>
             {/* <tr>

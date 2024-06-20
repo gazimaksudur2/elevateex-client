@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 import useUserInfo from "../../hooks/useUserInfo";
 
 const TeachHere = () => {
@@ -11,7 +11,7 @@ const TeachHere = () => {
     const [userInfo] = useUserInfo();
     const axiosSecure = useAxiosSecure();
     // const [userInfo] = useUserInfo();
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const onSubmit = data => {
         // console.log(data);
         const instructor = {
