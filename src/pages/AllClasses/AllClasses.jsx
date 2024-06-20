@@ -1,12 +1,12 @@
 import { ScrollRestoration } from 'react-router-dom';
 import SubSection from '../../shared/SubSection';
-import { MdFilterList } from 'react-icons/md';
+// import { MdFilterList } from 'react-icons/md';
 import ClassCards from '../../components/AllClasses/ClassCards';
 import useClass from '../../hooks/useClass';
 
 const AllClasses = () => {
     // const [courses, setCourses] = useState([]);
-    const [classes] = useClass();
+    const [classes] = useClass({query:'?course_status=approved'});
     const heading = "Discover Our Wide Range of Courses";
     const subHeading = "Explore our extensive selection of classes, carefully curated to expand your knowledge and skills across various fields. Each course is designed to support your educational and career goals, providing you with the tools and resources needed for success.";
     // const handleFilter = ()=>{

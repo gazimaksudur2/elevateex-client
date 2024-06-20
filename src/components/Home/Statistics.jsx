@@ -10,7 +10,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 const Statistics = () => {
     const countUpRef = useRef(null);
     const [users] = useUsers();
-    const [classes] = useClass();
+    const [classes] = useClass({query:''});
     const axiosSecure = useAxiosSecure();
     const [enrolled, setEnrolled] = useState(0);
 

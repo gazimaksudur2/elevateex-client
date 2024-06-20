@@ -1,10 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import useUserInfo from "../../../hooks/useUserInfo";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Assignment = ({ assign }) => {
-    const [status, setStatus] = useState({
-        submitted: false,
-    })
+    const [status, setStatus] = useState(null);
+    const [userInfo] = useUserInfo(); 
+    const axiosSecure = useAxiosSecure();
+
+    useEffect(()=>{
+        const submittedPeople = assign.submittedBy; 
+        if(submittedPeople.includes(userInfo.email)){
+            setStatus({
+                submitted: true,
+                totalSubmitted: submittedPeople?.length,
+            })
+        }else{
+            setStatus({
+                submitted: false,
+                totalSubmitted: submittedPeople?.length,
+            })
+        }
+    },[assign]);
 
     const handleSubmit = () => {
         Swal.fire({
@@ -17,17 +34,29 @@ const Assignment = ({ assign }) => {
             confirmButtonText: "Yes, Submit!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Request Submited!",
-                    text: "Your Submission perfectly submitted for the corresponding Course!",
-                    icon: "success"
-                });
-                setStatus({
-                    submitted: true,
-                });
+                axiosSecure.patch(`assignments/submit?_id=${assign?._id}`, { email: userInfo.email } )
+                .then(() => {
+                    Swal.fire({
+                        title: "Assignment Submited!",
+                        text: "Your Submission perfectly submitted for the corresponding Course!",
+                        icon: "success"
+                    });
+                    setStatus({
+                        submitted: true,
+                    });
+                })
+                .catch(error => {
+                    // console.log(error.message);
+                    Swal.fire({
+                        title: "Error Occured!",
+                        text: error.message,
+                        icon: "error"
+                    });
+                })
             }
         });
     }
+
     const handleUnsubmit = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -39,14 +68,25 @@ const Assignment = ({ assign }) => {
             confirmButtonText: "Yes, Unsubmit it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Unsubmitted your Submission!",
-                    text: "Submit it again for this assignment within the announced timeframe!",
-                    icon: "warning"
-                });
-                setStatus({
-                    submitted: false,
-                });
+                axiosSecure.patch(`assignments/unsubmit?_id=${assign?._id}`, { email: userInfo.email } )
+                .then(() => {
+                    Swal.fire({
+                        title: "Unsubmitted your Submission!",
+                        text: "Submit it again for this assignment within the announced timeframe!",
+                        icon: "warning"
+                    });
+                    setStatus({
+                        submitted: false,
+                    });
+                })
+                .catch(error => {
+                    // console.log(error.message);
+                    Swal.fire({
+                        title: "Error Occured!",
+                        text: error.message,
+                        icon: "error"
+                    });
+                })
             }
         });
     }
@@ -88,7 +128,7 @@ const Assignment = ({ assign }) => {
 
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                     {
-                        status.submitted===false?<button onClick={handleSubmit} className="btn btn-sm btn-success text-white">Submit it</button>:
+                        status?.submitted===false?<button onClick={handleSubmit} className="btn btn-sm btn-success text-white">Submit it</button>:
                         <button onClick={handleUnsubmit} className="btn btn-sm btn-error text-white">Unsubmit it</button>
                     }
                 </td>

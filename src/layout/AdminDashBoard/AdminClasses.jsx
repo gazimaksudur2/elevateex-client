@@ -3,7 +3,7 @@ import EmptyEnrollment from "../UserDashboard/EmptyEnrollment";
 import AdminClass from "./AdminClass";
 
 const AdminClasses = () => {
-    const [classes] = useClass();
+    const [classes] = useClass({query:''});
     
     // const classes = [];
     if (classes.length == 0) {
