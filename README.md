@@ -1,5 +1,23 @@
+### ElevateEx An Educational Platform
+
+Assignment Variant Is: Assignment12_category_0008
+Admin email: admin@elavateex.edu
+Admin Password: AdmEdu123!
+Demo Instructor email: johndoe@example.com
+Demo Instructor Password: JohnMama2!
+Demo Student with proper Functionality
+Demo student mail: hello@gmail.com
+Demo student password: helloVai!
+live site URL: https://elevateex-ac4de.web.app
+Client side repo: https://github.com/programming-hero-web-course1/b9a12-client-side-gazimaksudur2
+Server side repo: https://github.com/programming-hero-web-course1/b9a12-server-side-gazimaksudur2
+live server URL: https://elevate-dusky-nine.vercel.app
+
+Assalamualikum vai,
+Here I'm requesting you about my submission. Please take patience while evaluating my submission. I've completed all the assignments in time and scored well previously. My score is safe for SCIC but there requires at least 70% on this assignment and I'm scaring for that.In recent times, I've experienced a lot of troubles like my semester final starts and also I was sick for more than a week. So, I didn't able to complete my assignment 12 on time. Now I did as much as I can in my Eid vacation time. Please do not disappoint me in this case, here this was my dream to get into the SCIC.
+
  10 Bullet features of my ElevateEx web application goes here
- 
+
  1. There are 3 type of user facility. Like, admin, instructor, student or general user.
  2. Students will be able to access the courses that are approved by the admin and able to enroll it.
  3. When Student login or signup his account on this platform he will get access to the user dashboard.
