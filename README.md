@@ -1,15 +1,14 @@
 # ElevateEx: An Educational Platform
 
-### Assignment Details
-- **Assignment Variant:** Assignment12_category_0008
+### Demo Credentials
 - **Admin email:** admin@elavateex.edu
 - **Admin Password:** AdmEdu123!
 - **Demo Instructor email:** johndoe@example.com
 - **Demo Instructor Password:** JohnMama2!
 - **Demo Student email:** hello@gmail.com
 - **Demo Student Password:** helloVai!
-- **Live site URL:** [ElevateEx](https://elevateex-ac4de.web.app)
-- **Client side repo:** [GitHub - Client Side](https://github.com/programming-hero-web-course1/b9a12-client-side-gazimaksudur2)
+
+### Server Side Development
 - **Server side repo:** [GitHub - Server Side](https://github.com/programming-hero-web-course1/b9a12-server-side-gazimaksudur2)
 - **Live server URL:** [Elevate Server](https://elevate-dusky-nine.vercel.app)
 
