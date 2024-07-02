@@ -32,6 +32,41 @@
 ## 🚀 Experience
 These features provide a comprehensive educational platform designed for a seamless and efficient user experience. Explore the ElevateEx platform and enjoy its diverse functionalities.
 
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js installed on your machine
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/gazimaksudur2/elevateex-client.git
+   cd elevateex-client
+
+2. Install Dependencies:
+   ```bash
+   npm install
+
+3. Set Up Firebase Authentication
+   Create a .env file in the root directory of the project.
+   Add the following environment variables to the .env file, replacing placeholders (your_api_key, your_auth_domain, etc.) with your Firebase project's actual configuration:
+   ```bash
+   VITE_APIKEY=your_api_key
+   VITE_AUTHDOMAIN=your_authdomain
+   VITE_PROJECTID=your_projectID
+   VITE_STORAGEBUCKET=your_storagebucket
+   VITE_MESSAGINGSENDERID=your_messageingsenderID
+   VITE_APPID=your_appID
+   
+4. Running the Project:
+   ```bash
+   npm run dev
+
+5. open your localhost on your browser:
+   ```bash
+   http://localhost:5173/
 
 
 
