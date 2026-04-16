@@ -1,100 +1,60 @@
-import { FcGoogle } from 'react-icons/fc';
-import { VscGithub } from 'react-icons/vsc';
-import useAuth from '../hooks/useAuth';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import useAxiosPublic from '../hooks/useAxiosPublic';
+import { FcGoogle } from "react-icons/fc";
+import { VscGithub } from "react-icons/vsc";
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import { parseApiError } from "../utils/errorParser";
+import { toast } from "../utils/toast";
 
 const SocialLogin = () => {
-    const { googleLogin, githubLogin } = useAuth();
-    const axiosPublic = useAxiosPublic();
-    const navigate = useNavigate();
-    const location = useLocation();
+  const { googleLogin, githubLogin } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
-    const handleGoogle = () => {
-        googleLogin()
-            .then(async (res) => {
-                const msg = "Logged in Successful!";
-                const existing = await axiosPublic.get(`/users?email=${res.user.email}`);
-                // console.log(existing.data);
-                // console.log(res.user);
-                // console.log(user);
-                if (existing.data.length==0) {
-                    const user = {
-                        displayName: res.user.displayName,
-                        photoURL: res.user.photoURL,
-                        email: res.user.email,
-                        provider: 'google',
-                        password: null,
-                        role: 'general',
-                        req_status: 'No'
-                    }
-                    axiosPublic.post('/users', user);
-                }
-                Swal.fire({
-                    title: `Hello! ${res.user.displayName}`,
-                    text: msg,
-                    icon: "success"
-                });
-                navigate('/');
-            })
-            .catch(error => {
-                Swal.fire({
-                    title: "Unfortunately!",
-                    text: "Error Occurred!",
-                    icon: "error"
-                });
-                console.log(error.message);
-            })
+  const handleSocialAuth = async (authFn, provider) => {
+    try {
+      const res = await authFn();
+      const existing = await axiosPublic.get(`/users?email=${res.user.email}`);
+      if (existing.data.length === 0) {
+        await axiosPublic.post("/users", {
+          displayName: res.user.displayName,
+          photoURL: res.user.photoURL,
+          email: res.user.email,
+          provider,
+          role: "student",
+          admin_status: "not_attempted",
+          instructor_status: "not_attempted",
+          isActive: true,
+          createdAt: new Date().toISOString().slice(0, 10),
+        });
+      }
+      toast.success(`Welcome, ${res.user.displayName}!`);
+      navigate("/");
+    } catch (error) {
+      toast.error(parseApiError(error, "login"));
     }
+  };
 
-    const handleGithub = () => {
-        githubLogin()
-            .then(async(res) => {
-                Swal.fire({
-                    title: `Hello! ${res.user.displayName}`,
-                    text: "Logged in user Successful!",
-                    icon: "success"
-                });
-                const existing = await axiosPublic.get(`/users?displayName=${res.user.displayName}&photoURL=${res.user.photoURL}`);
-                // console.log(existing.data);
-                // console.log(res.user);
-                // console.log(user);
-                if (existing.data.length==0) {
-                    const user = {
-                        displayName: res.user.displayName,
-                        photoURL: res.user.photoURL,
-                        email: res.user.email,
-                        provider: 'github',
-                        password: null,
-                        role: 'general',
-                        req_status: 'No'
-                    }
-                    axiosPublic.post('/users', user);
-                }
-                navigate('/');
-            })
-            .catch(error => {
-                Swal.fire({
-                    title: "Unfortunately!",
-                    text: "Error Occurred!",
-                    icon: "error"
-                });
-                console.log(error.message);
-            })
-    }
-    return (
-        <div className='pb-2 text-lg grid grid-cols-2 gap-4 justify-items-center align-middle'>
-            <div onClick={handleGoogle} className='btn inline-flex justify-center items-center gap-2'>
-                <FcGoogle className='text-2xl' />
-                <p>Google</p>
-            </div>
-            <div onClick={handleGithub} className='btn inline-flex justify-center items-center gap-2'>
-                <VscGithub className='text-2xl' />
-                <p>Github</p>
-            </div>
-        </div>
-    );
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      <button
+        onClick={() => handleSocialAuth(googleLogin, "google")}
+        type="button"
+        className="flex items-center justify-center gap-2.5 px-4 py-3 text-sm font-medium text-surface-700 bg-white border border-surface-300 rounded-xl hover:bg-surface-50 transition-colors"
+      >
+        <FcGoogle className="text-lg" />
+        Google
+      </button>
+      <button
+        onClick={() => handleSocialAuth(githubLogin, "github")}
+        type="button"
+        className="flex items-center justify-center gap-2.5 px-4 py-3 text-sm font-medium text-surface-700 bg-white border border-surface-300 rounded-xl hover:bg-surface-50 transition-colors"
+      >
+        <VscGithub className="text-lg" />
+        GitHub
+      </button>
+    </div>
+  );
 };
 
 export default SocialLogin;

@@ -1,73 +1,156 @@
-# ElevateEx: An Educational Platform
+# ElevateEx: Enterprise EdTech Platform
 
-### Demo Credentials
-- **Admin email:** admin@elavateex.edu
-- **Admin Password:** AdmEdu123!
-- **Demo Instructor email:** johndoe@example.com
-- **Demo Instructor Password:** JohnMama2!
-- **Demo Student email:** hello@gmail.com
-- **Demo Student Password:** helloVai!
+A modern, full-featured educational platform built with React, Tailwind CSS, and a modular Express.js backend. ElevateEx provides a complete learning management system with role-based access, course management, enrollment workflows, and an enterprise-grade architecture.
 
-### Server Side Development
-- **Server side repo:** [GitHub - Server Side](https://github.com/programming-hero-web-course1/b9a12-server-side-gazimaksudur2)
-- **Live server URL:** [Elevate Server](https://elevate-dusky-nine.vercel.app)
+## Architecture
 
----
+### Frontend
+- **React 18** with React Router v6 for SPA routing
+- **Tailwind CSS** with custom design system (tokens, semantic colors, component classes)
+- **DaisyUI** custom theme (`elevateex`)
+- **TanStack React Query** for server-state management
+- **React Hook Form** for form handling and validation
+- **Firebase Authentication** (Email/Password, Google, GitHub)
 
-## 🌟 Features
+### Backend (v2.0 - Modular Monolith)
+- **Express.js** with modular architecture (`src/modules/*`)
+- **MongoDB** via native driver with centralized connection management
+- **JWT** access + refresh token strategy
+- **RBAC** middleware with role hierarchy (super_admin > admin > instructor > student)
+- **Audit logging**, rate limiting, request tracing, and structured error handling
+- **Legacy API compatibility** preserved alongside new `/api/v2/*` routes
 
-1. **User Roles:** Three types of users: Admin, Instructor, and Student (or General User).
-2. **Course Access:** Students can access and enroll in courses approved by the admin.
-3. **Student Dashboard:** Students have a dedicated dashboard with access to their profile and enrolled courses, including a detailed view of each course and coursework.
-4. **Course Enrollment:** Students can view and manage their coursework, including assignments and other submissions.
-5. **Instructor Role:** Users can request to become an instructor. After approval by the admin, instructors can create and manage courses.
-6. **Course Creation:** Instructors can design and launch courses with detailed descriptions. Courses are published after admin approval.
-7. **Instructor Dashboard:** Instructors have a dashboard with profile management, class management, and course creation options.
-8. **Admin Role:** Users can apply to become an admin. Admins manage the platform's users, courses, and instructor requests.
-9. **Admin Features:** Admins have access to routes like All Users, All Classes, Admin Profile, and Instructor Requests. They can approve or reject instructor and admin applications.
-10. **Request Management:** Admins can approve or cancel pending instructor requests and manage the status of all classes on the platform.
+## Features
 
----
+### Public
+- Conversion-focused landing page with hero, featured courses, testimonials, and CTA
+- Course catalog with search, category filtering, price filtering, and sorting
+- Course detail pages with enrollment flow
 
-## 🚀 Experience
-These features provide a comprehensive educational platform designed for a seamless and efficient user experience. Explore the ElevateEx platform and enjoy its diverse functionalities.
+### Student Dashboard
+- Profile management
+- Enrolled courses with progress tracking
+- Assignment submission workflow
 
----
+### Instructor Studio
+- Course creation and management
+- Assignment creation with deadlines
+- Student submission review and grading
+
+### Admin Console
+- Platform dashboard with KPIs (users, courses, enrollments, revenue)
+- Instructor application approval/rejection workflow
+- Admin application management
+- Course approval/rejection with audit logging
+- User role management
+
+### Security
+- JWT-based authentication with short-lived access tokens
+- Role-based access control (RBAC) at route and service level
+- Rate limiting per IP
+- Request ID tracing
+- Secure headers via Helmet
+- Centralized error handling with environment-aware responses
+- Audit logs for admin actions
+
+## Demo Credentials
+- **Admin:** admin@elavateex.edu / AdmEdu123!
+- **Instructor:** johndoe@example.com / JohnMama2!
+- **Student:** hello@gmail.com / helloVai!
+
+## Links
+- **Server Repo:** [GitHub - Server](https://github.com/gazimaksudur2/elevateex-server)
+- **Live Server:** [API](https://elevate-dusky-nine.vercel.app)
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js installed on your machine
+- Node.js 18+ installed
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/gazimaksudur2/elevateex-client.git
-   cd elevateex-client
+### Client Setup
+```bash
+git clone https://github.com/gazimaksudur2/elevateex-client.git
+cd elevateex-client
+npm install
+```
 
-2. Install Dependencies:
-   ```bash
-   npm install
+Create `.env` file:
+```
+VITE_APIKEY=your_api_key
+VITE_AUTHDOMAIN=your_authdomain
+VITE_PROJECTID=your_projectID
+VITE_STORAGEBUCKET=your_storagebucket
+VITE_MESSAGINGSENDERID=your_messagingSenderID
+VITE_APPID=your_appID
+VITE_image_hosting_key=your_imgbb_key
+```
 
-3. Set Up Firebase Authentication
-   Create a .env file in the root directory of the project.
-   Add the following environment variables to the .env file, replacing placeholders (your_api_key, your_auth_domain, etc.) with your Firebase project's actual configuration:
-   ```bash
-   VITE_APIKEY=your_api_key
-   VITE_AUTHDOMAIN=your_authdomain
-   VITE_PROJECTID=your_projectID
-   VITE_STORAGEBUCKET=your_storagebucket
-   VITE_MESSAGINGSENDERID=your_messageingsenderID
-   VITE_APPID=your_appID
-   
-4. Running the Project:
-   ```bash
-   npm run dev
+```bash
+npm run dev
+# Open http://localhost:5173
+```
 
-5. open your localhost on your browser:
-   ```bash
-   http://localhost:5173/
+### Server Setup
+```bash
+cd elevateex-server
+npm install
+```
 
+Create `.env` file:
+```
+DBuser=your_mongo_user
+DBpassword=your_mongo_password
+Security_Access_Token=your_jwt_secret
+STRIPE_SECRET_KEY=your_stripe_key
+CLIENT_URL=http://localhost:5173
+```
 
+```bash
+npm run dev      # New modular server (v2.0)
+npm run start:legacy  # Legacy single-file server
+```
 
+## Project Structure
 
+### Client (`elevateex-client/src/`)
+```
+src/
+├── components/
+│   ├── Home/           # HeroSection, FeaturedCourses, WhyElevateEx, Testimonials, CTASection, BecomeInstructor, TrustedBy
+│   └── AllClasses/     # ClassCards, CourseDetail, Payment, CheckOutForm
+├── pages/
+│   ├── Home/           # Home page composition
+│   ├── AllClasses/     # Course catalog with search/filter
+│   └── TeachHere/      # Instructor application
+├── layout/
+│   ├── MainLayout      # App shell (Navbar + Outlet + Footer)
+│   ├── Login/Register  # Split-screen auth pages
+│   ├── UserDashboard/  # Student dashboard
+│   ├── TeacherDashboard/ # Instructor dashboard
+│   └── AdminDashBoard/ # Admin dashboard
+├── shared/             # Navbar, Footer, SubSection
+├── hooks/              # useAuth, useAxiosSecure, useAxiosPublic, useUserInfo, useClass, useUsers
+├── providers/          # AuthProvider, Firebase config
+└── routes/             # Router, PrivateRoute, AdminRouter
+```
+
+### Server (`elevateex-server/src/`)
+```
+src/
+├── config/             # database, cors, env
+├── middleware/          # auth, rbac, validate, errorHandler, rateLimiter, requestId, auditLog
+├── modules/
+│   ├── auth/           # JWT token management, login/register, social auth, profile
+│   ├── users/          # CRUD, stats, role management
+│   ├── courses/        # CRUD, search, approve/reject, reviews
+│   ├── enrollments/    # Enroll, progress, cancel, stats
+│   ├── assignments/    # CRUD, submit, grade
+│   ├── admin/          # Dashboard stats, instructor/admin requests, audit logs, revenue
+│   └── reviews/        # CRUD, featured reviews
+├── utils/              # ApiError, ApiResponse, asyncHandler, logger
+├── app.js              # Express app with legacy + v2 routes
+└── server.js           # Server entry point
+```
+
+## Tech Stack
+React 18 | Tailwind CSS | DaisyUI | React Query | React Hook Form | Firebase Auth | Express.js | MongoDB | JWT | Helmet | Stripe (planned)

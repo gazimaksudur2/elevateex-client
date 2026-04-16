@@ -1,53 +1,65 @@
-import { CiStar } from "react-icons/ci";
-import { MdOutlineLibraryBooks } from "react-icons/md";
-import { SlCalender } from "react-icons/sl";
+import { HiOutlineClock, HiOutlineBookOpen, HiOutlineStar, HiOutlineUsers } from "react-icons/hi";
+import { FiDollarSign } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { FaDollarSign } from "react-icons/fa";
-import { TbUsersPlus } from "react-icons/tb";
 
 const ClassCards = ({ course }) => {
-    return (
-        <Link to={`/course/${course?._id}`} state={{data: course}}>
-            <div className="card w-96 bg-base-100 shadow-xl">
-                <figure><img src={course?.course_banner} alt="Shoes" /></figure>
-                <div className=" absolute badge badge-accent top-4 left-4">{course?.course_type}</div>
-                <div className="card-body relative">
-                    <div className="absolute w-full px-10 -top-3 left-0 flex items-center justify-between"> 
-                        <div className="bg-primary rounded-badge px-3 py-1 text-white flex justify-center items-center gap-1">
-                            <FaDollarSign/>
-                            <p>{course?.course_fee}</p>
-                        </div>
-                        <div className="bg-secondary rounded-badge px-3 py-1 text-white flex justify-center items-center gap-1">
-                            <TbUsersPlus/>
-                            <p>{course?.total_enrollment}</p>
-                        </div>
-                    </div>
-                    <div className='flex items-center justify-start gap-3'>
-                        <img className='w-16 h-16 rounded-full' src={course?.instructor_url} alt="" />
-                        <h2 className="text-xl font-medium">{course?.instructor}</h2>
-                    </div>
-                    <p className="text-[#151515db] pb-4 font-semibold">{course?.course_title}</p>
-                    <div className="flex items-center justify-evenly">
-                        <div className="flex items-center justify-start gap-2">
-                            <MdOutlineLibraryBooks className="text-amber-600 font-bold" size={20}/>
-                            <p className="text-[#151515ab] text-sm">{course?.total_lessons} lessons</p>
-                        </div>
-                        <div className="flex items-center justify-start gap-2">
-                            <SlCalender className="text-amber-600 font-bold" size={17}/>
-                            <p className="text-[#151515ab] text-sm">{course?.course_duration}</p>
-                        </div>
-                        <div className="flex items-center justify-start gap-2">
-                            <CiStar className="text-amber-600 font-bold" size={20}/>
-                            <p className="text-[#151515ab] text-sm">{course?.rating}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="w-full flex justify-center items-center">
-                    <div className="absolute -z-10 bg-white w-[80%] h-20 rounded-2xl -bottom-4 shadow-md"></div>
-                </div>
-            </div>
-        </Link>
-    );
+  return (
+    <Link to={`/course/${course?._id}`} state={{ data: course }}>
+      <div className="card-interactive group overflow-hidden h-full">
+        <div className="relative overflow-hidden">
+          <img
+            src={course?.course_banner || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80"}
+            alt={course?.course_title}
+            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          <div className="absolute top-3 left-3">
+            <span className="badge-accent px-3 py-1">{course?.course_type || "General"}</span>
+          </div>
+          <div className="absolute bottom-3 right-3 flex items-center gap-2">
+            <span className="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-surface-900 text-xs font-bold px-2.5 py-1 rounded-lg shadow-sm">
+              <FiDollarSign className="text-xs" />
+              {course?.course_fee || "Free"}
+            </span>
+          </div>
+        </div>
+
+        <div className="p-5 flex flex-col flex-1">
+          <div className="flex items-center gap-3 mb-3">
+            <img
+              src={course?.instructor_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(course?.instructor || "I")}&background=dbeafe&color=1d4ed8`}
+              alt={course?.instructor}
+              className="w-8 h-8 rounded-lg object-cover ring-1 ring-surface-200"
+            />
+            <span className="text-sm text-surface-500 truncate">{course?.instructor}</span>
+          </div>
+
+          <h3 className="text-base font-semibold text-surface-900 line-clamp-2 group-hover:text-brand-600 transition-colors mb-auto">
+            {course?.course_title}
+          </h3>
+
+          <div className="flex items-center justify-between gap-2 text-xs text-surface-400 pt-4 mt-4 border-t border-surface-100">
+            <span className="flex items-center gap-1">
+              <HiOutlineBookOpen className="text-sm" />
+              {course?.total_lessons || 0} lessons
+            </span>
+            <span className="flex items-center gap-1">
+              <HiOutlineClock className="text-sm" />
+              {course?.course_duration || "Self-paced"}
+            </span>
+            <span className="flex items-center gap-1">
+              <HiOutlineStar className="text-sm text-warning-500" />
+              {course?.rating || "New"}
+            </span>
+            <span className="flex items-center gap-1">
+              <HiOutlineUsers className="text-sm" />
+              {course?.total_enrollment || 0}
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
 };
 
 export default ClassCards;

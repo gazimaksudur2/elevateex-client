@@ -1,28 +1,23 @@
-import BannerBottom from "../../components/Home/BannerBottom";
-import BeInstructor from "../../components/Home/BeInstructor";
-import Collaborators from "../../components/Home/Collaborators";
-import HomeSubSection from "../../components/Home/HomeSubSection";
-import KeenSlider from "../../components/Home/KeenSlider";
-import NewsLetter from "../../components/Home/NewsLetter";
-import PopularClasses from "../../components/Home/PopularClasses";
-import Statistics from "../../components/Home/Statistics";
-import StudentFeedbacks from "../../components/Home/StudentFeedbacks";
+import HeroSection from "../../components/Home/HeroSection";
+import TrustedBy from "../../components/Home/TrustedBy";
+import FeaturedCourses from "../../components/Home/FeaturedCourses";
+import WhyElevateEx from "../../components/Home/WhyElevateEx";
+import Testimonials from "../../components/Home/Testimonials";
+import BecomeInstructor from "../../components/Home/BecomeInstructor";
+import CTASection from "../../components/Home/CTASection";
 
 const Home = () => {
-    return (
-        <div>
-            {/* <BannerSlider/> */}
-            <KeenSlider/>
-            <HomeSubSection/>
-            <BannerBottom/>
-            <PopularClasses/>
-            <StudentFeedbacks/>
-            <Statistics/>
-            <BeInstructor/>
-            <Collaborators/>
-            <NewsLetter/>
-        </div>
-    );
+  return (
+    <div>
+      <HeroSection />
+      <TrustedBy />
+      <FeaturedCourses />
+      <WhyElevateEx />
+      <BecomeInstructor />
+      <Testimonials />
+      <CTASection />
+    </div>
+  );
 };
 
 export default Home;

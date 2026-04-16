@@ -1,59 +1,83 @@
-// import { loadStripe } from "@stripe/stripe-js";
-// import { Elements } from "@stripe/react-stripe-js";
-// import CheckOutForm from "./CheckOutForm";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 
-// TODO: add publishable key
-// const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
-const Payment = ({course}) => {
-    const { register, handleSubmit } = useForm();
-    const { user } = useAuth();
-    const onSubmit = data => console.log(data);
-    return (
+const Payment = ({ course }) => {
+  const { register, handleSubmit } = useForm();
+  const { user } = useAuth();
+
+  const onSubmit = (data) => {
+    // Payment integration placeholder
+  };
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold text-surface-900 mb-4">Confirm Enrollment</h3>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-            <div>
-                <h2 className="text-center font-medium font-mulish text-lg">Payment Details</h2>
-                <form className="card-body justify-start" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Course Title</span>
-                        </label>
-                        <input type="text" value={course?.course_title} className="input input-bordered"  {...register("course_title")} readOnly />
-                    </div>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Your Official Name</span>
-                        </label>
-                        <input type="text" {...register("launcher")} className="input input-bordered" value={user?.displayName} readOnly />
-                    </div>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Your Study Email</span>
-                        </label>
-                        <input type="text" {...register("mail")} className="input input-bordered" value={user?.email} readOnly />
-                    </div>
-                    <div className="flex justify-between items-center gap-3">
-                        <div className="form-control w-[48%]">
-                            <label className="label">
-                                <span className="label-text text-sm">Course Fee</span>
-                            </label>
-                            <input type="text" {...register("fee")} value={"$"+course?.course_fee} className="input input-bordered" readOnly />
-                        </div>
-                        <div className="form-control w-[48%]">
-                            <label className="label">
-                                <span className="label-text text-sm">Course Type</span>
-                            </label>
-                            <input type="text" {...register("type")}  value={course?.course_type} className="input input-bordered" readOnly />
-                        </div>
-                    </div>
-                </form>
-                {/* <Elements stripe={stripePromise}>
-                    <CheckOutForm></CheckOutForm>
-                </Elements> */}
-            </div>
+          <label className="block text-sm font-medium text-surface-700 mb-1.5">Course</label>
+          <input
+            type="text"
+            value={course?.course_title || ""}
+            className="input-field bg-surface-50"
+            {...register("course_title")}
+            readOnly
+          />
         </div>
-    );
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-surface-700 mb-1.5">Your Name</label>
+            <input
+              type="text"
+              value={user?.displayName || ""}
+              className="input-field bg-surface-50"
+              {...register("launcher")}
+              readOnly
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-surface-700 mb-1.5">Email</label>
+            <input
+              type="text"
+              value={user?.email || ""}
+              className="input-field bg-surface-50"
+              {...register("mail")}
+              readOnly
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-surface-700 mb-1.5">Course Fee</label>
+            <input
+              type="text"
+              value={`$${course?.course_fee || 0}`}
+              className="input-field bg-surface-50"
+              {...register("fee")}
+              readOnly
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-surface-700 mb-1.5">Category</label>
+            <input
+              type="text"
+              value={course?.course_type || "General"}
+              className="input-field bg-surface-50"
+              {...register("type")}
+              readOnly
+            />
+          </div>
+        </div>
+
+        <div className="p-4 bg-brand-50 rounded-xl border border-brand-200">
+          <p className="text-sm text-brand-800 font-medium">
+            Payment gateway integration coming soon. Click "Enroll Now" above to join this course.
+          </p>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default Payment;

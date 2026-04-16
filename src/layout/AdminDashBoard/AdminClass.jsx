@@ -2,157 +2,121 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { parseApiError } from "../../utils/errorParser";
+import { toast } from "../../utils/toast";
 
 const AdminClass = ({ course }) => {
-    const [status, setStatus] = useState({
-        course_status: course?.course_status,
-    });
+    const [status, setStatus] = useState({ course_status: course?.course_status });
     const axiosSecure = useAxiosSecure();
-    const handleApprove = () => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Approve!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.post('allclasses/approve', { _id: course?._id })
-                    .then((res) => {
-                        console.log(res);
-                        Swal.fire({
-                            title: "Request Approved!",
-                            text: "Course Permission Provided!",
-                            icon: "success"
-                        });
-                        //   handleRemove(course?._id);
-                        setStatus({
-                            course_status: 'approved'
-                        })
-                    })
-                    .catch(error => {
-                        // console.log(error.message);
-                        Swal.fire({
-                            title: "Request Denied!",
-                            text: error.message,
-                            icon: "error"
-                        });
-                    })
-            }
-        });
-    }
-    const handleCancel = () => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Deny permission!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.post('allclasses/cancel', { _id: course?._id })
-                    .then((res) => {
-                        console.log(res);
-                        Swal.fire({
-                            title: "Request Cancelled!",
-                            text: "Course Permission Denied!",
-                            icon: "warning"
-                        });
-                        //   handleRemove(course?._id);
-                        setStatus({
-                            course_status: 'cancelled'
-                        })
-                    })
-                    .catch(error => {
-                        // console.log(error.message);
-                        Swal.fire({
-                            title: "Request Denied!",
-                            text: error.message,
-                            icon: "error"
-                        });
-                    })
-            }
-        });
-    }
     const navigate = useNavigate();
-    const navigat = (address) => {
-        navigate(address);
-    }
+
+    const confirmAction = (title, confirmText) =>
+        Swal.fire({
+            title,
+            text: "This action cannot be undone.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: confirmText,
+        });
+
+    const handleApprove = async () => {
+        const result = await confirmAction("Approve this course?", "Yes, Approve!");
+        if (!result.isConfirmed) return;
+
+        const toastId = toast.loading("Approving course…");
+        try {
+            await axiosSecure.post('allclasses/approve', { _id: course?._id });
+            toast.update(toastId, {
+                render: "Course approved and published!",
+                type: "success",
+                isLoading: false,
+                autoClose: 3000,
+            });
+            setStatus({ course_status: 'approved' });
+        } catch (error) {
+            toast.update(toastId, {
+                render: parseApiError(error),
+                type: "error",
+                isLoading: false,
+                autoClose: 5000,
+            });
+        }
+    };
+
+    const handleCancel = async () => {
+        const result = await confirmAction("Reject this course?", "Yes, Reject!");
+        if (!result.isConfirmed) return;
+
+        const toastId = toast.loading("Rejecting course…");
+        try {
+            await axiosSecure.post('allclasses/cancel', { _id: course?._id });
+            toast.update(toastId, {
+                render: "Course has been rejected.",
+                type: "warning",
+                isLoading: false,
+                autoClose: 3000,
+            });
+            setStatus({ course_status: 'cancelled' });
+        } catch (error) {
+            toast.update(toastId, {
+                render: parseApiError(error),
+                type: "error",
+                isLoading: false,
+                autoClose: 5000,
+            });
+        }
+    };
+
     return (
-        <>
-            <tr>
-                <td className="px-4 py-4 text-gray-800">
-                    <h2 className='font-medium'>{course?.course_title}</h2>
-                    <p className='text-xs'>{course?.course_description.slice(0, 150) + "..."}</p>
-                </td>
-                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                    <div className="inline-flex items-center gap-x-3">
-                        <div className="flex items-center gap-x-2">
-                            <img className="object-cover w-10 h-10 rounded-full" src={course?.instructor_url} alt="instructor images" />
-                            <div>
-                                <h2 className="font-medium text-gray-800">{course?.instructor}</h2>
-                                <p className="text-sm font-normal text-gray-600">{course?.instructor_email}</p>
-                            </div>
+        <tr>
+            <td className="px-4 py-4 text-gray-800">
+                <h2 className='font-medium'>{course?.course_title}</h2>
+                <p className='text-xs'>{course?.course_description?.slice(0, 150) + "…"}</p>
+            </td>
+            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                <div className="inline-flex items-center gap-x-3">
+                    <div className="flex items-center gap-x-2">
+                        <img className="object-cover w-10 h-10 rounded-full" src={course?.instructor_url} alt="instructor" />
+                        <div>
+                            <h2 className="font-medium text-gray-800">{course?.instructor}</h2>
+                            <p className="text-sm font-normal text-gray-600">{course?.instructor_email}</p>
                         </div>
                     </div>
-                </td>
-                <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                    {
-                        status.course_status === "approved" ? <>
-                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
-                                <h2 className="text-sm font-normal text-emerald-500">approved</h2>
-                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                            </div>
-                        </> : status?.course_status === "pending" ? <div className="space-x-2">
-                            <button onClick={handleApprove} className="btn btn-sm btn-success text-white">Approve it</button>
-                            <button onClick={handleCancel} className="btn btn-sm btn-error text-white">Cancel it</button>
-                        </div> : <>
-                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60">
-                                <h2 className="text-sm font-normal text-red-500">cancelled</h2>
-                                <span className="h-1.5 w-1.5 rounded-full bg-red-500"></span>
-                            </div>
-                        </>
-                    }
-                </td>
-                <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                    {
-                        status.course_status !== 'approved' ? <>
-                            <button className="btn btn-disabled btn-sm">
-                                See Progress
-                            </button>
-                        </> : <button onClick={() => navigat(`/class/${course?._id}`)} className='inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80'>
-                            See Progress
-                        </button>
-                    }
-                </td>
-                {/* <td className="px-4 py-4 text-sm whitespace-nowrap">
-                    <div className="flex items-center gap-x-2">
-                        <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-indigo-100/60">Design</p>
-                        <p className="px-3 py-1 text-xs text-blue-500 rounded-full bg-blue-100/60">Product</p>
-                        <p className="px-3 py-1 text-xs text-pink-500 rounded-full bg-pink-100/60">Marketing</p>
+                </div>
+            </td>
+            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                {status.course_status === "approved" ? (
+                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
+                        <h2 className="text-sm font-normal text-emerald-500">Approved</h2>
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                     </div>
-                </td> */}
-                {/* <td className="px-4 py-4 text-sm whitespace-nowrap">
-                    <div className="flex items-center gap-x-6">
-                        <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 hover:text-red-500 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                            </svg>
-                        </button>
-
-                        <button className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 hover:text-yellow-500 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
-                        </button>
+                ) : status?.course_status === "pending" ? (
+                    <div className="space-x-2">
+                        <button onClick={handleApprove} className="btn btn-sm btn-success text-white">Approve</button>
+                        <button onClick={handleCancel} className="btn btn-sm btn-error text-white">Reject</button>
                     </div>
-                </td> */}
-            </tr>
-        </>
+                ) : (
+                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60">
+                        <h2 className="text-sm font-normal text-red-500">Rejected</h2>
+                        <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                    </div>
+                )}
+            </td>
+            <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>
+                {status.course_status !== 'approved' ? (
+                    <button className="btn btn-disabled btn-sm" disabled>See Progress</button>
+                ) : (
+                    <button
+                        onClick={() => navigate(`/class/${course?._id}`)}
+                        className='inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700'
+                    >
+                        See Progress
+                    </button>
+                )}
+            </td>
+        </tr>
     );
 };
 

@@ -1,23 +1,42 @@
-import { Link } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
+import { HiOutlineAcademicCap, HiOutlineHome, HiOutlineArrowLeft } from "react-icons/hi";
 
 const ErrorPage = () => {
-    return (
-        <div className="min-h-screen flex flex-col justify-center items-center">
-            <img src="https://cdn.svgator.com/images/2024/04/electrocuted-caveman-animation-404-error-page.gif" alt="ERROR GIF" />
-            <div className="absolute min-h-[450px] w-full bottom-[12%] flex flex-col items-center justify-between">
-                <h1 className="text-6xl font-roboto font-semibold text-[#151515db]">404</h1>
-                <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-2xl font-roboto font-medium text-[#151515bc]">{"Look like you're lost"}</h2>
-                    <p className="text-[#151515ac]">{"the page you're looking for not available else under construction"}</p>
-                    <Link to={'/'}>
-                        <button className="btn rounded-none text-white bg-green-600 hover:bg-green-500">Go to Home</button>
-                    </Link>
-                </div>
-            </div>
+  const error = useRouteError();
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-surface-50 px-4">
+      <div className="text-center max-w-md">
+        <Link to="/" className="inline-flex items-center gap-2 mb-8">
+          <div className="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
+            <HiOutlineAcademicCap className="text-white text-lg" />
+          </div>
+          <span className="text-xl font-bold text-surface-900">ElevateEx</span>
+        </Link>
+
+        <div className="text-8xl font-display font-bold gradient-text mb-4">
+          {error?.status || "404"}
         </div>
-    );
+        <h1 className="text-2xl font-bold text-surface-900 mb-2">
+          {error?.status === 404 ? "Page Not Found" : "Something Went Wrong"}
+        </h1>
+        <p className="text-surface-500 mb-8">
+          {error?.statusText || error?.message || "The page you're looking for doesn't exist or has been moved."}
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Link to="/" className="btn-primary">
+            <HiOutlineHome />
+            Go Home
+          </Link>
+          <button onClick={() => window.history.back()} className="btn-secondary">
+            <HiOutlineArrowLeft />
+            Go Back
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ErrorPage;
-
-// gif : https://cdn.svgator.com/images/2024/04/electrocuted-caveman-animation-404-error-page.gif
