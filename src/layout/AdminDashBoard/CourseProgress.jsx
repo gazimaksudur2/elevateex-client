@@ -1,40 +1,52 @@
-import { Rating } from "@mui/material";
+import { HiOutlineStar, HiOutlineUser } from 'react-icons/hi';
 
 const CourseProgress = ({ reviews }) => {
+  if (!reviews || reviews.length === 0) {
     return (
-        <div className="relative w-[70%] my-6 mx-auto max-w-3xl">
-            {/*content*/}
-            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="relative p-6 flex-auto">
-                    <div className="space-y-4">
-                        {
-                            (!(reviews) || (reviews.length == 0)) && <h1 className="font-semibold text-xl text-center text-red-500">No Review Posted For this course till Now!!</h1>
-                        }
-                        {
-                            reviews && reviews.map(review => (<>
-                                <div key={review._id} className="py-4 px-4 border-b-2 border-gray-300 flex flex-col justify-between items-center gap-4 shadow">
-                                    <div className="flex flex-row items-center justify-start gap-8">
-                                        <img className="object-cover rounded-full w-14 h-14" src={review?.user_url} alt="" />
-                                        <div className="text-center flex flex-col justify-center items-start">
-                                            <Rating name="half-rating-read" value={review?.rating} precision={0.5} readOnly />
-                                            <h1 className="font-semibold text-gray-800 ">{review?.user_name}</h1>
-                                            {/* <span className="text-sm text-gray-500">{review?.clientEmail ? review.clientEmail : "Email didn't Provided!!"}</span> */}
-                                        </div>
-                                    </div>
-                                    <p className="flex items-center justify-center text-center text-gray-500 lg:mx-14">
-                                        {review?.description}
-                                    </p>
-                                    {/* <p className="flex items-center justify-center text-center text-gray-500 lg:mx-14">
-                                                {review.roomId +"  "+id}
-                                            </p> */}
-                                </div>
-                            </>))
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div className="card-elevated p-8 text-center">
+        <p className="text-sm text-surface-400">No reviews have been posted for this course yet.</p>
+      </div>
     );
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-base font-semibold text-surface-900">Student Reviews</h3>
+        <span className="badge-primary">{reviews.length} Reviews</span>
+      </div>
+
+      <div className="grid gap-4">
+        {reviews.map((review) => (
+          <div key={review._id} className="card-elevated p-5">
+            <div className="flex items-start gap-4">
+              <img
+                className="w-10 h-10 rounded-xl object-cover shrink-0"
+                src={review?.user_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(review?.user_name || 'U')}`}
+                alt=""
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-sm font-semibold text-surface-900">{review?.user_name}</p>
+                  <span className="text-xs text-surface-400">{review?.rated_at}</span>
+                </div>
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <HiOutlineStar
+                      key={i}
+                      className={`text-sm ${i < Math.round(review?.rating || 0) ? 'text-amber-500 fill-amber-500' : 'text-surface-300'}`}
+                    />
+                  ))}
+                  <span className="text-xs text-surface-400 ml-1">{review?.rating}</span>
+                </div>
+                <p className="text-sm text-surface-600 leading-relaxed">{review?.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default CourseProgress;

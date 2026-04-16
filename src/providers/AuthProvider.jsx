@@ -19,6 +19,11 @@ import LoadingState from '../components/ui/LoadingState';
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
+  // `loading` is ONLY for the initial Firebase SDK auth-state resolution.
+  // Individual operations (login, register) track their own loading via
+  // react-hook-form's `isSubmitting` or local state — NOT this flag.
+  // If we set loading=true inside logIn() and Firebase throws, onAuthStateChanged
+  // is never called, so setLoading(false) would never run → infinite spinner.
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const auth = getAuth(app);
@@ -26,38 +31,28 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
 
-  // ── Auth methods ─────────────────────────────────────────────────────────
-  const createUser = (email, password) => {
-    setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
+  // ── Auth methods — DO NOT call setLoading(true) here ────────────────────
+  // These return Promises; callers handle their own loading/error UI.
+  const createUser = (email, password) =>
+    createUserWithEmailAndPassword(auth, email, password);
 
-  const logIn = (email, password) => {
-    setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
-  };
+  const logIn = (email, password) =>
+    signInWithEmailAndPassword(auth, email, password);
 
-  const googleLogin = () => {
-    setLoading(true);
-    return signInWithPopup(auth, googleProvider);
-  };
+  const googleLogin = () => signInWithPopup(auth, googleProvider);
 
-  const githubLogin = () => {
-    setLoading(true);
-    return signInWithPopup(auth, githubProvider);
-  };
+  const githubLogin = () => signInWithPopup(auth, githubProvider);
 
-  const updateUser = (name, photo) => {
-    setLoading(true);
-    return updateProfile(auth.currentUser, { displayName: name, photoURL: photo });
-  };
+  const updateUser = (name, photo) =>
+    updateProfile(auth.currentUser, { displayName: name, photoURL: photo });
 
+  // logOut triggers onAuthStateChanged (user → null), so setLoading is safe here.
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
   };
 
-  // ── Auth state observer ──────────────────────────────────────────────────
+  // ── Auth state observer (single source of truth for `loading`) ───────────
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (curUser) => {
       setUser(curUser);
@@ -68,8 +63,7 @@ const AuthProvider = ({ children }) => {
           if (res?.data?.token) {
             localStorage.setItem('access-token', res.data.token);
           }
-        } catch (err) {
-          // JWT issue – keep the user logged in on Firebase but show a warning
+        } catch {
           toast.warning(
             'Could not verify your session with the server. Some features may be limited.',
             { toastId: 'jwt-warn', autoClose: 6000 },
@@ -79,6 +73,7 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('access-token');
       }
 
+      // Always resolve loading regardless of success or error above
       setLoading(false);
     });
 

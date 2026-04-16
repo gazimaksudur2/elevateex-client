@@ -1,123 +1,78 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Swal from "sweetalert2";
-import { parseApiError } from "../../utils/errorParser";
-import { toast } from "../../utils/toast";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { HiOutlineEye, HiOutlineCheck, HiOutlineX } from 'react-icons/hi';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { parseApiError } from '../../utils/errorParser';
+import { toast } from '../../utils/toast';
 
 const AdminClass = ({ course }) => {
-    const [status, setStatus] = useState({ course_status: course?.course_status });
-    const axiosSecure = useAxiosSecure();
-    const navigate = useNavigate();
+  const [status, setStatus] = useState(course?.course_status);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
-    const confirmAction = (title, confirmText) =>
-        Swal.fire({
-            title,
-            text: "This action cannot be undone.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: confirmText,
-        });
+  const handleAction = async (action) => {
+    const isApprove = action === 'approve';
+    const toastId = toast.loading(isApprove ? 'Approving…' : 'Rejecting…');
+    try {
+      await axiosSecure.post(`allclasses/${action}`, { _id: course?._id });
+      toast.update(toastId, {
+        render: isApprove ? 'Course approved!' : 'Course rejected.',
+        type: isApprove ? 'success' : 'warning',
+        isLoading: false,
+        autoClose: 3000,
+      });
+      setStatus(isApprove ? 'approved' : 'cancelled');
+    } catch (err) {
+      toast.update(toastId, { render: parseApiError(err), type: 'error', isLoading: false, autoClose: 5000 });
+    }
+  };
 
-    const handleApprove = async () => {
-        const result = await confirmAction("Approve this course?", "Yes, Approve!");
-        if (!result.isConfirmed) return;
-
-        const toastId = toast.loading("Approving course…");
-        try {
-            await axiosSecure.post('allclasses/approve', { _id: course?._id });
-            toast.update(toastId, {
-                render: "Course approved and published!",
-                type: "success",
-                isLoading: false,
-                autoClose: 3000,
-            });
-            setStatus({ course_status: 'approved' });
-        } catch (error) {
-            toast.update(toastId, {
-                render: parseApiError(error),
-                type: "error",
-                isLoading: false,
-                autoClose: 5000,
-            });
-        }
-    };
-
-    const handleCancel = async () => {
-        const result = await confirmAction("Reject this course?", "Yes, Reject!");
-        if (!result.isConfirmed) return;
-
-        const toastId = toast.loading("Rejecting course…");
-        try {
-            await axiosSecure.post('allclasses/cancel', { _id: course?._id });
-            toast.update(toastId, {
-                render: "Course has been rejected.",
-                type: "warning",
-                isLoading: false,
-                autoClose: 3000,
-            });
-            setStatus({ course_status: 'cancelled' });
-        } catch (error) {
-            toast.update(toastId, {
-                render: parseApiError(error),
-                type: "error",
-                isLoading: false,
-                autoClose: 5000,
-            });
-        }
-    };
-
-    return (
-        <tr>
-            <td className="px-4 py-4 text-gray-800">
-                <h2 className='font-medium'>{course?.course_title}</h2>
-                <p className='text-xs'>{course?.course_description?.slice(0, 150) + "…"}</p>
-            </td>
-            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                <div className="inline-flex items-center gap-x-3">
-                    <div className="flex items-center gap-x-2">
-                        <img className="object-cover w-10 h-10 rounded-full" src={course?.instructor_url} alt="instructor" />
-                        <div>
-                            <h2 className="font-medium text-gray-800">{course?.instructor}</h2>
-                            <p className="text-sm font-normal text-gray-600">{course?.instructor_email}</p>
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                {status.course_status === "approved" ? (
-                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
-                        <h2 className="text-sm font-normal text-emerald-500">Approved</h2>
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    </div>
-                ) : status?.course_status === "pending" ? (
-                    <div className="space-x-2">
-                        <button onClick={handleApprove} className="btn btn-sm btn-success text-white">Approve</button>
-                        <button onClick={handleCancel} className="btn btn-sm btn-error text-white">Reject</button>
-                    </div>
-                ) : (
-                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60">
-                        <h2 className="text-sm font-normal text-red-500">Rejected</h2>
-                        <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                    </div>
-                )}
-            </td>
-            <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                {status.course_status !== 'approved' ? (
-                    <button className="btn btn-disabled btn-sm" disabled>See Progress</button>
-                ) : (
-                    <button
-                        onClick={() => navigate(`/class/${course?._id}`)}
-                        className='inline-flex items-center justify-center px-6 py-2 text-sm text-white duration-300 bg-gray-800 rounded-lg hover:bg-gray-700'
-                    >
-                        See Progress
-                    </button>
-                )}
-            </td>
-        </tr>
-    );
+  return (
+    <tr>
+      <td>
+        <div className="max-w-xs">
+          <p className="text-sm font-medium text-surface-900 truncate">{course?.course_title}</p>
+          <p className="text-xs text-surface-400 line-clamp-1">{course?.course_description?.slice(0, 100)}</p>
+        </div>
+      </td>
+      <td>
+        <div className="flex items-center gap-2.5">
+          <img className="w-8 h-8 rounded-lg object-cover" src={course?.instructor_url} alt="" />
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-surface-900 truncate">{course?.instructor}</p>
+            <p className="text-xs text-surface-400 truncate">{course?.instructor_email}</p>
+          </div>
+        </div>
+      </td>
+      <td>
+        {status === 'approved' && <span className="badge-success">Approved</span>}
+        {status === 'pending' && <span className="badge-warning">Pending</span>}
+        {status === 'cancelled' && <span className="badge-danger">Rejected</span>}
+      </td>
+      <td>
+        <div className="flex items-center gap-2">
+          {status === 'pending' && (
+            <>
+              <button onClick={() => handleAction('approve')} title="Approve" className="w-7 h-7 rounded-lg bg-success-50 text-success-600 hover:bg-success-100 flex items-center justify-center transition-colors">
+                <HiOutlineCheck className="text-sm" />
+              </button>
+              <button onClick={() => handleAction('cancel')} title="Reject" className="w-7 h-7 rounded-lg bg-danger-50 text-danger-600 hover:bg-danger-100 flex items-center justify-center transition-colors">
+                <HiOutlineX className="text-sm" />
+              </button>
+            </>
+          )}
+          <button
+            onClick={() => navigate(`/class/${course?._id}`)}
+            disabled={status !== 'approved'}
+            className="w-7 h-7 rounded-lg bg-brand-50 text-brand-600 hover:bg-brand-100 flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            title="View progress"
+          >
+            <HiOutlineEye className="text-sm" />
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
 };
 
 export default AdminClass;

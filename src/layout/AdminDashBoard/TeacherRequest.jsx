@@ -1,110 +1,65 @@
-import { MdDownloadDone, MdOutlineCancel } from "react-icons/md";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Swal from "sweetalert2";
-import { parseApiError } from "../../utils/errorParser";
-import { toast } from "../../utils/toast";
+import { HiOutlineCheck, HiOutlineX } from 'react-icons/hi';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { parseApiError } from '../../utils/errorParser';
+import { toast } from '../../utils/toast';
 
 const TeacherRequest = ({ request, handleRemove }) => {
-    const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
 
-    const confirmAction = (title, confirmText) =>
-        Swal.fire({
-            title,
-            text: "This action cannot be undone.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: confirmText,
-        });
+  const handleAction = async (action) => {
+    const isApprove = action === 'approve';
+    const toastId = toast.loading(isApprove ? 'Approving…' : 'Denying…');
+    try {
+      await axiosSecure.post(`instructors/${action}`, { email: request.email });
+      toast.update(toastId, {
+        render: isApprove ? 'Instructor approved!' : 'Request denied.',
+        type: isApprove ? 'success' : 'warning',
+        isLoading: false,
+        autoClose: 3000,
+      });
+      handleRemove(request.email);
+    } catch (err) {
+      toast.update(toastId, { render: parseApiError(err), type: 'error', isLoading: false, autoClose: 5000 });
+    }
+  };
 
-    const handleApprove = async () => {
-        const result = await confirmAction("Approve this instructor?", "Yes, Approve!");
-        if (!result.isConfirmed) return;
-
-        const toastId = toast.loading("Approving request…");
-        try {
-            await axiosSecure.post('instructors/approve', { email: request.email });
-            toast.update(toastId, {
-                render: "Instructor approved successfully!",
-                type: "success",
-                isLoading: false,
-                autoClose: 3000,
-            });
-            handleRemove(request.email);
-        } catch (error) {
-            toast.update(toastId, {
-                render: parseApiError(error),
-                type: "error",
-                isLoading: false,
-                autoClose: 5000,
-            });
-        }
-    };
-
-    const handleCancel = async () => {
-        const result = await confirmAction("Deny this instructor request?", "Yes, Deny!");
-        if (!result.isConfirmed) return;
-
-        const toastId = toast.loading("Denying request…");
-        try {
-            await axiosSecure.post('instructors/cancel', { email: request.email });
-            toast.update(toastId, {
-                render: "Instructor request denied.",
-                type: "warning",
-                isLoading: false,
-                autoClose: 3000,
-            });
-            handleRemove(request.email);
-        } catch (error) {
-            toast.update(toastId, {
-                render: parseApiError(error),
-                type: "error",
-                isLoading: false,
-                autoClose: 5000,
-            });
-        }
-    };
-
-    return (
-        <tr>
-            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                <div className="flex items-center gap-x-2">
-                    <img className="object-cover w-8 h-8 rounded-full" src={request?.photoURL} alt="" />
-                    <div>
-                        <h2 className="text-sm font-medium text-gray-800">{request?.first_name + " " + request?.last_name}</h2>
-                        <p className="text-xs font-normal text-gray-600">{request?.email}</p>
-                    </div>
-                </div>
-            </td>
-            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60">
-                    <h2 className="text-sm font-normal">{request?.cur_role}</h2>
-                </div>
-            </td>
-            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request?.category}</td>
-            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request?.experience}</td>
-            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request?.requestedAt}</td>
-            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                <div className="flex items-center gap-x-6">
-                    <button
-                        onClick={handleApprove}
-                        title="Approve instructor"
-                        className="bg-green-300 p-1 rounded-full hover:bg-green-400 transition-colors"
-                    >
-                        <MdDownloadDone className="text-green-800" size={20} />
-                    </button>
-                    <button
-                        onClick={handleCancel}
-                        title="Deny instructor request"
-                        className="bg-red-300 p-1 rounded-full hover:bg-red-400 transition-colors"
-                    >
-                        <MdOutlineCancel className="text-red-800" size={20} />
-                    </button>
-                </div>
-            </td>
-        </tr>
-    );
+  return (
+    <tr>
+      <td>
+        <div className="flex items-center gap-3">
+          <img className="w-8 h-8 rounded-lg object-cover" src={request?.photoURL} alt="" />
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-surface-900 truncate">{request?.first_name} {request?.last_name}</p>
+            <p className="text-xs text-surface-400 truncate">{request?.email}</p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <span className="badge-primary capitalize">{request?.cur_role}</span>
+      </td>
+      <td className="text-surface-600">{request?.category}</td>
+      <td className="text-surface-600">{request?.experience}</td>
+      <td className="text-surface-500">{request?.requestedAt}</td>
+      <td>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => handleAction('approve')}
+            title="Approve"
+            className="w-7 h-7 rounded-lg bg-success-50 text-success-600 hover:bg-success-100 flex items-center justify-center transition-colors"
+          >
+            <HiOutlineCheck className="text-sm" />
+          </button>
+          <button
+            onClick={() => handleAction('cancel')}
+            title="Deny"
+            className="w-7 h-7 rounded-lg bg-danger-50 text-danger-600 hover:bg-danger-100 flex items-center justify-center transition-colors"
+          >
+            <HiOutlineX className="text-sm" />
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
 };
 
 export default TeacherRequest;

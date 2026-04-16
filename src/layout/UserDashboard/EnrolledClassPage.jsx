@@ -1,139 +1,168 @@
-// import { useLocation } from 'react-router-dom';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-// import Classes from './classes/Classes';
-import AllTopics from './classes/AllTopics';
-import ClassWork from './classes/ClassWork';
-import { IoAdd } from 'react-icons/io5';
-import { useEffect, useRef, useState } from 'react';
-import Swal from 'sweetalert2';
-import { Rating } from '@mui/material';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import {
+  HiOutlineBookOpen,
+  HiOutlineClock,
+  HiOutlineStar,
+  HiOutlineClipboardList,
+  HiOutlinePencilAlt,
+} from 'react-icons/hi';
+import { Rating } from '@mui/material';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useUserInfo from '../../hooks/useUserInfo';
+import LoadingState from '../../components/ui/LoadingState';
+import ErrorState from '../../components/ui/ErrorState';
+import ClassWork from './classes/ClassWork';
+import { parseApiError, isNetworkError } from '../../utils/errorParser';
+import { toast } from '../../utils/toast';
+
+const TABS = [
+  { key: 'overview', label: 'Overview', icon: HiOutlineBookOpen },
+  { key: 'assignments', label: 'Assignments', icon: HiOutlineClipboardList },
+];
 
 const EnrolledClassPage = () => {
-    const location = useLocation();
-    const [course, setCourse] = useState();
-    const axiosSecure = useAxiosSecure();
-    const [userInfo] = useUserInfo();
-    const id = location.pathname.split('/')[location.pathname.split('/').length - 1];
-    // console.log(id);
-    useEffect(()=>{
-        axiosSecure.get(`/allclasses?_id=${id}`)
-        .then(res=>{
-            setCourse(res.data[0]);
-        })
-        .catch(error=>{
-            console.log(error);
-        })
-    },[]);
-    // const course = {
-    //     "id": 1,
-    //     "course_banner": "https://kinforce.net/learen/wp-content/uploads/2022/08/young-woman-doing-web-meeting-using-mirrorless-cam-7CTA9CH.jpg",
-    //     "instructor": "Jane Doe",
-    //     "instructor_url": "https://kinforce.net/learen/wp-content/uploads/2022/08/small-business-owners-startup-and-e-commerce-conce-83S5W35.jpg",
-    //     "instructor_email": "janedoe@gmail.com",
-    //     "course_title": "Introduction to Python",
-    //     "course_fee": "99.99",
-    //     "course_type": "Programming",
-    //     "course_duration": "4 weeks",
-    //     "total_lessons": 20,
-    //     "rating": 4.8,
-    //     "course_status": "pending",
-    //     "course_description": "Embark on a journey to learn Python basics and start coding with confidence in just 4 weeks. This comprehensive course covers everything from variables and data types to loops, functions, and object-oriented programming concepts. Gain hands-on experience with practical exercises and projects designed to reinforce your understanding of Python fundamentals. By the end of the course, you'll have the skills to write your own Python scripts and applications, setting a solid foundation for further exploration in the world of programming."
-    // };
-    const ref = useRef();
-    const ratingRef = useRef();
-    // console.log(course);
+  const location = useLocation();
+  const [course, setCourse] = useState(null);
+  const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  const [userInfo] = useUserInfo();
+  const reviewRef = useRef();
+  const ratingRef = useRef();
+  const id = location.pathname.split('/').pop();
 
-    const reviewSubmission = () => {
-        // const letter = ref
-        // console.log(ref.current.value);
-        const reviewDoc = {
-            description: ref.current.value,
-            rating: ratingRef.current.value,
-            user_name: userInfo.displayName,
-            user_url: userInfo.photoURL,
-            rated_at: new Date().toISOString().slice(0,10),
-            course_title: course.course_title,
-        }
-        axiosSecure.post(`reviews`, reviewDoc )
-            .then(() => {
-                Swal.fire({
-                    title: "Great job!",
-                    text: "Review submitted Successfully!",
-                    icon: "success"
-                });
-            })
-            .catch(error => {
-                // console.log(error.message);
-                Swal.fire({
-                    title: "Error Occured!",
-                    text: error.message,
-                    icon: "error"
-                });
-            })
+  const fetchCourse = () => {
+    setError(null);
+    setCourse(null);
+    axiosSecure.get(`/allclasses?_id=${id}`)
+      .then(res => {
+        if (!res.data[0]) setError({ message: 'Course not found.', network: false });
+        else setCourse(res.data[0]);
+      })
+      .catch(err => setError({ message: parseApiError(err), network: isNetworkError(err) }));
+  };
+
+  useEffect(() => { if (id) fetchCourse(); }, [id]);
+
+  const submitReview = async () => {
+    const toastId = toast.loading('Submitting review…');
+    try {
+      await axiosSecure.post('reviews', {
+        description: reviewRef.current?.value,
+        rating: parseFloat(ratingRef.current?.value || 5),
+        user_name: userInfo?.displayName,
+        user_url: userInfo?.photoURL,
+        rated_at: new Date().toISOString().slice(0, 10),
+        course_title: course?.course_title,
+      });
+      toast.update(toastId, { render: 'Review submitted!', type: 'success', isLoading: false, autoClose: 3000 });
+      setReviewOpen(false);
+    } catch (err) {
+      toast.update(toastId, { render: parseApiError(err), type: 'error', isLoading: false, autoClose: 5000 });
     }
-    const defaultLetter = ('The '+ course?.course_title +' course offers exceptional content, clear and engaging instruction from '+ course?.instructor +', and practical projects that reinforce learning. With strong community support and comprehensive resources, this course is a valuable investment for anyone looking to master [subject/topic]. Highly recommended!');
-    const TERmodal = <>
-        <dialog id="my_modal_1" className="modal backdrop-blur">
-            <div className="modal-box bg-base-100">
-                <div className="w-full flex flex-col justify-center items-center">
-                    <img className="w-40" src="https://img.freepik.com/free-vector/hand-drawn-cartoon-business-planning_23-2149158459.jpg?t=st=1718243146~exp=1718246746~hmac=8a44771af4255b9d25c4de78d618b9996d5a6c1fe648b0cbd2434d7e7df87509&w=826" alt="" />
-                </div>
-                <h3 className="text-center font-medium text-[#151515ab]">Submit your <span className="font-semibold text-blue-600"> Experience in a Review</span> Over this course.</h3>
-                {/* <p className="py-4">Press ESC key or click the button below to close</p> */}
-                <div className="modal-action">
-                    <form method="dialog" className="w-full flex flex-col justify-center items-center gap-3">
-                        <div className='flex justify-center items-center gap-8'>
-                            <p className='text-lg'>Rate Here</p>
-                            <Rating ref={ratingRef} name="half-rating-read" precision={0.5}/>
-                        </div>
-                        <label className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text">Your review</span>
-                            </div>
-                            <textarea ref={ref} className="textarea textarea-secondary w-full h-44" defaultValue={defaultLetter}></textarea>
-                        </label>
-                        <div className="w-full flex justify-end items-center gap-3">
-                            <button className="btn btn-primary">Cancel</button>
-                            <button onClick={reviewSubmission} className="btn btn-outline">Review it</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </dialog>
-    </>
-    return (
-        <div className='p-6'>
-            {TERmodal}
-            <div className=' py-4 flex flex-col justify-center items-start'>
-                <h2 className='text-xl font-semibold'>Rate your Experience </h2>
-                <div className='w-full pr-20 flex justify-between items-center'>
-                    <p>Rate through Teaching Evaluation Report submission</p>
-                    <button onClick={() => document.getElementById('my_modal_1').showModal()} className='btn btn-accent'><IoAdd size={24} /> TER</button>
-                </div>
-            </div>
-            <Tabs>
-                <TabList>
-                    <Tab>Course Description</Tab>
-                    {/* <Tab>Course Classes</Tab> */}
-                    <Tab>Class Works</Tab>
-                </TabList>
+  };
 
-                <TabPanel>
-                    <AllTopics course={course} />
-                </TabPanel>
-                {/* <TabPanel>
-                    <Classes course={course}/>
-                </TabPanel> */}
-                <TabPanel>
-                    <ClassWork course={course} />
-                </TabPanel>
-            </Tabs>
+  if (!course && !error) return <LoadingState text="Loading course…" />;
+  if (error) return <ErrorState type={error.network ? 'network' : 'generic'} message={error.message} onRetry={fetchCourse} />;
+
+  return (
+    <div className="space-y-6">
+      {/* Course header */}
+      <div className="card-elevated overflow-hidden">
+        <div className="h-48 md:h-56 bg-cover bg-center relative" style={{ backgroundImage: `url(${course?.course_banner})` }}>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+            <span className="inline-flex items-center px-2.5 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium mb-2">
+              {course?.course_type}
+            </span>
+            <h1 className="text-xl md:text-2xl font-bold">{course?.course_title}</h1>
+          </div>
         </div>
-    );
+        <div className="p-5 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <img src={course?.instructor_url} alt="" className="w-10 h-10 rounded-xl object-cover" />
+            <div>
+              <p className="text-sm font-semibold text-surface-900">{course?.instructor}</p>
+              <p className="text-xs text-surface-400">{course?.instructor_email}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-5 text-sm text-surface-500">
+            <span className="flex items-center gap-1.5"><HiOutlineBookOpen />{course?.total_lessons} lessons</span>
+            <span className="flex items-center gap-1.5"><HiOutlineClock />{course?.course_duration}</span>
+            <span className="flex items-center gap-1.5"><HiOutlineStar className="text-amber-500" />{course?.rating}</span>
+          </div>
+          <button onClick={() => setReviewOpen(true)} className="btn-secondary text-sm py-2 px-4">
+            <HiOutlinePencilAlt /> Write Review
+          </button>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex items-center gap-1 p-1 bg-surface-100 rounded-xl w-fit">
+        {TABS.map(({ key, label, icon: Icon }) => (
+          <button
+            key={key}
+            onClick={() => setActiveTab(key)}
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+              activeTab === key
+                ? 'bg-white text-surface-900 shadow-sm'
+                : 'text-surface-500 hover:text-surface-700'
+            }`}
+          >
+            <Icon className="text-base" />
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab content */}
+      {activeTab === 'overview' && (
+        <div className="card-elevated p-6 space-y-4">
+          <h2 className="text-base font-semibold text-surface-900">About This Course</h2>
+          <p className="text-sm text-surface-600 leading-relaxed">{course?.course_description}</p>
+          <div className="grid sm:grid-cols-3 gap-4 pt-2">
+            {[
+              { label: 'Total Lessons', value: course?.total_lessons },
+              { label: 'Duration', value: course?.course_duration },
+              { label: 'Rating', value: `${course?.rating} / 5.0` },
+            ].map(({ label, value }) => (
+              <div key={label} className="bg-surface-50 rounded-xl p-4 text-center">
+                <p className="text-lg font-bold text-surface-900">{value}</p>
+                <p className="text-xs text-surface-400 mt-0.5">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'assignments' && <ClassWork course={course} />}
+
+      {/* Review modal */}
+      {reviewOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setReviewOpen(false)}>
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6" onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg font-semibold text-surface-900 mb-4">Rate Your Experience</h3>
+            <div className="flex items-center gap-4 mb-4">
+              <p className="text-sm font-medium text-surface-600">Rating</p>
+              <Rating ref={ratingRef} name="review-rating" defaultValue={4.5} precision={0.5} />
+            </div>
+            <textarea
+              ref={reviewRef}
+              className="input-field h-32 resize-none"
+              placeholder="Share your thoughts about this course…"
+              defaultValue={`The ${course?.course_title} course offers exceptional content and engaging instruction from ${course?.instructor}.`}
+            />
+            <div className="flex justify-end gap-3 mt-4">
+              <button onClick={() => setReviewOpen(false)} className="btn-ghost text-sm py-2 px-4">Cancel</button>
+              <button onClick={submitReview} className="btn-primary text-sm py-2.5 px-5">Submit Review</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default EnrolledClassPage;

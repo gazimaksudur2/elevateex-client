@@ -3,7 +3,7 @@ import { isNetworkError } from '../utils/errorParser';
 import { toast } from '../utils/toast';
 
 const axiosPublic = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://elevate-dusky-nine.vercel.app',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 15000,
 });
 

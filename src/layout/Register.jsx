@@ -6,13 +6,12 @@ import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { parseApiError } from "../utils/errorParser";
 import { toast } from "../utils/toast";
+import { uploadImage } from "../utils/imgbb";
 
 const Register = () => {
   const { createUser, updateUser } = useAuth();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-  const img_hosting_key = import.meta.env.VITE_image_hosting_key;
-  const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
   const {
     register,
     handleSubmit,
@@ -20,18 +19,23 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const toastId = toast.loading("Creating your account…");
     try {
+      // 1 — Upload profile photo to ImgBB (optional field)
       let profile_img = null;
       if (data.image?.length) {
-        const res = await axiosPublic.post(
-          img_hosting_api,
-          { image: data.image[0] },
-          { headers: { "content-type": "multipart/form-data" } }
-        );
-        profile_img = res.data.data.display_url;
+        try {
+          profile_img = await uploadImage(data.image[0]);
+        } catch {
+          // Photo upload failed — continue without it rather than blocking signup
+          toast.warning("Profile photo could not be uploaded. You can add it later.", {
+            toastId: "img-warn",
+          });
+        }
       }
 
-      const user = {
+      // 2 — Save user document to backend
+      const userDoc = {
         displayName: data.name,
         photoURL: profile_img,
         email: data.email,
@@ -43,14 +47,26 @@ const Register = () => {
         isActive: true,
         createdAt: new Date().toISOString().slice(0, 10),
       };
+      await axiosPublic.post("/users", userDoc);
 
-      await axiosPublic.post("/users", user);
+      // 3 — Create Firebase user and set display name + photo
       await createUser(data.email, data.password);
       await updateUser(data.name, profile_img);
-      toast.success("Account created successfully!");
+
+      toast.update(toastId, {
+        render: "Account created successfully! Welcome aboard.",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
       navigate("/");
     } catch (error) {
-      toast.error(parseApiError(error, "register"));
+      toast.update(toastId, {
+        render: parseApiError(error, "register"),
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
     }
   };
 

@@ -5,7 +5,7 @@ import { isAuthError, isNetworkError } from '../utils/errorParser';
 import { toast } from '../utils/toast';
 
 const axiosSecure = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://elevate-dusky-nine.vercel.app',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 15000,
 });
 
@@ -42,7 +42,7 @@ const useAxiosSecure = () => {
       if (status === 401) {
         toast.error('Your session has expired. Please sign in again.', { toastId: 'session-expired' });
         await logOut();
-        navigate('/login', { replace: true });
+        navigate('/', { replace: true });
         return Promise.reject(error);
       }
 
@@ -50,7 +50,7 @@ const useAxiosSecure = () => {
         toast.error('You do not have permission to perform this action.', {
           toastId: 'forbidden',
         });
-        navigate('/login', { replace: true });
+        navigate('/', { replace: true });
         return Promise.reject(error);
       }
 

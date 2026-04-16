@@ -1,40 +1,50 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { HiOutlineBookOpen, HiOutlineClock, HiOutlinePlay } from 'react-icons/hi';
 
 const EnrolledClass = ({ course }) => {
-    return (
-        <div>
-            <div className="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md">
-                <img className="object-cover w-full h-64" src={course?.course_banner} alt="Article" />
+  return (
+    <div className="card-elevated overflow-hidden group">
+      <div className="relative h-44 overflow-hidden">
+        <img
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          src={course?.course_banner}
+          alt={course?.course_title}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <span className="absolute top-3 right-3 badge-primary text-xs">
+          {course?.course_type}
+        </span>
+      </div>
 
-                <div className="p-6">
-                    <div>
-                    <div className='flex justify-between items-center'>
-                            <h2 className="text-xl font-semibold text-gray-800 md:text-3xl">
-                                {course?.course_title}
-                            </h2>
-                            <div className=''>
-                                <p className="bg-emerald-200 text-emerald-700 px-2 py-1 rounded-full cursor-pointer">{course?.course_type}</p>
-                                {/* <p className="bg-green-200 text-green-700 px-2 py-1 rounded-full cursor-pointer">Approved</p> */}
-                                {/* <p className="bg-red-200 text-red-700 px-2 py-1 rounded-full cursor-pointer">Cancelled</p> */}
-                            </div>
-                        </div>
+      <div className="p-5 space-y-3">
+        <h3 className="text-base font-semibold text-surface-900 line-clamp-2 leading-snug">
+          {course?.course_title}
+        </h3>
+        <p className="text-sm text-surface-500 line-clamp-2">
+          {course?.course_description}
+        </p>
 
-                        <p className="mt-4 text-gray-500">
-                            {course?.course_description.slice(0, 200) + " ...."}
-                        </p>
-                    </div>
-
-                    <div className="mt-4">
-                        <div className="flex items-center">
-                            <Link to={`/userdash/classes/${course?._id}`}>
-                                <button className="btn btn-outline">Continue Course</button>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div className="flex items-center gap-4 text-xs text-surface-400">
+          <span className="flex items-center gap-1">
+            <HiOutlineBookOpen className="text-sm" />
+            {course?.total_lessons} lessons
+          </span>
+          <span className="flex items-center gap-1">
+            <HiOutlineClock className="text-sm" />
+            {course?.course_duration}
+          </span>
         </div>
-    );
+
+        <Link
+          to={`/userdash/classes/${course?._id}`}
+          className="btn-primary w-full py-2.5 text-sm mt-2"
+        >
+          <HiOutlinePlay className="text-base" />
+          Continue Learning
+        </Link>
+      </div>
+    </div>
+  );
 };
 
 export default EnrolledClass;

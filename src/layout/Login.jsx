@@ -12,8 +12,20 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm();
+
+  const applyDemoCredentials = (role) => {
+    const creds = {
+      admin: { email: "admin@elavateex.edu", password: "AdmEdu123!" },
+      instructor: { email: "johndoe@example.com", password: "JohnMama2!" },
+      student: { email: "hello@gmail.com", password: "helloVai!" },
+    }[role];
+
+    setValue("email", creds.email, { shouldDirty: true, shouldValidate: true });
+    setValue("password", creds.password, { shouldDirty: true, shouldValidate: true });
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -104,6 +116,36 @@ const Login = () => {
                 />
               </div>
               {errors.password && <p className="text-xs text-danger-500 mt-1">{errors.password.message}</p>}
+            </div>
+
+            <div className="rounded-2xl border border-surface-200 bg-surface-50 p-4">
+              <p className="text-sm font-semibold text-surface-900 mb-3">Demo Credentials</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button
+                  type="button"
+                  onClick={() => applyDemoCredentials("admin")}
+                  className="btn-secondary py-2.5 text-sm"
+                >
+                  Admin
+                </button>
+                <button
+                  type="button"
+                  onClick={() => applyDemoCredentials("instructor")}
+                  className="btn-secondary py-2.5 text-sm"
+                >
+                  Instructor
+                </button>
+                <button
+                  type="button"
+                  onClick={() => applyDemoCredentials("student")}
+                  className="btn-secondary py-2.5 text-sm"
+                >
+                  Student
+                </button>
+              </div>
+              <p className="text-xs text-surface-500 mt-3">
+                Click a button to autofill email and password, then press <span className="font-semibold">Sign In</span>.
+              </p>
             </div>
 
             <div className="flex items-center justify-between">

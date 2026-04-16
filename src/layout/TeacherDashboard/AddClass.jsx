@@ -1,152 +1,128 @@
-import { useForm } from "react-hook-form";
-import useUserInfo from "../../hooks/useUserInfo";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Swal from "sweetalert2";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useForm } from 'react-hook-form';
+import { HiOutlinePhotograph, HiOutlineAcademicCap } from 'react-icons/hi';
+import useUserInfo from '../../hooks/useUserInfo';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { uploadImage } from '../../utils/imgbb';
+import { parseApiError } from '../../utils/errorParser';
+import { toast } from '../../utils/toast';
 
 const AddClass = () => {
-    const [userInfo] = useUserInfo();
-    const { register, handleSubmit, reset } = useForm();
-    const axiosSecure = useAxiosSecure();
-    const axiosPublic = useAxiosPublic();
-    const img_hosting_key = import.meta.env.VITE_image_hosting_key;
-    const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
-    const onSubmit = async(data) =>{
-        let banner_img = null;
-        if(data.banner_img.length){
-            const res = await axiosPublic.post(img_hosting_api, {image: data.banner_img[0]}, {
-                headers: {
-                    "content-type": 'multipart/form-data'
-                }
-            });
-            banner_img = res.data.data.display_url;
-        }
-        
-        // console.log(new Date().toISOString().slice(0,10));
-        const course = {
-            course_title: data.course_title,
-            course_fee: data.fee,
-            course_banner: banner_img,
-            course_type: data.type,
-            course_duration: data.duration,
-            course_description: data.description,
-            course_status: "pending",
-            total_enrollment: 0,
-            total_lessons: data.lesson,
-            rating: 4.8,
-            instructor: userInfo.displayName,
-            instructor_email: userInfo.email,
-            instructor_url: userInfo.photoURL,
-            enrolled_by: [],
-            createdAt: new Date().toISOString().slice(0,10),
-        }
-        // console.log(course);
-        axiosSecure.post('/allclasses', course)
-        .then(()=>{
-            Swal.fire({
-                title: "Great job!",
-                text: "Course info sent to admin for Reviewing!",
-                icon: "success"
-              });
-        })
-        .catch(error=>{
-            // console.log(error.message);
-            Swal.fire({
-                title: "Unfortunately!",
-                text: error.message,
-                icon: "warning"
-              });
-        })
-        reset();
-    };
+  const [userInfo] = useUserInfo();
+  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm();
+  const axiosSecure = useAxiosSecure();
 
-    return (
-        <div>
-            <header className="bg-white ">
-                <div className="container px-2 py-10 mx-auto">
-                    <div className="items-center lg:flex lg:flex-row-reverse lg:justify-evenly">
-                        <div className="w-full lg:w-[60%]">
-                            <div className="">
-                                <h1 className="text-3xl font-semibold text-gray-800 lg:text-4xl">Add a New <span className="text-blue-500">Course </span></h1>
-                                <form className="card-body justify-start" onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text">Course Title</span>
-                                        </label>
-                                        <input type="text" placeholder="Your Course Title" className="input input-bordered"  {...register("course_title")} required />
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text">Course Launcher</span>
-                                        </label>
-                                        <input type="text" {...register("launcher")} className="input input-bordered" value={userInfo?.displayName} readOnly />
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text">Course Launcher Email</span>
-                                        </label>
-                                        <input type="text" {...register("mail")} className="input input-bordered" value={userInfo?.email} readOnly />
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text text-sm">Course Banner Image</span>
-                                        </label>
-                                        <input type="file" {...register("banner_img")} className="file-input file-input-bordered w-full" required/>
-                                    </div>
-                                    <div className="flex justify-between items-center gap-3">
-                                        <div className="form-control w-[48%]">
-                                            <label className="label">
-                                                <span className="label-text text-sm">Course Fee</span>
-                                            </label>
-                                            <input type="text" {...register("fee")} placeholder="Your Course Fee" className="input input-bordered" required />
-                                        </div>
-                                        <div className="form-control w-[48%]">
-                                            <label className="label">
-                                                <span className="label-text text-sm">Course Type</span>
-                                            </label>
-                                            <input type="text" {...register("type")} placeholder="Your Course Type  eg. programming" className="input input-bordered" required />
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between items-center gap-3">
-                                        <div className="form-control w-[48%]">
-                                            <label className="label">
-                                                <span className="label-text text-sm">Course Duration</span>
-                                            </label>
-                                            <input type="text" {...register("duration")} placeholder="Your Course Duration eg. 8 weeks" className="input input-bordered" required />
-                                        </div>
-                                        <div className="form-control w-[48%]">
-                                            <label className="label">
-                                                <span className="label-text text-sm">Course Lesson Count</span>
-                                            </label>
-                                            <input type="text" {...register("lesson")} placeholder="Your Course Lesson Count" className="input input-bordered" required />
-                                        </div>
-                                    </div>
-                                    <label className="form-control">
-                                        <div className="label">
-                                            <span className="label-text">Course Description</span>
-                                        </div>
-                                        <textarea className="textarea textarea-bordered h-24" placeholder="Your Course Description" {...register("description")} required></textarea>
-                                    </label>
-                                    <div className="form-control mt-6 gap-3">
-                                        {/* <button className="btn btn-primary">Login</button> */}
-                                        <input type="submit" value={'Add Class'} className="w-full btn btn-primary" />
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+  const onSubmit = async (data) => {
+    const toastId = toast.loading('Submitting your course…');
+    try {
+      const banner_img = await uploadImage(data.banner_img[0]);
 
-                        <div className="flex flex-col items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/3">
-                            <img className="w-full h-full max-w-sm" src="https://img.freepik.com/free-vector/online-certification-illustration_23-2148575636.jpg?t=st=1718101519~exp=1718105119~hmac=4eabc0f5fd5e6087cb2b49b33534a1569b73160bd66269da953bfaf6b7326614&w=740" alt="email illustration vector art" />
-                            <div className="space-y-2">
-                                <h2 className="text-2xl font-semibold font-roboto text-[#151515db]">Launch <span className="text-blue-600">Another</span> Door of Opportunity</h2>
-                                <p className="text-[#151515bc]">Empower countless learners, expand your reach, and shape the future of education by launching more courses.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-        </div>
-    );
+      const course = {
+        course_title: data.course_title,
+        course_fee: data.fee,
+        course_banner: banner_img,
+        course_type: data.type,
+        course_duration: data.duration,
+        course_description: data.description,
+        course_status: 'pending',
+        total_enrollment: 0,
+        total_lessons: data.lesson,
+        rating: 4.8,
+        instructor: userInfo?.displayName,
+        instructor_email: userInfo?.email,
+        instructor_url: userInfo?.photoURL,
+        enrolled_by: [],
+        createdAt: new Date().toISOString().slice(0, 10),
+      };
+
+      await axiosSecure.post('/allclasses', course);
+      toast.update(toastId, { render: 'Course submitted for review!', type: 'success', isLoading: false, autoClose: 4000 });
+      reset();
+    } catch (error) {
+      toast.update(toastId, { render: parseApiError(error), type: 'error', isLoading: false, autoClose: 5000 });
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="dash-title flex items-center gap-2">
+          <HiOutlineAcademicCap className="text-brand-600" />
+          Create New Course
+        </h1>
+        <p className="text-sm text-surface-500 mt-1">Fill in the details below to submit your course for admin review.</p>
+      </div>
+
+      <div className="card-elevated p-6 md:p-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          {/* Title */}
+          <div>
+            <label className="block text-sm font-medium text-surface-700 mb-1.5">Course Title</label>
+            <input type="text" placeholder="e.g. Introduction to Python" className="input-field" {...register('course_title', { required: true })} />
+          </div>
+
+          {/* Instructor info (readonly) */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-surface-700 mb-1.5">Instructor</label>
+              <input type="text" className="input-field bg-surface-50" value={userInfo?.displayName ?? ''} readOnly />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-surface-700 mb-1.5">Email</label>
+              <input type="text" className="input-field bg-surface-50" value={userInfo?.email ?? ''} readOnly />
+            </div>
+          </div>
+
+          {/* Banner upload */}
+          <div>
+            <label className="block text-sm font-medium text-surface-700 mb-1.5">Banner Image</label>
+            <div className="flex items-center gap-3">
+              <label className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-surface-300 rounded-xl cursor-pointer hover:border-brand-400 transition-colors">
+                <HiOutlinePhotograph className="text-surface-400 text-xl" />
+                <span className="text-sm text-surface-500">Choose an image</span>
+                <input type="file" accept="image/*" className="hidden" {...register('banner_img', { required: true })} />
+              </label>
+            </div>
+          </div>
+
+          {/* Fee & Type */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-surface-700 mb-1.5">Course Fee ($)</label>
+              <input type="number" min="0" step="0.01" placeholder="49.99" className="input-field" {...register('fee', { required: true })} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-surface-700 mb-1.5">Category</label>
+              <input type="text" placeholder="e.g. Programming" className="input-field" {...register('type', { required: true })} />
+            </div>
+          </div>
+
+          {/* Duration & Lessons */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-surface-700 mb-1.5">Duration</label>
+              <input type="text" placeholder="e.g. 8 weeks" className="input-field" {...register('duration', { required: true })} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-surface-700 mb-1.5">Total Lessons</label>
+              <input type="number" min="1" placeholder="24" className="input-field" {...register('lesson', { required: true })} />
+            </div>
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium text-surface-700 mb-1.5">Description</label>
+            <textarea className="input-field h-28 resize-none" placeholder="Describe what students will learn…" {...register('description', { required: true })} />
+          </div>
+
+          {/* Submit */}
+          <button type="submit" disabled={isSubmitting} className="btn-primary w-full py-3">
+            {isSubmitting ? 'Uploading & Submitting…' : 'Submit for Review'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default AddClass;

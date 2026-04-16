@@ -8,6 +8,7 @@ const FIREBASE_MESSAGES = {
   'auth/user-not-found': 'No account found with this email address.',
   'auth/wrong-password': 'Incorrect password. Please try again.',
   'auth/invalid-credential': 'Invalid email or password. Please check your credentials.',
+  'auth/invalid-login-credentials': 'Invalid email or password. Please check your credentials.',
   'auth/invalid-email': 'Please enter a valid email address.',
   'auth/email-already-in-use': 'An account with this email already exists. Try signing in instead.',
   'auth/weak-password': 'Password is too weak. Use at least 6 characters.',
@@ -71,12 +72,28 @@ const CONTEXT_MESSAGES = {
  * @param {string}  context - Optional context key from CONTEXT_MESSAGES
  * @returns {string} Human-readable error message
  */
+// Firebase REST API raw message strings → friendly text
+const FIREBASE_RAW_MESSAGES = {
+  INVALID_LOGIN_CREDENTIALS: 'Invalid email or password. Please check your credentials.',
+  EMAIL_NOT_FOUND: 'No account found with this email address.',
+  INVALID_PASSWORD: 'Incorrect password. Please try again.',
+  USER_DISABLED: 'This account has been disabled. Please contact support.',
+  TOO_MANY_ATTEMPTS_TRY_LATER: 'Too many failed attempts. Please wait before trying again.',
+  WEAK_PASSWORD: 'Password is too weak. Use at least 6 characters.',
+  EMAIL_EXISTS: 'An account with this email already exists.',
+};
+
 export const parseApiError = (error, context = '') => {
   if (!error) return 'An unexpected error occurred. Please try again.';
 
   // ── Firebase ──────────────────────────────────────────────────────────────
   if (error?.code && typeof error.code === 'string' && error.code.startsWith('auth/')) {
     return FIREBASE_MESSAGES[error.code] || `Authentication error: ${error.message || error.code}`;
+  }
+
+  // Firebase SDK sometimes puts the raw REST message in error.message (e.g. "INVALID_LOGIN_CREDENTIALS")
+  if (error?.message && FIREBASE_RAW_MESSAGES[error.message]) {
+    return FIREBASE_RAW_MESSAGES[error.message];
   }
 
   // ── Axios / HTTP ──────────────────────────────────────────────────────────

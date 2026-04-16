@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 import { useState, useRef } from "react";
@@ -11,6 +11,7 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const [userInfo] = useUserInfo();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
@@ -21,6 +22,7 @@ const Navbar = () => {
       .then(() => toast.success("Signed out successfully"))
       .catch(() => toast.error("Sign out interrupted"));
     setProfileOpen(false);
+    navigate("/", { replace: true });
   };
 
   const handleAdminApply = () => {
